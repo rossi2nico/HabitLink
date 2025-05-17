@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 body {
-
-  background-color: #0F0F0F0F;
-
+  margin: 0;
+  background-color: #0a0a0a;
+  color: #F0F0F0;
+  font-family: 'Rubik', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 

@@ -13,7 +13,7 @@ const habitSchema = new Schema({
             return this.name;
         }
     },
-    // Frequency: times per week (daily habit is 7)
+    // 7 = daily
     frequency: {
         type: Number,
         required: true
@@ -22,30 +22,24 @@ const habitSchema = new Schema({
         type: Number,
         default: 0
     },
-    completed: {
-        type: Boolean,
-        default: false
+    maxStreak: {
+        type: Number,
+        default: 0
+    },
+    datesCompleted: [{
+        type: Date
+    }],
+    syncedHabits: [{
+        habitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit', required: true },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+    }],
+    privacy: { // 0 = private, 1 = friends-only, 2 = public
+        type: Number,
+        default: 0
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true
     }
-    /* Future implementation ideas
-
-    friendsSharedWith: [{ 
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' }],
-    progress: [{
-        userId: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'User' },
-        completed: { 
-            type: Boolean, 
-            default: false },
-        date: { 
-            type: Date, 
-            default: Date.now },
-        streak: { 
-            type: Number, 
-            default: 0 } 
-    }]
-    */
 }, { timestamps: true})
 
 module.exports = mongoose.model("Habit", habitSchema)

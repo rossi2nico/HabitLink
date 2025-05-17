@@ -8,8 +8,8 @@ const app = express() // Express: handles requests and interacts with database.
 // Middleware: parse JSON into req.body
 app.use(express.json())
 // Middleware: logs every incoming HTTP request's path and method 
-app.use((request, response, next) => {
-    console.log(request.path, request.method)
+app.use((req, res, next) => {
+    console.log(req.path, req.method)
     next()
 })
 

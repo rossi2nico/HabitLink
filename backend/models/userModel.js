@@ -12,7 +12,13 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    pendingUsers: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    }],
+    friends: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    }]
 })
 
 
@@ -62,7 +68,6 @@ userSchema.statics.signup = async function (rawUsername, password) {
 
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
-
     const user = await this.create({ username, password: hash }) // creates document
 
     return user

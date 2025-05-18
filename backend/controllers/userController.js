@@ -28,10 +28,8 @@ const signupUser = async (req, res) => {
 
     try {
         const user = await User.signup(username, password)
-
         // create a token
         const token = createToken(user._id)
-
         res.status(200).json({username, token})
     } 
     catch (error) {
@@ -39,4 +37,95 @@ const signupUser = async (req, res) => {
     }
 }
 
-module.exports = { signupUser, loginUser}
+const sendFriendRequest = async (req, res) => {
+    const { targetUserId } = req.body;
+    const userId = req.user._id;
+
+    try {
+        const targetUser = await User.findById(targetUserId);
+        if (!targetUser) {
+            return res.status(404).json({error: 'User does not exist'})
+        }
+        const user = await User.findById(userId)
+        // Ensure request is not already sent
+        const alreadyRequested = targetUser.pendingUsers.some(
+            (pendingUser) => pendingUser.toString() === userId.toString()
+        )
+        if (alreadyRequested) {
+            return res.status(409).json({error: 'Request has already been sent!'})
+        }
+        // Check if target user has already sent a friend request
+        const targetUserPending = user.pendingUsers.some(
+            (pendingUser) => pendingUser.toString() === targetUserId.toString()
+        )
+        if (targetUserPending) {
+            // Remove the target user from users pending user array
+            user.pendingUsers = user.pendingUsers.filter(
+                (pendingUser) => pendingUser.toString() !== targetUserId.toString()
+            )
+            // Add eachother as friends as they both requested each other
+            user.friends.push(targetUserId);
+            targetUser.friends.push(userId);
+
+            await user.save();
+            await targetUser.save();
+
+            return res.status(200).json({message: 'Both users pending. Successfully added friend'})
+        }
+        targetUser.pendingUsers.push(userId);
+        await targetUser.save();
+        
+        res.status(200).json({message: 'Friend request sent!'})
+    }
+    catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+const acceptFriendRequest = async (req, res) => {
+    const { incomingUserId } = req.body;
+    const userId = req.user._id;
+  
+    try {
+      const user = await User.findById(userId);
+      const incomingUser = await User.findById(incomingUserId);
+  
+      if (!user || !incomingUser) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      user.pendingUsers = user.pendingUsers.filter(
+        (pendingUser) => pendingUser.toString() !== incomingUserId.toString()
+      );
+  
+      user.friends.push(incomingUserId);
+      incomingUser.friends.push(userId);
+  
+      await user.save();
+      await incomingUser.save();
+  
+      res.status(200).json({ message: 'Friend request accepted!' });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+  
+
+const declineFriendRequest = async (req, res) => {
+    const { incomingUserId } = req.body
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        user.pendingUsers = user.pendingUsers.filter(
+            (pendingUser) => pendingUser.toString() !== incomingUserId.toString()
+        )
+        await user.save();
+        res.status(200).json({ message: 'Friend request declined' })
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+module.exports = { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest }

@@ -1,11 +1,16 @@
 const express = require("express")
 const router = express.Router()
+const requireAuth = require('../middleware/requireAuth');
 
-const { signupUser, loginUser } = require('../controllers/userController')
-//login route
+
+const { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest } = require('../controllers/userController')
+
 router.post('/login', loginUser)
-
-// sign up route
 router.post('/signup', signupUser)
+
+router.use(requireAuth);
+router.post('/send-friend-request', sendFriendRequest)
+router.post('/accept-friend-request', acceptFriendRequest)
+router.post('/decline-friend-request', declineFriendRequest)
 
 module.exports = router

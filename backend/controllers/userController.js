@@ -54,6 +54,13 @@ const sendFriendRequest = async (req, res) => {
         if (alreadyRequested) {
             return res.status(409).json({error: 'Request has already been sent!'})
         }
+        // Cgeck if users are already friends
+        const usersAlreadyFriends = user.friends.some(
+            pendingUser => pendingUser.toString() === targetUserId.toString()
+        )
+        if (usersAlreadyFriends) {
+            return res.status(409).json({error: 'Users are already friends'})
+        }
         // Check if target user has already sent a friend request
         const targetUserPending = user.pendingUsers.some(
             (pendingUser) => pendingUser.toString() === targetUserId.toString()

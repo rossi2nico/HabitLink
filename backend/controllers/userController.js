@@ -135,4 +135,32 @@ const declineFriendRequest = async (req, res) => {
     }
 }
 
-module.exports = { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest }
+const removeFriend = async (req, res) => {
+    const { targetUserId } = req.body
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        const targetUser = await User.findById(targetUserId)
+        if (!user || !targetUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        user.friends = user.friends.filter(
+            friendId => friendId.toString() !== targetUserId.toString()
+        )
+        targetUser.friends = targetUser.friends.filter(
+            friendId => friendId.toString() !== userId.toString()
+        )
+
+        await targetUser.save();
+        await user.save();
+        res.status(200).json({message: 'Friend successfully removed'})
+
+    }
+    catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+module.exports = { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend }

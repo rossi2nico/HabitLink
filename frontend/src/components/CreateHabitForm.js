@@ -10,26 +10,20 @@ export const CreateHabitForm = () => {
   const [privacy, setPrivacy] = useState(0)
   const { createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error } = useHabits()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const handleSubmit = async (e) => {
-      e.preventDefault()
-      
-      const success = await createHabit(name, description, frequency, privacy)
-      if (!success) {
-        // Show error message (already handled by error state)
-        return
-      }
-    
-      // Only clear form and close popup if successful
-      setName('')
-      setDescription('')
-      setPrivacy(0)
-      setIsPopup(false)
+  
+    const success = await createHabit(name, description, frequency, privacy)
+    if (!success) {
+      return
     }
-
+  
+    setName('')
+    setDescription('')
+    setPrivacy(0)
+    setIsPopup(false)
   }
-
+  
   return (
     <div>
       <button className = 'create-habit-button' onClick={() => setIsPopup(true)} >

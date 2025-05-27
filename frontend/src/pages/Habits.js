@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
 import { CreateHabitForm } from '../components/CreateHabitForm'
+import { useHabitsContext } from '../hooks/useHabitsContext'
 const Habits = () => {
   
-  const [habits, setHabits] = useState([])
+  const { habits, dispatch } = useHabitsContext()
   useEffect(() => {
     const fetchHabits = async () => {
       const res = await fetch('/api/habits')
       const json = await res.json()
-      setHabits(json);
+      if (res.ok) {
+        dispatch({ type: 'SET_HABITS', payload: json })
+        console.log('Habits have been successfully fetched')
+      }
       console.log('Habits have been successfully fetched');
     }
     fetchHabits();
-  }, [])
+  }, [dispatch])
 
   return (
     <>

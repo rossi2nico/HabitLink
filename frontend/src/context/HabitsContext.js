@@ -1,6 +1,8 @@
 import { createContext, useReducer } from 'react'
 
+
 export const HabitsReducer = (state, action) => {
+  
   switch(action.type) {
     // Initializes or updates habits state
     case 'SET_HABITS':
@@ -9,8 +11,7 @@ export const HabitsReducer = (state, action) => {
       }
     case 'CREATE_HABIT':
       return {
-        habits: [action.payload, ...state.habits]
-      }
+        habits: [action.payload, ...state.habits]      }
     case 'DELETE_HABIT':
       return {
         habits: state.habits.filter(
@@ -21,6 +22,8 @@ export const HabitsReducer = (state, action) => {
       return {
         // tbd
       }
+    default:
+      return state
     
   }
 }
@@ -28,7 +31,7 @@ export const HabitsReducer = (state, action) => {
 export const HabitsContext = createContext()
 export const HabitsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(HabitsReducer, {
-    habits: null
+    habits: []
   })
   return (
     <HabitsContext.Provider value = {{...state, dispatch}}>

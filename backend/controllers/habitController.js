@@ -1,4 +1,5 @@
 const Habit = require('../models/habitModel')
+const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
 const syncHabit = async (req, res) => {
@@ -78,7 +79,36 @@ const getHabit = async (req, res) => {
 }
 
 const getHabits = async (req, res) => {
-    const habits = await Habit.find({}).sort({createdAt: -1});
+    const userId  = req.user._id
+    const habits = await Habit.find({ userId }).sort({ createdAt: 1 });
+    res.status(200).json(habits)
+}
+
+const getTargetHabits = async (req, res) => {
+    const userId = req.user._id
+    const targetUserId = req.params.targetUserId
+
+    try {
+        const targetUser = await User.findById(targetUserId)
+        const areFriends = targetUser.friends.some(
+            f => f.toString() === userId.toString()
+        )
+        if (areFriends) {
+            // Find habits that are either public or private
+            const habits = await Habit.find({ userId: targetUserId, privacy: { $gt: 0 }}).sort( { createdAt: 1 })
+            return res.status(200).json(habits)
+        }
+        const habits = await Habit.find({ userId: targetUserId, privacy: 2 }).sort({ createdAt: 1 })
+        return res.status(200).json(habits)
+    }
+    catch (error) {
+        res.status(400).json({error: error.message })
+    }
+    
+}
+
+const getPublicHabits = async (req, res) => {
+    const habits = await Habit.find({ privacy: 2 }).sort({ createdAt: 1 })
     res.status(200).json(habits)
 }
 
@@ -121,7 +151,7 @@ const calculateStreaks = async (req, res) => {
 
 module.exports = {
     createHabit,
-    getHabit, getHabits,
+    getHabit, getHabits, getPublicHabits, getTargetHabits,
     deleteHabit,
     updateHabit,
     syncHabit

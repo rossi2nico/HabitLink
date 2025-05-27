@@ -1,5 +1,4 @@
 const express = require('express')
-const Habit = require('../models/habitModel')
 const router = express.Router()
 const requireAuth = require('../middleware/requireAuth');
 
@@ -10,13 +9,17 @@ const {
     createHabit, 
     deleteHabit, 
     updateHabit,
-    syncHabit
+    syncHabit,
+    getPublicHabits,
+    getTargetHabits
 } = require('../controllers/habitController')
 
 // Route Handlers: handle requests with habitController
 
-router.get('/', getHabits)
 router.use(requireAuth)
+router.get('/', getHabits)
+router.get('/public', getPublicHabits)
+router.get('/public/:targetUserId', getTargetHabits)
 router.get('/:id', getHabit)
 router.post('/', createHabit)
 router.post('/sync', syncHabit)

@@ -17,6 +17,36 @@ export const useHabits = () => {
     // tbd
   }
 
+  const getHabits = async () => {
+
+    setIsLoading(true)
+    setError(null)
+    console.log('user token:', user?.token)
+
+    if (!user) {
+      setError('You must be logged in')
+      return false;
+    }
+
+    const res = await fetch('/api/habits', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ user.token }`
+      }
+    })
+    const json = await res.json()
+    if (!res.ok) {
+      setError(json.error)
+      setIsLoading(false)
+      return false
+    }
+    console.log('Retrieved all habits')
+    dispatch({ type: 'SET_HABITS', payload: json})
+    setIsLoading(false)
+    return true
+  }
+
   // Modify this so that frequency and privacy are strings, then inside here convert it to the appropriate integer
   const createHabit = async (name, description, frequency, privacy) => {
     
@@ -77,5 +107,5 @@ export const useHabits = () => {
     return true;
   }
 
-  return { createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
+  return { getHabits, createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
 }

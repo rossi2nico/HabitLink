@@ -1,21 +1,17 @@
 import { useEffect, useState } from 'react'
 import { CreateHabitForm } from '../components/CreateHabitForm'
 import { useHabitsContext } from '../hooks/useHabitsContext'
+import { useHabits } from '../hooks/useHabits'
+import { useAuthContext } from '../hooks/useAuthContext'
 const Habits = () => {
-  
-  const { habits, dispatch } = useHabitsContext()
+
+  const { habits } = useHabitsContext()
+  const { getHabits } = useHabits()
+  const { user } = useAuthContext()
+
   useEffect(() => {
-    const fetchHabits = async () => {
-      const res = await fetch('/api/habits')
-      const json = await res.json()
-      if (res.ok) {
-        dispatch({ type: 'SET_HABITS', payload: json })
-        console.log('Habits have been successfully fetched')
-      }
-      console.log('Habits have been successfully fetched');
-    }
-    fetchHabits();
-  }, [dispatch])
+    getHabits()
+  }, [user])
 
   return (
     <>

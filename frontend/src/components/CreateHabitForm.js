@@ -4,8 +4,8 @@ import { useHabits } from "../hooks/useHabits"
 export const CreateHabitForm = () => {
   
   const [isPopup, setIsPopup] = useState(false)
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
+  const [name, setName] = useState(undefined)
+  const [description, setDescription] = useState(undefined)
   const [frequency, setFrequency] = useState(7) // implement this later if needed
   const [privacy, setPrivacy] = useState(0)
   const { createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error } = useHabits()

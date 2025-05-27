@@ -16,12 +16,64 @@ export const useHabits = () => {
   const completeHabit = async () => {
     // tbd
   }
+  const getTargetHabits = async (targetUserId) => {
 
+    setIsLoading(true)
+    setError(null)
+
+    if (!user) {
+      setError('You must be logged in')
+      return false;
+    }
+
+    const res = await fetch(`/api/habits/public/${ targetUserId }`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ user.token }`
+      }
+    })
+    const json = await res.json()
+    if (!res.ok) {
+      setIsLoading(false)
+      setError(json.error)
+      return []
+    }
+    setIsLoading(false)
+    return json;
+  }
+
+  const getPublicHabits = async () => {
+
+    setIsLoading(true)
+    setError(null)
+
+    if (!user) {
+      setError('You must be logged in')
+      return false;
+    }
+
+    const res = await fetch('/api/habits/public', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ user.token }`
+      }
+    })
+    const json = await res.json()
+    if (!res.ok) {
+      setIsLoading(false)
+      setError(json.error)
+      return []
+    }
+    setIsLoading(false)
+    return json;
+
+  }
   const getHabits = async () => {
 
     setIsLoading(true)
     setError(null)
-    console.log('user token:', user?.token)
 
     if (!user) {
       setError('You must be logged in')
@@ -107,5 +159,5 @@ export const useHabits = () => {
     return true;
   }
 
-  return { getHabits, createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
+  return { getHabits, getPublicHabits, getTargetHabits, createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
 }

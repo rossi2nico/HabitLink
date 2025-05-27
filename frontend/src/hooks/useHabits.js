@@ -9,9 +9,6 @@ export const useHabits = () => {
   const { dispatch } = useHabitsContext()
   const { user } = useAuthContext()
 
-  const frequencyMap = { daily: 7, weekly: 1 }
-  const privacyMap = { private: 0, friends: 1, public: 2 }
-
   const syncHabit = async () => {
     // tbd
   }
@@ -23,7 +20,7 @@ export const useHabits = () => {
   // Modify this so that frequency and privacy are strings, then inside here convert it to the appropriate integer
   const createHabit = async (name, description, frequency, privacy) => {
     
-    const habit = { name, description, frequency, privacy: privacyMap[privacy] ?? 0 }
+    const habit = { name, description, frequency, privacy }
     setIsLoading(true)
     setError(null)
 

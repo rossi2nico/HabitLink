@@ -71,8 +71,8 @@ export const CreateHabitForm = () => {
                 <option value = 'custom'> TBD </option>
             </select> */ }
 
-          {/* <button> Add Habit </button>
-          {error && <div className = "error"> {error} </div>} */}
+          <button> Add Habit </button>
+          {error && <div className = "error"> {error} </div>}
           </form>
         </div>
       )}

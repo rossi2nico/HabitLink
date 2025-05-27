@@ -14,9 +14,9 @@ const {
 } = require('../controllers/habitController')
 
 // Route Handlers: handle requests with habitController
-router.use(requireAuth)
 
 router.get('/', getHabits)
+router.use(requireAuth)
 router.get('/:id', getHabit)
 router.post('/', createHabit)
 router.post('/sync', syncHabit)

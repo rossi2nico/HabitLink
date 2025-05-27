@@ -1,12 +1,15 @@
 const User = require('../models/userModel')
-const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET, {expiresIn: '30d'})
 }
 
-//login
+const getUsers = async (req, res) => {
+    const users = await User.find({}).sort({createdAt: -1})
+    res.status(200).json(users);
+}
+
 const loginUser = async (req, res) => {
     const username = req.body.username.toLowerCase();
     const password = req.body.password;
@@ -21,7 +24,7 @@ const loginUser = async (req, res) => {
     }
         
 }
-//sign up
+
 const signupUser = async (req, res) => {
     const username = req.body.username.toLowerCase();
     const password = req.body.password;
@@ -101,6 +104,14 @@ const acceptFriendRequest = async (req, res) => {
         return res.status(404).json({ error: 'User not found' });
       }
   
+      const isPending = user.pendingUsers.some(
+        (pendingUser) => pendingUser.toString() === incomingUserId.toString()
+      );
+      
+      if (!isPending) {
+        return res.status(400).json({ error: 'User is not in pending list.' });
+      }
+
       user.pendingUsers = user.pendingUsers.filter(
         (pendingUser) => pendingUser.toString() !== incomingUserId.toString()
       );
@@ -146,6 +157,14 @@ const removeFriend = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
         
+        const isFriends = user.friends.some(
+            friendId => friendId.toString() === targetUserId.toString()
+        )
+
+        if (!isFriends) {
+            return res.status(400).json({error: 'User is not on friend list'})
+        }
+
         user.friends = user.friends.filter(
             friendId => friendId.toString() !== targetUserId.toString()
         )
@@ -163,4 +182,4 @@ const removeFriend = async (req, res) => {
     }
 }
 
-module.exports = { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend }
+module.exports = { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend, getUsers }

@@ -21,10 +21,8 @@ const userSchema = new Schema({
     }]
 })
 
-
-
-//static login method
 userSchema.statics.login = async function(rawUsername, password) {
+    
     if (!rawUsername || !password) {
         throw Error('All fields must be filled')
     }
@@ -42,11 +40,9 @@ userSchema.statics.login = async function(rawUsername, password) {
     }
     return user;
 }
-//model comes with its own methods, and we can make our own!
-// static signup method
+
 userSchema.statics.signup = async function (rawUsername, password) {
 
-    //validation
     if (!rawUsername || !password) {
         throw Error('All fields must be filled')
     }
@@ -66,6 +62,7 @@ userSchema.statics.signup = async function (rawUsername, password) {
         throw Error('Username must contain only letters and numbers');
     }
 
+    // create user with username and encrypted password
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
     const user = await this.create({ username, password: hash }) // creates document

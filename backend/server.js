@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 
 // Find these routes when we come to a specific path
 app.use('/api/habits', habitRoutes)
-app.use('/api/user', userRoutes)
+app.use('/api/users', userRoutes)
 
 // Connect to the database
 mongoose.connect(process.env.MONGODB_URI)

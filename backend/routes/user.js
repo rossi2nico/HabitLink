@@ -3,8 +3,9 @@ const router = express.Router()
 const requireAuth = require('../middleware/requireAuth');
 
 
-const { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend } = require('../controllers/userController')
+const { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend, getUsers } = require('../controllers/userController')
 
+router.get('/', getUsers)
 router.post('/login', loginUser)
 router.post('/signup', signupUser)
 

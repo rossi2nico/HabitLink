@@ -3,8 +3,7 @@ const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
 const syncHabit = async (req, res) => {
-    // If a user has access to a habit, they will be able to send a sync request
-    // Allow the user to choose their privacy (private will only share with the other synced user)
+ 
     const { originalHabitId, originalUserId, privacy } = req.body;
     try {
         // Get the user requesting a sync request's id

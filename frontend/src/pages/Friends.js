@@ -4,7 +4,7 @@ import { useHabits } from '../hooks/useHabits'
 const Friends = () => {
   
   const [users, setUsers] = useState([])
-  const { getTargetHabits } = useHabits()
+  const { getTargetHabits, syncHabit } = useHabits()
   const [targetHabits, setTargetHabits] = useState([])
 
   useEffect(() => { 
@@ -22,14 +22,25 @@ const Friends = () => {
     setTargetHabits(habits)
   }
 
+  const linkHabit = async (originalHabitId, originalUserId) => {
+    console.log(originalHabitId)
+    console.log(originalUserId)
+    const success = await syncHabit(originalHabitId, originalUserId, 1)
+    if (!success) {
+      console.log('failed')
+    }
+    //make hook
+  }
 
   return (
     <div className = 'users'>
-      
-      { targetHabits && <h3> User habits: </h3> }
-      { targetHabits && targetHabits.map((habit) => (
+
+      { targetHabits.length > 0 && <h3> User habits: </h3> }
+      { targetHabits.length > 0 && targetHabits.map((habit) => (
         <pre key = { habit._id }>
           {JSON.stringify(habit, null, 2)}
+          <br></br>
+          <button onClick = {() => {linkHabit(habit._id, habit.userId)}}>Sync Habit</button>
         </pre>
       ))}
 
@@ -37,7 +48,8 @@ const Friends = () => {
       { users && users.map((user) => (
         <pre key= { user._id }>
           {JSON.stringify(user, null, 2)}
-          <button onClick = {() => getTargetUserHabits(user._id)}> Show Habits! </button>
+          <br></br>
+          <button onClick = {() => getTargetUserHabits(user._id)}>Display { user.username } habits </button>
         </pre>
       ))}
     </div>

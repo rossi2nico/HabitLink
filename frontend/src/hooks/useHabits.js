@@ -9,8 +9,37 @@ export const useHabits = () => {
   const { dispatch } = useHabitsContext()
   const { user } = useAuthContext()
 
-  const syncHabit = async () => {
-    // tbd
+  const syncHabit = async (originalHabitId, originalUserId, newPrivacy) => {
+    // Privacy needs to be modified later
+    setIsLoading(true)
+    setError(null)
+
+    if (!user) {
+      setError('You must be logged in')
+      return false;
+    }
+
+    const res = await fetch('/api/habits/sync', {
+      method: 'POST',
+      body: JSON.stringify({
+        originalHabitId,
+        originalUserId,
+        privacy: newPrivacy
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ user.token }`
+      }
+    })
+    const json = await res.json()
+    if (!res.ok) {
+      setError(json.error)
+      setIsLoading(false)
+      return false
+    }
+    setIsLoading(false)
+    console.log('Successfully synced habit!')
+    return true
   }
 
   const completeHabit = async () => {
@@ -159,5 +188,5 @@ export const useHabits = () => {
     return true;
   }
 
-  return { getHabits, getPublicHabits, getTargetHabits, createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
+  return { syncHabit, getHabits, getPublicHabits, getTargetHabits, createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
 }

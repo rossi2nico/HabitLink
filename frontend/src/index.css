@@ -8,3 +8,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.habit {
+  background-color: #1F1F1F;
+  border-radius: 20px;
+  width: 500px;
+  height: 150px;
+  color: #F0F0F0;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 10px;
+}
+
+.habits {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

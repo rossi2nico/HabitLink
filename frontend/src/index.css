@@ -18,6 +18,17 @@ body {
   padding-left: 15px;
   padding-right: 15px;
   margin: 10px;
+  display: flex;
+}
+
+.privacy {
+  margin-top: 35px;
+  margin-bottom: -15px;
+}
+
+.habit-id {
+  font-size: 12px;
+  margin-top: -15px;
 }
 
 .habits {
@@ -25,4 +36,23 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.right {
+  /* border: 2px solid white; */
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /* justify-content: center;  */
+}
+
+.left {
+  /* border: 2px solid blue; */
+  width: 50%;
+  /* display: flex;
+  flex-direction: column; */
+  /* justify-content: space-between; */
+  /* align-items: center;  */
 }

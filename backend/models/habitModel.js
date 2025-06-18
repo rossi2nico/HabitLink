@@ -39,6 +39,9 @@ const habitSchema = new Schema({
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true
+    },
+    ownerId: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }
 }, { timestamps: true})
 

@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 
 const syncHabit = async (req, res) => {
  
-    const { originalHabitId, originalUserId, privacy } = req.body;
+    const { originalHabitId, privacy } = req.body;
     try {
         // Get the user requesting a sync request's id
         const userId = req.user._id;
@@ -15,6 +15,10 @@ const syncHabit = async (req, res) => {
         const habit = await Habit.findById(originalHabitId);
         if (!habit) {
             return res.status(404).json({error: 'Original habit does not exist!'});
+        }
+        const originalUserId = habit.userId;
+        if (originalUserId.toString() === userId.toString()) {
+            return res.status(409).json( {error: 'Cant sync with own habit' })
         }
         // Ensure habit is not already synced
         const alreadySynced = habit.syncedHabits.some(
@@ -55,6 +59,7 @@ const createHabit = async (req, res) => {
         const userId = req.user._id;
         if (!userId) return res.status(400);
         const habit = await Habit.create({name, description, privacy, frequency, userId});
+        habit.ownerId = userId;
         res.status(200).json(habit);
     }
     catch (error) {

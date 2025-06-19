@@ -45,6 +45,34 @@ export const useHabits = () => {
   const completeHabit = async () => {
     // tbd
   }
+
+  const getFriendHabits = async ( ) => {
+
+    setIsLoading(true)
+    setError(null)
+
+    if (!user) {
+      setError('You must be logged in')
+      return false;
+    }
+
+    const res = await fetch(`/api/habits/friends/`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${ user.token }`
+      }
+    })
+    const json = await res.json()
+    if (!res.ok) {
+      setIsLoading(false)
+      setError(json.error)
+      return []
+    }
+    setIsLoading(false)
+    return json;
+  }
+
   const getTargetHabits = async (targetUserId) => {
 
     setIsLoading(true)
@@ -188,5 +216,5 @@ export const useHabits = () => {
     return true;
   }
 
-  return { syncHabit, getHabits, getPublicHabits, getTargetHabits, createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
+  return { syncHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
 }

@@ -7,17 +7,28 @@ import { Habit } from '../components/Habit'
 const Habits = () => {
 
   const { habits } = useHabitsContext()
-  const { getHabits, getPublicHabits } = useHabits()
+  const { getHabits, getPublicHabits, getFriendHabits } = useHabits()
   const { user } = useAuthContext()
-  const [publicHabits, setPublicHabits] = useState()
+  const [publicHabits, setPublicHabits] = useState([])
+  const [friendHabits, setFriendHabits] = useState([])
+  
 
   useEffect(() => {
     getHabits()
+    
     const fetchPublic = async () => {
       const fetchedPublicHabits = await getPublicHabits()
       setPublicHabits(fetchedPublicHabits)
     }
+
+    const fetchFriendHabits = async () => {
+      const fetchedFriendHabits = await getFriendHabits();
+      console.log("Fetched friend habits:", fetchedFriendHabits); // 👈 add this
+      setFriendHabits(fetchedFriendHabits);
+    }
+
     fetchPublic()
+    fetchFriendHabits()
   }, [user])
 
   return (
@@ -29,18 +40,33 @@ const Habits = () => {
             { JSON.stringify(habit, null, 2)}
           </pre>
         ))} */}
-        { habits && habits.map((habit) => (
+        {/* { habits && habits.map((habit) => (
           <Habit key = { habit._id } habit = { habit }></Habit>
-        ))}
+        ))} */}
+
+        { habits && (habits.length > 0) ? (
+          habits.map(habit => <Habit key = { habit._id} habit = { habit }></Habit>
+        )) : (
+          <p>No Habits found</p>
+        )}
+        <h3> Friend habits: </h3>
+        { friendHabits && (friendHabits.length > 0) ? (
+          friendHabits.map(friendHabit => <Habit key = { friendHabit._id} habit = { friendHabit }></Habit>
+        )) : (
+          <p> No Friends Habits found</p>
+        )}
+        
         <h3> Public habits: </h3>
         {/* { publicHabits && publicHabits.map((habit) => (
           <pre key = { habit._id }>
             { JSON.stringify(habit, null, 2)}
           </pre>
         ))} */}
-        { publicHabits && publicHabits.map((publicHabit) => (
+        { publicHabits && publicHabits.length > 0 ? publicHabits.map((publicHabit) => (
           <Habit key = { publicHabit._id } habit = { publicHabit }></Habit>
-        ))}
+        )) : (
+          <p>No public habits found</p>
+        )}
       </div>
       
       <div className="create">

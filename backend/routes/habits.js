@@ -2,8 +2,6 @@ const express = require('express')
 const router = express.Router()
 const requireAuth = require('../middleware/requireAuth');
 
-
-// Import habit controller functions
 const {
     getHabit, getHabits, 
     createHabit, 
@@ -11,7 +9,8 @@ const {
     updateHabit,
     syncHabit,
     getPublicHabits,
-    getTargetHabits
+    getTargetHabits,
+    getFriendHabits
 } = require('../controllers/habitController')
 
 // Route Handlers: handle requests with habitController
@@ -19,6 +18,7 @@ const {
 router.use(requireAuth)
 router.get('/', getHabits)
 router.get('/public', getPublicHabits)
+router.get('/friends', getFriendHabits);
 router.get('/public/:targetUserId', getTargetHabits)
 router.get('/:id', getHabit)
 router.post('/', createHabit)

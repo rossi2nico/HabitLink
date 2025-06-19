@@ -50,6 +50,10 @@ const sendFriendRequest = async (req, res) => {
             return res.status(404).json({error: 'User does not exist'})
         }
         const user = await User.findById(userId)
+        
+        if (userId.toString() == targetUserId.toString()) {
+            return res.status(400).json({ error: 'Can not send friend request to yourself'})
+        }
         // Ensure request is not already sent
         const alreadyRequested = targetUser.pendingUsers.some(
             (pendingUser) => pendingUser.toString() === userId.toString()

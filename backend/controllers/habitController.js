@@ -88,6 +88,28 @@ const getHabits = async (req, res) => {
     res.status(200).json(habits)
 }
 
+const getFriendHabits = async (req, res) => {
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId)
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const friendIds = user.friends
+        const friendHabits = await Habit.find({
+            userId: {$in: friendIds },
+            privacy: { $gt: 0 }
+        }).sort( { createdAt: -1 })
+        return res.status(200).json(friendHabits);
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 const getTargetHabits = async (req, res) => {
     const userId = req.user._id
     const targetUserId = req.params.targetUserId
@@ -108,7 +130,6 @@ const getTargetHabits = async (req, res) => {
     catch (error) {
         res.status(400).json({error: error.message })
     }
-    
 }
 
 const getPublicHabits = async (req, res) => {
@@ -155,7 +176,7 @@ const calculateStreaks = async (req, res) => {
 
 module.exports = {
     createHabit,
-    getHabit, getHabits, getPublicHabits, getTargetHabits,
+    getHabit, getHabits, getPublicHabits, getTargetHabits, getFriendHabits,
     deleteHabit,
     updateHabit,
     syncHabit

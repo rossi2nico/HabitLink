@@ -12,6 +12,9 @@ const Habits = () => {
   const [publicHabits, setPublicHabits] = useState([])
   const [friendHabits, setFriendHabits] = useState([])
   
+  const isUsersHabit = (habit) => {
+    return user?._id?.toString() === habit?.userId?.toString();
+  }
 
   useEffect(() => {
     getHabits()
@@ -63,7 +66,9 @@ const Habits = () => {
           </pre>
         ))} */}
         { publicHabits && publicHabits.length > 0 ? publicHabits.map((publicHabit) => (
-          <Habit key = { publicHabit._id } habit = { publicHabit }></Habit>
+          !isUsersHabit(publicHabit) ? (
+            <Habit key = { publicHabit._id } habit = { publicHabit }></Habit>
+          ) : null
         )) : (
           <p>No public habits found</p>
         )}

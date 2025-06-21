@@ -1,6 +1,5 @@
 import { createContext, useReducer } from 'react'
 
-
 export const HabitsReducer = (state, action) => {
   
   switch(action.type) {
@@ -18,7 +17,17 @@ export const HabitsReducer = (state, action) => {
           habit => habit._id !== action.payload._id
         )
       }
-    case 'COMPLETE_HABIT':
+
+    case 'TOGGLE_COMPLETE': {
+      const updatedHabit = action.payload;
+
+      return {
+        habits: state.habits.map(habit =>
+          habit._id === updatedHabit._id ? updatedHabit : habit
+        )
+      };
+    }
+    case 'SYNC_HABIT':
       return {
         // tbd
       }

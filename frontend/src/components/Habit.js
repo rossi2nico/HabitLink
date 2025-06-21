@@ -1,10 +1,39 @@
-
+import { useHabits } from '../hooks/useHabits'
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export const Habit = ({ habit }) => {
+
+  const { toggleComplete } = useHabits();
+  const { user } = useAuthContext();
+
+  const isUsersHabit = () => {
+    return user?._id?.toString() === habit?.userId?.toString();
+}
 
   const syncedUsers = habit.syncedHabits.map(
     syncedHabit => syncedHabit.userId); 
  
+  const sameDate = (d1, d2) => {
+        return (
+            d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate()
+        )
+    }
+
+  const isComplete = () => {
+    const today = new Date();
+    const len = habit.completions.length;
+    if (len === 0) {
+      return false;
+    }
+    const lastDate = new Date(habit.completions[len - 1]);
+    return sameDate(today, lastDate);
+  }
+
+  const complete = isComplete();
+  const usersHabit = isUsersHabit();
+
   return (
     <div className = "habit">
       <div className = "left">
@@ -41,6 +70,16 @@ export const Habit = ({ habit }) => {
         ) : ( 
           <p> No synced users </p>
         )}  
+        
+        {usersHabit &&
+          <button onClick = { () => toggleComplete(habit._id) }>
+            {complete ? (
+              <p style={{ margin: "0px" }}>Mark as incomplete</p>
+            ) : (
+              <p style={{ margin: "0px" }}>Mark as complete</p>
+            )}
+          </button>
+        } 
       </div>
     </div>
   )

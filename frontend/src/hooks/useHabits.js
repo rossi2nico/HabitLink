@@ -9,6 +9,36 @@ export const useHabits = () => {
   const { dispatch } = useHabitsContext()
   const { user } = useAuthContext()
 
+  const toggleComplete = async (habitId) => {
+    setIsLoading(true)
+    setError(null)
+
+    if (!user) {
+      setError('You must be logged in')
+      return false;
+    }
+
+    const res = await fetch('/api/habits/complete', {
+      method: 'POST',
+      body: JSON.stringify({
+        habitId
+      }),
+      headers: {
+        'Authorization': `Bearer ${ user.token }`,
+        'Content-Type': 'application/json'
+      }
+    })
+    const json = await res.json()
+    if (!res.ok) {
+      setError(json.error)
+      setIsLoading(false)
+      return false
+    }
+    setIsLoading(false)
+    dispatch({ type: 'TOGGLE_COMPLETE', payload: json.habit})
+    return true
+  }
+
   const syncHabit = async (originalHabitId, originalUserId, newPrivacy) => {
     // Privacy needs to be modified later
     setIsLoading(true)
@@ -42,11 +72,7 @@ export const useHabits = () => {
     return true
   }
 
-  const completeHabit = async () => {
-    // tbd
-  }
-
-  const getFriendHabits = async ( ) => {
+  const getFriendHabits = async () => {
 
     setIsLoading(true)
     setError(null)
@@ -59,7 +85,7 @@ export const useHabits = () => {
     const res = await fetch(`/api/habits/friends/`, {
       method: 'GET',
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${ user.token }`
       }
     })
@@ -216,5 +242,5 @@ export const useHabits = () => {
     return true;
   }
 
-  return { syncHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, deleteHabit, syncHabit, completeHabit, isLoading, error }
+  return { syncHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, deleteHabit, syncHabit, toggleComplete, isLoading, error }
 }

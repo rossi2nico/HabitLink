@@ -13,7 +13,7 @@ const habitSchema = new Schema({
             return this.name;
         }
     },
-    // 7 = daily
+    // Modify this to specific days of the week?
     frequency: {
         type: Number,
         required: true
@@ -26,7 +26,7 @@ const habitSchema = new Schema({
         type: Number,
         default: 0
     },
-    datesCompleted: [{
+    completions: [{
         type: Date
     }],
     syncedHabits: [{

@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const requireAuth = require('../middleware/requireAuth');
 
-
 const { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend, getUsers } = require('../controllers/userController')
 
 router.get('/', getUsers)

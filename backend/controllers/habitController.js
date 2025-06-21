@@ -2,6 +2,50 @@ const Habit = require('../models/habitModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
+const toggleComplete = async (req, res) => {
+
+    const today = new Date();
+    const { habitId } = req.body;
+
+    const sameDate = (d1, d2) => {
+        return (
+            d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate()
+        )
+    }
+
+    try {
+        const habit = await Habit.findById(habitId);
+        if (!habit) {
+            return res.status(400).json( { error: 'Habit not found' });
+        }        
+        
+        const len = habit.completions.length;
+
+        if (len === 0) {
+            habit.completions.push(today);
+            await habit.save()
+            return res.status(200).json({ habit })
+        }
+
+        const lastItem = new Date(habit.completions[len - 1]);
+        if (sameDate(lastItem, today)) {
+            habit.completions.pop();
+            await habit.save();
+            return res.status(200).json({ habit })
+        }
+        habit.completions.push(today);
+        await habit.save();
+        res.status(200).json({ habit })
+
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message }) 
+    }
+}
+
+
 const syncHabit = async (req, res) => {
  
     const { originalHabitId, privacy } = req.body;
@@ -179,5 +223,6 @@ module.exports = {
     getHabit, getHabits, getPublicHabits, getTargetHabits, getFriendHabits,
     deleteHabit,
     updateHabit,
-    syncHabit
+    syncHabit,
+    toggleComplete
 }

@@ -10,7 +10,8 @@ const {
     syncHabit,
     getPublicHabits,
     getTargetHabits,
-    getFriendHabits
+    getFriendHabits,
+    toggleComplete
 } = require('../controllers/habitController')
 
 // Route Handlers: handle requests with habitController
@@ -23,6 +24,7 @@ router.get('/public/:targetUserId', getTargetHabits)
 router.get('/:id', getHabit)
 router.post('/', createHabit)
 router.post('/sync', syncHabit)
+router.post('/complete', toggleComplete)
 router.delete('/:id', deleteHabit)
 router.patch("/:id", updateHabit)
 

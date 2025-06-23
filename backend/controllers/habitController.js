@@ -180,6 +180,12 @@ const syncHabit = async (req, res) => {
 const createHabit = async (req, res) => {
     // Name, description, privacy, frequency, userId
     const { name, description, privacy, frequency } = req.body;
+    if (name.length > 25) {
+        return res.status(400).json({ error: 'habit name must be 25 characters or less'})
+    }
+    if (description.length > 140) {
+        return res.status(400).json({ error: 'description must be 140 characters or less'})
+    }
     try {
         const userId = req.user._id;
         if (!userId) return res.status(400);

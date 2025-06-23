@@ -27,6 +27,9 @@ const loginUser = async (req, res) => {
 
 const signupUser = async (req, res) => {
     const username = req.body.username.toLowerCase();
+    if (username.length > 12) {
+        return res.status(400).json({ error: 'username must be 12 or less characters'})
+    }
     const password = req.body.password;
 
     try {

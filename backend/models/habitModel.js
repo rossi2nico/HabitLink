@@ -16,7 +16,7 @@ const habitSchema = new Schema({
     // Modify this to specific days of the week?
     frequency: {
         type: Number,
-        required: true
+        default: 7,
     },
     streak: {
         type: Number,
@@ -25,6 +25,9 @@ const habitSchema = new Schema({
     maxStreak: {
         type: Number,
         default: 0
+    },
+    streakLastUpdated: {
+        type: Date
     },
     completions: [{
         type: Date

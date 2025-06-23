@@ -8,7 +8,7 @@ export const Habit = ({ habit }) => {
 
   const isUsersHabit = () => {
     return user?._id?.toString() === habit?.userId?.toString();
-}
+  }
 
   const syncedUsers = habit.syncedHabits.map(
     syncedHabit => syncedHabit.userId); 
@@ -58,6 +58,7 @@ export const Habit = ({ habit }) => {
         ) : (
           <p> Custom frequency </p>
         )}
+        <p style = {{ marginTop: "-15px" }}> Streak: { habit.streak }, Max: { habit.maxStreak } </p>
 
            
       </div>

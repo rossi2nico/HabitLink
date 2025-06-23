@@ -2,18 +2,94 @@ const Habit = require('../models/habitModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
+const sameDate = (d1, d2) => {
+
+    if (d1 === null || d2 === null) return false;
+    return (
+        d1.getFullYear() === d2.getFullYear() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate()
+    )
+}
+
+const calculateStreak = async (habit) => {
+    const completions = habit.completions.map((d) => new Date(d))
+
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    habit.streakLastUpdated = today;
+    await habit.save();
+
+    if (completions.length === 0) {
+        habit.streak = 0;
+        habit.maxStreak = 0;
+        await habit.save();
+        return;
+    }
+
+    const lastCompleted = completions[completions.length -1]
+    const daysMissed = (today - lastCompleted) / (1000 * 60 * 60 * 24)
+
+    if (daysMissed > 1) {
+        habit.streak = 0;
+        await habit.save(); 
+        return;
+    }
+    // Recalculate streak backward from today or yesterday
+    let day = new Date(today);
+    if (!sameDate(today, lastCompleted)) {
+        day.setDate(day.getDate() - 1);
+    }
+    let streak = 0;
+
+    for (let i = completions.length - 1; i >= 0; i--) {
+        const date = completions[i];
+        if (sameDate(date, day)) {
+            streak++;
+            day.setDate(day.getDate() - 1);
+        }
+        else {
+            break;
+        }
+    }
+    
+    let maxStreak = 0;
+    let cur = 0;
+
+    for (let i = completions.length - 1; i >= 0; i--) {
+        const date = completions[i];
+
+        if (i === completions.length - 1) {
+            cur = 1;
+        } else {
+            const prevDate = completions[i + 1]; 
+            const expectedDate = new Date(prevDate);
+            expectedDate.setDate(expectedDate.getDate() - 1);
+            expectedDate.setHours(0, 0, 0, 0);
+
+            if (sameDate(date, expectedDate)) {
+                cur++;
+            } else {
+                if (cur > maxStreak) maxStreak = cur;
+                cur = 1;
+            }
+        }
+    }
+    if (cur > maxStreak) maxStreak = cur;
+
+    console.log(`new streak: ${streak}`)
+    habit.streak = streak;
+    habit.maxStreak = maxStreak;
+    await habit.save();
+    return;
+
+}
+
 const toggleComplete = async (req, res) => {
 
     const today = new Date();
     const { habitId } = req.body;
-
-    const sameDate = (d1, d2) => {
-        return (
-            d1.getFullYear() === d2.getFullYear() &&
-            d1.getMonth() === d2.getMonth() &&
-            d1.getDate() === d2.getDate()
-        )
-    }
 
     try {
         const habit = await Habit.findById(habitId);
@@ -26,6 +102,8 @@ const toggleComplete = async (req, res) => {
         if (len === 0) {
             habit.completions.push(today);
             await habit.save()
+            // need to calculate streak here.
+            await calculateStreak(habit);
             return res.status(200).json({ habit })
         }
 
@@ -33,10 +111,14 @@ const toggleComplete = async (req, res) => {
         if (sameDate(lastItem, today)) {
             habit.completions.pop();
             await habit.save();
+            // need to calculate streak here
+            await calculateStreak(habit);
             return res.status(200).json({ habit })
         }
         habit.completions.push(today);
         await habit.save();
+        // need to calculate streak here
+        await calculateStreak(habit);
         res.status(200).json({ habit })
 
     }
@@ -44,7 +126,6 @@ const toggleComplete = async (req, res) => {
         res.status(400).json({ error: error.message }) 
     }
 }
-
 
 const syncHabit = async (req, res) => {
  
@@ -127,8 +208,19 @@ const getHabit = async (req, res) => {
 }
 
 const getHabits = async (req, res) => {
+
     const userId  = req.user._id
     const habits = await Habit.find({ userId }).sort({ createdAt: 1 });
+
+    const today = new Date()
+    
+    for (const habit of habits) {
+        if (!sameDate(habit.streakLastUpdated, today)) {
+            console.log('Calculating streak')
+            await calculateStreak(habit);
+        }
+    }
+
     res.status(200).json(habits)
 }
 
@@ -147,6 +239,16 @@ const getFriendHabits = async (req, res) => {
             userId: {$in: friendIds },
             privacy: { $gt: 0 }
         }).sort( { createdAt: -1 })
+
+        const today = new Date()
+    
+        for (const habit of friendHabits) {
+            if (!sameDate(habit.streakLastUpdated, today)) {
+                console.log('Calculating streak')
+                await calculateStreak(habit);
+            }
+        }
+        
         return res.status(200).json(friendHabits);
     }
     catch (error) {
@@ -178,6 +280,15 @@ const getTargetHabits = async (req, res) => {
 
 const getPublicHabits = async (req, res) => {
     const habits = await Habit.find({ privacy: 2 }).sort({ createdAt: 1 })
+    const today = new Date()
+    
+    for (const habit of habits) {
+        if (!sameDate(habit.streakLastUpdated, today)) {
+            console.log('Calculating streak!!')
+            await calculateStreak(habit);
+        }
+    }
+
     res.status(200).json(habits)
 }
 
@@ -212,10 +323,6 @@ const updateHabit = async (req, res) => {
     }
 
     res.status(200).json(habit)
-}
-
-const calculateStreaks = async (req, res) => {
-
 }
 
 module.exports = {

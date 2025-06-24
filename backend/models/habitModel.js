@@ -5,10 +5,12 @@ const Schema = mongoose.Schema
 const habitSchema = new Schema({
     name: {
         type: String,
+        maxlength: 25,
         required: true
     },
     description: {
         type: String,
+        maxlength: 140,
         default: function() {
             return this.name;
         }

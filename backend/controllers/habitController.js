@@ -368,13 +368,14 @@ const deleteHabit = async (req, res) => {
             modifiedHabits.push(otherHabit);
         }
 
-        await habit.remove();
+        await habit.deleteOne();
         return res.status(200).json({
             deletedHabit: habit,
             updatedSyncedHabits: modifiedHabits
         })
     }
     catch (error) {
+        console.error("DELETE habit error:", error); // not just error.message
         return res.status(400).json({ error: error.message })
     }
 }

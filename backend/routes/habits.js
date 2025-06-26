@@ -25,7 +25,7 @@ router.get('/:habitId', getHabit)
 router.post('/', createHabit)
 router.post('/sync', syncHabit)
 router.post('/complete', toggleComplete)
-router.delete('/:id', deleteHabit)
+router.delete('/:habitId', deleteHabit)
 router.patch('/:habitId', updateHabit)
 
 module.exports = router; // Export habits router to be used in server.js

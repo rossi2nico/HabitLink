@@ -1,37 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { CreateHabitForm } from '../components/CreateHabitForm'
 import { useHabitsContext } from '../hooks/useHabitsContext'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { Habit } from '../components/Habit'
+
 const Habits = () => {
 
-  const { habits } = useHabitsContext()
+  const { habits, friendHabits, publicHabits } = useHabitsContext()
   const { getHabits, getPublicHabits, getFriendHabits } = useHabits()
   const { user } = useAuthContext()
-  const [publicHabits, setPublicHabits] = useState([])
-  const [friendHabits, setFriendHabits] = useState([])
   
   const isUsersHabit = (habit) => {
     return user?._id?.toString() === habit?.userId?.toString();
   }
 
   useEffect(() => {
+
     getHabits()
-    
-    const fetchPublic = async () => {
-      const fetchedPublicHabits = await getPublicHabits()
-      setPublicHabits(fetchedPublicHabits)
-    }
+    getPublicHabits()
+    getFriendHabits()
 
-    const fetchFriendHabits = async () => {
-      const fetchedFriendHabits = await getFriendHabits();
-      console.log("Fetched friend habits:", fetchedFriendHabits); // 👈 add this
-      setFriendHabits(fetchedFriendHabits);
-    }
-
-    fetchPublic()
-    fetchFriendHabits()
   }, [user])
 
   return (

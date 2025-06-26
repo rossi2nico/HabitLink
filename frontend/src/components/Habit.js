@@ -1,17 +1,19 @@
+import { useState } from 'react'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
+import { EditHabitForm } from './EditHabitForm'
 
 export const Habit = ({ habit }) => {
 
-  const { toggleComplete } = useHabits();
+  const { toggleComplete, syncHabit } = useHabits();
   const { user } = useAuthContext();
+  const [editingHabit, setEditingHabit] = useState(null);
 
   const isUsersHabit = () => {
     return user?._id?.toString() === habit?.userId?.toString();
   }
 
-  const syncedUsers = habit.syncedHabits.map(
-    syncedHabit => syncedHabit.userId); 
+  const syncedUsers = habit.syncedHabits.map((syncedHabit) => syncedHabit.userId); 
  
   const sameDate = (d1, d2) => {
         return (
@@ -20,6 +22,12 @@ export const Habit = ({ habit }) => {
             d1.getDate() === d2.getDate()
         )
     }
+
+  const isSynced = () => {
+    return syncedUsers.some(
+      syncedUser => syncedUser === user._id.toString()
+    )
+  }
 
   const isComplete = () => {
     const today = new Date();
@@ -33,6 +41,11 @@ export const Habit = ({ habit }) => {
 
   const complete = isComplete();
   const usersHabit = isUsersHabit();
+  const synced = isSynced();
+
+  const originalHabitId = habit._id;
+  const originalUserId = habit.userId;
+  const newPrivacy = 0;
 
   return (
     <div className = "habit">
@@ -72,15 +85,31 @@ export const Habit = ({ habit }) => {
           <p> No synced users </p>
         )}  
         
-        {usersHabit &&
-          <button onClick = { () => toggleComplete(habit._id) }>
-            {complete ? (
-              <p style={{ margin: "0px" }}>Mark as incomplete</p>
-            ) : (
-              <p style={{ margin: "0px" }}>Mark as complete</p>
+        {usersHabit ? (
+          <>
+              <button onClick={() => toggleComplete(habit._id)}>
+                <p style={{ margin: 0 }}>
+                  {complete ? 'Mark as incomplete' : 'Mark as complete'}
+                </p>
+              </button>
+              {/* <button onClick={() => setEditingHabit(habit)}>
+                Edit habit
+              </button> */}
+          </>
+        ) : (
+          <>
+            {synced ? (
+              <p>
+               Synced!
+              </p>
+            ): (
+              <button onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}>
+                Sync Habit
+              </button>
             )}
-          </button>
-        } 
+          </>
+        )}
+
       </div>
     </div>
   )

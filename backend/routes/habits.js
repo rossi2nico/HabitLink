@@ -21,7 +21,7 @@ router.get('/', getHabits)
 router.get('/public', getPublicHabits)
 router.get('/friends', getFriendHabits);
 router.get('/public/:targetUserId', getTargetHabits)
-router.get('/:id', getHabit)
+router.get('/:habitId', getHabit)
 router.post('/', createHabit)
 router.post('/sync', syncHabit)
 router.post('/complete', toggleComplete)

@@ -214,7 +214,7 @@ const syncHabit = async (req, res) => {
         await habit.save();
         await newHabit.save();
 
-        res.status(200).json({ newHabit })
+        res.status(200).json(newHabit)
     }
     catch (error) {
         res.status(400).json({ error: error.message })
@@ -342,6 +342,7 @@ const getPublicHabits = async (req, res) => {
     res.status(200).json(habits)
 }
 
+// This needs to be modified to handle synced habits
 const deleteHabit = async (req, res) => {
     const { habitId } = req.params
 

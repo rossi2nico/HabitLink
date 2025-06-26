@@ -9,6 +9,36 @@ export const useHabits = () => {
   const { dispatch } = useHabitsContext()
   const { user } = useAuthContext()
 
+  const updateHabit = async (habitId, ...updates) => {
+    setIsLoading(true)
+    setError(null)
+
+    if (!user) {
+      setError('You must be logged in')
+      return false;
+    }
+
+    const res = await fetch('/api/habits/:habitId', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        updates
+      }),
+      headers: {
+        'Authorization': `Bearer ${ user.token }`,
+        'Content-Type': 'application/json'
+      }
+    })
+    const json = await res.json()
+    if (!res.ok) {
+      setError(json.error)
+      setIsLoading(false)
+      return false
+    }
+    setIsLoading(false)
+    dispatch({ type: 'UPDATE_HABIT', payload: json.habit})
+    return true
+  }
+
   const toggleComplete = async (habitId) => {
     setIsLoading(true)
     setError(null)
@@ -67,8 +97,27 @@ export const useHabits = () => {
       setIsLoading(false)
       return false
     }
+
+    const originalHabit = await fetch(`/api/habits/${originalHabitId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ user.token }`
+      }
+    })
+    const jsonOriginal = await originalHabit.json()
+    if (!originalHabit.ok) {
+      setError(jsonOriginal.error || "Failed to fetch original habit");
+      setIsLoading(false);
+      return false;
+    }
+
     setIsLoading(false)
-    console.log('Successfully synced habit!')
+    dispatch({ type: 'SYNC_HABIT', payload: {
+      newHabit: json,
+      originalHabit: jsonOriginal
+    }
+    })
     return true
   }
 
@@ -96,6 +145,7 @@ export const useHabits = () => {
       return []
     }
     setIsLoading(false)
+    dispatch({ type: 'SET_FRIEND_HABITS', payload: json })
     return json;
   }
 
@@ -150,6 +200,7 @@ export const useHabits = () => {
       return []
     }
     setIsLoading(false)
+    dispatch({ type: 'SET_PUBLIC_HABITS', payload: json })
     return json;
 
   }
@@ -242,5 +293,7 @@ export const useHabits = () => {
     return true;
   }
 
-  return { syncHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, deleteHabit, syncHabit, toggleComplete, isLoading, error }
+  return { 
+    syncHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit,
+    updateHabit, deleteHabit, toggleComplete, isLoading, error }
 }

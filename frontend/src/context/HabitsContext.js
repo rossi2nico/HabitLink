@@ -1,4 +1,4 @@
-import { createContext, useReducer, useMemo } from 'react'
+import { createContext, useReducer } from 'react'
 
 export const HabitsReducer = (state, action) => {
   switch(action.type) {
@@ -15,13 +15,33 @@ export const HabitsReducer = (state, action) => {
         habits: [action.payload, ...state.habits]      
       }
 
-    case 'DELETE_HABIT':
+   case 'DELETE_HABIT': {
+      const { deletedHabit, updatedSyncedHabits } = action.payload;
+
+      const updatedMap = new Map(
+        updatedSyncedHabits.map(h => [h._id.toString(), h])
+      );
+
       return {
         ...state,
+
         habits: state.habits.filter(
-          habit => habit._id !== action.payload._id
+          habit => habit._id.toString() !== deletedHabit._id.toString()
+        ),
+
+        friendHabits: state.friendHabits.map(habit =>
+          updatedMap.has(habit._id.toString())
+            ? updatedMap.get(habit._id.toString())
+            : habit
+        ),
+
+        publicHabits: state.publicHabits.map(habit =>
+          updatedMap.has(habit._id.toString())
+            ? updatedMap.get(habit._id.toString())
+            : habit
         )
-      }
+      };
+    }
 
     case 'UPDATE_HABIT': {
       return {
@@ -76,22 +96,15 @@ export const HabitsReducer = (state, action) => {
 }
 
 export const HabitsContext = createContext()
-
 export const HabitsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(HabitsReducer, {
     habits: [],
     friendHabits: [],
     publicHabits: []
-  });
-
-  const contextValue = useMemo(() => ({
-    ...state,
-    dispatch
-  }), [state]);
-
+  })
   return (
-    <HabitsContext.Provider value={contextValue}>
-      {children}
+    <HabitsContext.Provider value = {{...state, dispatch}}>
+      { children }
     </HabitsContext.Provider>
-  );
+  )
 }

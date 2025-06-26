@@ -5,7 +5,7 @@ import { EditHabitForm } from './EditHabitForm'
 
 export const Habit = ({ habit }) => {
 
-  const { toggleComplete, syncHabit } = useHabits();
+  const { toggleComplete, syncHabit, deleteHabit } = useHabits();
   const { user } = useAuthContext();
   const [editingHabit, setEditingHabit] = useState(null);
 
@@ -90,6 +90,11 @@ export const Habit = ({ habit }) => {
               <button onClick={() => toggleComplete(habit._id)}>
                 <p style={{ margin: 0 }}>
                   {complete ? 'Mark as incomplete' : 'Mark as complete'}
+                </p>
+              </button>
+              <button onClick = { () => deleteHabit(habit._id) }>
+                <p style = {{ margin: 0 }}>
+                  Delete Habit
                 </p>
               </button>
               {/* <button onClick={() => setEditingHabit(habit)}>

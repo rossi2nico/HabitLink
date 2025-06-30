@@ -9,6 +9,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.navigation {
+  border: 2px solid white;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
 .habit {
   background-color: #1F1F1F;
   border-radius: 20px;

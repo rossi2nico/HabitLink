@@ -4,6 +4,7 @@ import { useHabitsContext } from '../hooks/useHabitsContext'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { Habit } from '../components/Habit'
+import { Navigation } from '../components/Navigation'
 
 const Habits = () => {
 
@@ -25,6 +26,7 @@ const Habits = () => {
 
   return (
     <>
+      <Navigation></Navigation>
       <div className="habits">
         <h3> User habits: </h3>
         {/* { habits && habits.map((habit) => (

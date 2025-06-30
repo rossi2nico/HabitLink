@@ -19,8 +19,8 @@ function App() {
               />
               <Route
                 path="/habits"
-                // element={user ? <Habits /> : <Navigate to ="/login" />}
-                element= <Habits/>
+                element={user ? <Habits /> : <Navigate to ="/login" />}
+                // element= <Habits/>
               />
               <Route
                 path="/login"
@@ -32,8 +32,8 @@ function App() {
               />
               <Route
                 path="/friends"
-                // element={user ? <Friends /> : <Navigate to ="/login" />}
-                element = <Friends/>
+                element={user ? <Friends /> : <Navigate to ="/login" />}
+                // element = <Friends/>
               />
              </Routes>
           </div>

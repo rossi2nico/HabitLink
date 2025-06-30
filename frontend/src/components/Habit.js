@@ -24,6 +24,8 @@ export const Habit = ({ habit }) => {
     }
 
   const isSynced = () => {
+    if (!user || !user._id) return false;
+    
     return syncedUsers.some(
       syncedUser => syncedUser === user._id.toString()
     )

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useHabits } from '../hooks/useHabits'
+import { Navigation } from '../components/Navigation'
 
 const Friends = () => {
   
@@ -33,26 +34,28 @@ const Friends = () => {
   }
 
   return (
-    <div className = 'users'>
+    <>
+      <Navigation></Navigation>
+      <div className = 'users'>
+        { targetHabits.length > 0 && <h3> User habits: </h3> }
+        { targetHabits.length > 0 && targetHabits.map((habit) => (
+          <pre key = { habit._id }>
+            {JSON.stringify(habit, null, 2)}
+            <br></br>
+            <button onClick = {() => {linkHabit(habit._id, habit.userId)}}>Sync Habit</button>
+          </pre>
+        ))}
 
-      { targetHabits.length > 0 && <h3> User habits: </h3> }
-      { targetHabits.length > 0 && targetHabits.map((habit) => (
-        <pre key = { habit._id }>
-          {JSON.stringify(habit, null, 2)}
-          <br></br>
-          <button onClick = {() => {linkHabit(habit._id, habit.userId)}}>Sync Habit</button>
-        </pre>
-      ))}
-
-      <h3> All users: </h3>
-      { users && users.map((user) => (
-        <pre key= { user._id }>
-          {JSON.stringify(user, null, 2)}
-          <br></br>
-          <button onClick = {() => getTargetUserHabits(user._id)}>Display { user.username } habits </button>
-        </pre>
-      ))}
-    </div>
+        <h3> All users: </h3>
+        { users && users.map((user) => (
+          <pre key= { user._id }>
+            {JSON.stringify(user, null, 2)}
+            <br></br>
+            <button onClick = {() => getTargetUserHabits(user._id)}>Display { user.username } habits </button>
+          </pre>
+        ))}
+      </div>
+    </>
   )
 }
 export default Friends

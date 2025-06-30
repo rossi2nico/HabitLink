@@ -231,7 +231,7 @@ const createHabit = async (req, res) => {
     if (name.length > 25)  {
         return res.status(400).json({ error: 'habit name must be 25 characters or less'})
     }
-    if (name.trim.length == 0) {
+    if (name.trim().length == 0) {
         return res.status(400).json({ error: 'habit name can not be empty'})
     }
     if (description && description.length > 140) {

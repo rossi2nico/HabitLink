@@ -9,6 +9,13 @@ body {
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('https://wallpapercat.com/w/full/5/7/c/2112834-3840x2160-desktop-4k-minimalist-wallpaper-photo.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: 100vw;
+  background-color: #000; /* optional: black background behind image */
 }
 
 
@@ -300,11 +307,13 @@ h3 a:hover {
 }
 
 .habit {
-  background-color: #272727;
+  /* background-color: #272727; */
+  background-color: rgb(255, 255, 255);
   border-radius: 12px;
   width: 500px;
   height: 150px;
-  color: #F0F0F0;
+  /* color: #F0F0F0; */
+  color: #272727;
   padding-left: 15px;
   padding-right: 15px;
   margin: 16px;

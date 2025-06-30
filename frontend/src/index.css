@@ -10,27 +10,41 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+
 /* Login Stuff */
 
+/* Clean link styling for auth links like Sign up */
+h3 a {
+  text-decoration: none;
+  color: #0f0f0f;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+h3 a:hover {
+  color: #f44336;
+}
 /* Login form container */
 .login {
   max-width: 400px;
   margin: 80px auto;
-  padding: 40px;
+  padding: 0px 20px 30px 20px;
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   gap: 20px;
-  font-family: 'Segoe UI', sans-serif;
+  /* font-family: 'Segoe UI', sans-serif; */
 }
 
 /* Heading */
 .login h3 {
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin-bottom: 0px;
 }
 
 /* Labels */
@@ -63,7 +77,8 @@ body {
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease; 
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .login button:hover {
@@ -149,6 +164,7 @@ body {
   background-color: transparent;
   color: #f44336;
   border: 2px solid #f44336;
+  font-family: 'Segoe UI', sans-serif;
   margin-top: 3px;
   padding: 2px 8px;
   border-radius: 6px;

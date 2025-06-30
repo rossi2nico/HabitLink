@@ -40,7 +40,9 @@ const Login = () => {
                 {error && <div className="error">{error}</div>}
             
             </form>
-            <h3><Link to="/signup">Sign up</Link></h3>
+            <h3 style={{ marginTop: "-45px" }}>
+                <Link to="/signup">Don't have an account? Register here</Link>
+            </h3>
         </>
     )
 }

@@ -36,7 +36,8 @@ const habitSchema = new Schema({
     }],
     syncedHabits: [{
         habitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit', required: true },
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        username: {type: String }
     }],
     privacy: { // 0 = private, 1 = friends-only, 2 = public
         type: Number,
@@ -47,6 +48,9 @@ const habitSchema = new Schema({
     },
     ownerId: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    },
+    username: {
+        type: String
     }
 }, { timestamps: true})
 

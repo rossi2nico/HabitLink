@@ -177,6 +177,7 @@ const syncHabit = async (req, res) => {
     try {
         // Get the user requesting a sync request's id
         const userId = req.user._id;
+        const username = req.user.username;
         if (!userId) {
             return res.status(400).json({error: 'User ID not found!'});
         }
@@ -186,6 +187,7 @@ const syncHabit = async (req, res) => {
             return res.status(404).json({error: 'Original habit does not exist!'});
         }
         const originalUserId = habit.userId;
+        const originalUsername = habit.username;
         if (originalUserId.toString() === userId.toString()) {
             return res.status(409).json( {error: 'Cant sync with own habit' })
         }
@@ -198,18 +200,20 @@ const syncHabit = async (req, res) => {
         }
         // Create the duplicate habit
         const { name, description, frequency } = habit;
-        const newHabit = await Habit.create({name, description, frequency, privacy, userId});
+        const newHabit = await Habit.create({name, description, frequency, privacy, userId, username});
         if (!newHabit) {
             return res.status(500).json({error: 'Error creating synced habit'})
         }
         // Add habits to corresponding syncedHabits list
         habit.syncedHabits.push({
             habitId: newHabit._id,
-            userId: userId
+            userId: userId,
+            username: username
         })
         newHabit.syncedHabits.push({
             habitId: originalHabitId,
-            userId: originalUserId
+            userId: originalUserId,
+            username: originalUsername
         })
         await habit.save();
         await newHabit.save();
@@ -224,16 +228,21 @@ const syncHabit = async (req, res) => {
 const createHabit = async (req, res) => {
     // Name, description, privacy, frequency, userId
     const { name, description, privacy, frequency } = req.body;
-    if (name.length > 25) {
+    if (name.length > 25)  {
         return res.status(400).json({ error: 'habit name must be 25 characters or less'})
+    }
+    if (name.trim.length == 0) {
+        return res.status(400).json({ error: 'habit name can not be empty'})
     }
     if (description && description.length > 140) {
         return res.status(400).json({ error: 'description must be 140 characters or less'})
     }
     try {
         const userId = req.user._id;
+        const username = req.user.username;
+        console.log(`username${username}`)
         if (!userId) return res.status(400);
-        const habit = await Habit.create({name, description, privacy, frequency, userId});
+        const habit = await Habit.create({name, description, privacy, frequency, userId, username});
         habit.ownerId = userId;
         res.status(200).json(habit);
     }

@@ -11,7 +11,7 @@ const requireAuth = async (req, res, next) => {
   // Now we need to verify the token: valid = attach user to request (req.user = _id), invalid return error!
   try {
     const { _id } = jwt.verify(token, process.env.SECRET);
-    req.user = await User.findById(_id).select(_id)
+    req.user = await User.findById(_id).select('_id username')
     next()
   }
   catch (error) {

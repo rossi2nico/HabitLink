@@ -14,7 +14,7 @@ export const Navigation = () => {
       alt="Charmander"
       style={{ height: '74px', width: '74px', objectFit: 'contain', marginRight: '6px' }}
     />
-    <h3><Link to="/">habitLink 2027 → gross profit $3mil</Link></h3>
+    {/* <span><Link to="/">habitLink 2027 → gross profit $3mil</Link></span> */}
     <h3><Link to="/habits">Habits</Link></h3>
     <h3><Link to="/friends">Friends</Link></h3>
   </div>

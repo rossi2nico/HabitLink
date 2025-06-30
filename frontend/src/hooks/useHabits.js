@@ -9,6 +9,34 @@ export const useHabits = () => {
   const { dispatch } = useHabitsContext()
   const { user } = useAuthContext()
 
+  const getHabit = async (habitId) => {
+    setIsLoading(true)
+    setError(null) 
+
+    if (!user) {
+      setError('You must be logged in');
+      return false;
+    }
+
+    const res = await fetch(`/api/habits/${ habitId }`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${ user.token }`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const json = await res.json()
+    if (!res.ok) {
+      setError(json.error)
+      setIsLoading(false)
+      return false
+    }
+    setIsLoading(false)
+    // dispatch({ type: 'GET_HABIT', payload: json })
+    return json;
+  }
+
   const updateHabit = async (habitId, ...updates) => {
     setIsLoading(true)
     setError(null)
@@ -18,7 +46,7 @@ export const useHabits = () => {
       return false;
     }
 
-    const res = await fetch('/api/habits/:habitId', {
+    const res = await fetch(`/api/habits/${ habitId }`, {
       method: 'PATCH',
       body: JSON.stringify({
         updates
@@ -294,6 +322,6 @@ export const useHabits = () => {
   }
 
   return { 
-    syncHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit,
+    syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit,
     updateHabit, deleteHabit, toggleComplete, isLoading, error }
 }

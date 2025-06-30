@@ -2,19 +2,54 @@ import { useState, useEffect } from 'react'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
+import { useMemo } from 'react';
+
+
 
 export const Habit = ({ habit }) => {
 
-  const { toggleComplete, syncHabit, deleteHabit } = useHabits();
+  const { getHabit, toggleComplete, syncHabit, deleteHabit } = useHabits();
   const { user } = useAuthContext();
   const [editingHabit, setEditingHabit] = useState(null);
+  const [syncedHabits, setSyncedHabits] = useState([]);
+  const [fetchedHabitIds, setFetchedHabitIds] = useState(new Set());
 
+
+  const syncedUsers = habit.syncedHabits.map((syncedHabit) => syncedHabit.userId); 
+  const syncedUsernames = habit.syncedHabits.map((syncedHabits) => syncedHabits.username);
+
+  const syncedHabitIds = useMemo(() => {
+    return habit.syncedHabits.map(s => s.habitId);
+  }, [habit.syncedHabits]); 
+
+  useEffect(() => {
+    const fetchAllHabits = async () => {
+      const newIds = syncedHabitIds.filter(id => !fetchedHabitIds.has(id));
+      if (newIds.length === 0) return;
+
+      const newHabits = [];
+
+      for (const id of newIds) {
+        const fetched = await getHabit(id);
+        if (fetched) {
+          newHabits.push(fetched);
+        }
+      }
+
+      if (newHabits.length > 0) {
+        setSyncedHabits(prev => [...prev, ...newHabits]);
+        setFetchedHabitIds(prev => new Set([...prev, ...newIds]));
+      }
+    };
+
+    if (syncedHabitIds.length > 0 && user) {
+      fetchAllHabits();
+    }
+  }, [syncedHabitIds, user]); // syncedHabitIds is now stable thanks to useMemo
+  
   const isUsersHabit = () => {
     return user?._id?.toString() === habit?.userId?.toString();
   }
-
-  const syncedUsers = habit.syncedHabits.map((syncedHabit) => syncedHabit.userId); 
-  const syncedUsernames = habit.syncedHabits.map((syncedHabits) => syncedHabits.username)
 
   const sameDate = (d1, d2) => {
         return (
@@ -83,6 +118,13 @@ export const Habit = ({ habit }) => {
           <>
             <p style = {{ marginBottom: "-10px" }}> Synced Users: </p>
             <p style = {{ fontSize: "15px" }}> {syncedUsernames.join(", ")} </p>
+            
+            {syncedHabits.map((habit) => (
+             <> 
+              {console.log(`here${habit}`)}
+              <p key={habit._id}>??:{habit.username}</p>
+              </>
+            ))}
             
             
           </>

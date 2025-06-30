@@ -5,7 +5,9 @@ body {
   /* background-color: #0a0a0a;
   color: #F0F0F0; */
   background-color: #F0F0F0;
-  color: #0a0a0a;
+  opacity: 90%;
+  color: #ffffff;
+  font-weight: 550;
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17,8 +19,6 @@ body {
   background-size: 100vw;
   background-color: #000; /* optional: black background behind image */
 }
-
-
 
 /* Login Stuff */
 
@@ -314,6 +314,7 @@ h3 a:hover {
   height: 150px;
   /* color: #F0F0F0; */
   color: #272727;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.38);
   padding-left: 15px;
   padding-right: 15px;
   margin: 16px;

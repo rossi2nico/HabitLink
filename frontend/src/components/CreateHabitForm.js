@@ -25,51 +25,53 @@ export const CreateHabitForm = () => {
   }
   
   return (
-    <div>
-      <button className = 'create-habit-button' onClick={() => setIsPopup(true)} >
-        New Habit
-      </button>
+  <div>
+    <button
+      className="create-habit-button"
+      onClick={() => setIsPopup(true)}
+    >
+      New Habit
+    </button>
 
-      { isPopup && (
-        <div className = 'habit-popup'>
-          <button className = 'close-popup' onClick = {() => setIsPopup(false)}>
+    {isPopup && (
+      <>
+        <div
+          className="popup-overlay"
+          onClick={() => setIsPopup(false)}
+        />
+        <div className="habit-popup">
+          <button
+            className="close-popup"
+            onClick={() => setIsPopup(false)}
+          >
             Cancel
           </button>
-          <form className = 'create-habit-form' onSubmit = {handleSubmit}>
+          <form
+            className="create-habit-form"
+            onSubmit={handleSubmit}
+          >
             <h3>Create New Habit</h3>
 
-            <label> Name: </label>
+            <label>Name:</label>
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}
               value={name}
             />
 
-            <label> Description: </label>
+            <label>Description:</label>
             <input
               type="text"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
             />
 
-            {/* <label> Privacy: </label>
-            <select value = {privacy} onChange = {(e) => setPrivacy(e.target.value)}>
-              <option value = "private"> private </option>
-              <option value = "friends"> friends only </option>
-              <option value = "public"> public </option>
-            </select> */}
-
-            { /* <select value = {frequency} onChange = {(e) => setFrequency(e.target.value)} >
-                <option value = "daily"> Daily </option>
-                <option value = "weekly"> Weekly </option>
-                <option value = 'custom'> TBD </option>
-            </select> */ }
-
-          <button> Add Habit </button>
-          {error && <div className = "error"> {error} </div>}
+            <button>Add Habit</button>
+            {error && <div className="error">{error}</div>}
           </form>
         </div>
-      )}
-    </div>
-  )
+      </>
+    )}
+  </div>
+);
 }

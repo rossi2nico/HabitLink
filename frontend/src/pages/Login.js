@@ -40,8 +40,7 @@ const Login = () => {
                 {error && <div className="error">{error}</div>}
             
             </form>
-            Dont have an account? 
-            <h3><Link to="/signup">Register</Link></h3>
+            <h3><Link to="/signup">Sign up</Link></h3>
         </>
     )
 }

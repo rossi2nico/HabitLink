@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
@@ -14,7 +14,8 @@ export const Habit = ({ habit }) => {
   }
 
   const syncedUsers = habit.syncedHabits.map((syncedHabit) => syncedHabit.userId); 
- 
+  const syncedUsernames = habit.syncedHabits.map((syncedHabits) => syncedHabits.username)
+
   const sameDate = (d1, d2) => {
         return (
             d1.getFullYear() === d2.getFullYear() &&
@@ -81,7 +82,9 @@ export const Habit = ({ habit }) => {
         {syncedUsers.length > 0 ? (
           <>
             <p style = {{ marginBottom: "-10px" }}> Synced Users: </p>
-            <p style = {{ fontSize: "12px" }}> {syncedUsers.join(", ")} </p>
+            <p style = {{ fontSize: "15px" }}> {syncedUsernames.join(", ")} </p>
+            
+            
           </>
         ) : ( 
           <p> No synced users </p>

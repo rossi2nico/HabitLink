@@ -39,6 +39,7 @@ h3 a:hover {
   margin: 80px auto;
   padding: 0px 20px 30px 20px;
   background-color: #ffffff;
+  color:#292929;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   display: flex;
@@ -127,12 +128,12 @@ h3 a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff;
+  background-color: #fffdfd ;
   padding: 6px 32px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   /* font-family: 'Segoe UI', sans-serif; */
   position: sticky;
-  top: 0;
+top: 0;
   /* z-index: 999; */
   height: 50px;
   color: black;
@@ -273,7 +274,8 @@ h3 a:hover {
 .create-habit-form button:hover,
 .create-habit-button:hover,
 .close-popup:hover {
-  background-color: #45a049;
+  background-color: #d7372f;
+  transition: background-color 0.6s ease;
 }
 
 /* Cancel button (top right) */
@@ -302,16 +304,16 @@ h3 a:hover {
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.808);
+  background: rgba(0, 0, 0, 0.932);
   z-index: 999;
 }
 
 .habit {
   /* background-color: #272727; */
-  background-color: rgb(255, 255, 255);
-  border-radius: 12px;
+  background-color: #ffffff;  
+  border-radius: 8px;
   width: 500px;
-  height: 150px;
+  height: 100px;
   /* color: #F0F0F0; */
   color: #272727;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.38);

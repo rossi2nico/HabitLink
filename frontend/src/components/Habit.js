@@ -2,9 +2,6 @@ import { useState, useEffect } from 'react'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
-import { useMemo } from 'react';
-
-
 
 export const Habit = ({ habit }) => {
 
@@ -14,39 +11,9 @@ export const Habit = ({ habit }) => {
   const [syncedHabits, setSyncedHabits] = useState([]);
   const [fetchedHabitIds, setFetchedHabitIds] = useState(new Set());
 
-
   const syncedUsers = habit.syncedHabits.map((syncedHabit) => syncedHabit.userId); 
   const syncedUsernames = habit.syncedHabits.map((syncedHabits) => syncedHabits.username);
 
-  const syncedHabitIds = useMemo(() => {
-    return habit.syncedHabits.map(s => s.habitId);
-  }, [habit.syncedHabits]); 
-
-  useEffect(() => {
-    const fetchAllHabits = async () => {
-      const newIds = syncedHabitIds.filter(id => !fetchedHabitIds.has(id));
-      if (newIds.length === 0) return;
-
-      const newHabits = [];
-
-      for (const id of newIds) {
-        const fetched = await getHabit(id);
-        if (fetched) {
-          newHabits.push(fetched);
-        }
-      }
-
-      if (newHabits.length > 0) {
-        setSyncedHabits(prev => [...prev, ...newHabits]);
-        setFetchedHabitIds(prev => new Set([...prev, ...newIds]));
-      }
-    };
-
-    if (syncedHabitIds.length > 0 && user) {
-      fetchAllHabits();
-    }
-  }, [syncedHabitIds, user]); // syncedHabitIds is now stable thanks to useMemo
-  
   const isUsersHabit = () => {
     return user?._id?.toString() === habit?.userId?.toString();
   }
@@ -94,7 +61,7 @@ export const Habit = ({ habit }) => {
         
         <p className = "habit-id"> ID: {habit._id} </p>
 
-        {habit.privacy === 2 ? (
+        {/* {habit.privacy === 2 ? (
           <p className = "privacy"> Public </p>
         ) : habit.privacy === 1 ? (
           <p className = "privacy"> Friends </p>
@@ -108,8 +75,8 @@ export const Habit = ({ habit }) => {
           <p> Weekly </p>
         ) : (
           <p> Custom frequency </p>
-        )}
-        <p style = {{ marginTop: "-15px" }}> Streak: { habit.streak }, Max: { habit.maxStreak } </p>
+        )} */}
+        <p style = {{ marginTop: "-5px", fontSize: '12px' }}> Streak: { habit.streak }, Max: { habit.maxStreak } </p>
 
            
       </div>
@@ -121,15 +88,14 @@ export const Habit = ({ habit }) => {
             
             {syncedHabits.map((habit) => (
              <> 
-              {console.log(`here${habit}`)}
               <p key={habit._id}>??:{habit.username}</p>
-              </>
+            </>
             ))}
             
             
           </>
         ) : ( 
-          <p> No synced users </p>
+          <p> Synced Users: 0 </p>
         )}  
         
         {usersHabit ? (

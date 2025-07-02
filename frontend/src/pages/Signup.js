@@ -20,7 +20,7 @@ const Signup = () => {
       <form className = "login" onSubmit = {handleSubmit}>
         <h3>Sign up</h3>
 
-        <label>username:</label>
+        <label>Username:</label>
         <input
             type = "username"
             name="username"

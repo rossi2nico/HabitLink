@@ -1,61 +1,61 @@
-import { useState, useEffect } from 'react'
-import { useHabits } from '../hooks/useHabits'
-import { Navigation } from '../components/Navigation'
+import { useFriends } from "../hooks/useFriends";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useEffect } from "react";
+import { useFriendsContext } from "../hooks/useFriendsContext";
+import { Navigation } from "../components/Navigation";
 
 const Friends = () => {
-  
-  const [users, setUsers] = useState([])
-  const { getTargetHabits, syncHabit } = useHabits()
-  const [targetHabits, setTargetHabits] = useState([])
+
+  const { user } = useAuthContext();
+
+  const { friends, pendingUsers } = useFriendsContext();
+  const { removeFriend, sendFriendRequest, getPendingUsers, getFriends, acceptFriendRequest, declineFriendRequest, error, isLoading } = useFriends();
 
   useEffect(() => { 
-    const fetchUsers = async () => {
-      const res = await fetch ('/api/users/')
-      const json = await res.json()
-      setUsers(json)
-      console.log('Users have been successfully fetched');
+    if (user) {
+      getFriends(user._id);
+      getPendingUsers(user._id);
     }
-    fetchUsers();
-  }, [])
-
-  const getTargetUserHabits = async (targetUserId) => {
-    const habits = await getTargetHabits(targetUserId)
-    setTargetHabits(habits)
-  }
-
-  const linkHabit = async (originalHabitId, originalUserId) => {
-    console.log(originalHabitId)
-    console.log(originalUserId)
-    const success = await syncHabit(originalHabitId, originalUserId, 1)
-    if (!success) {
-      console.log('failed')
-    }
-    //make hook
-  }
+  }, [user]);
 
   return (
     <>
       <Navigation></Navigation>
-      <div className = 'users'>
-        { targetHabits.length > 0 && <h3> User habits: </h3> }
-        { targetHabits.length > 0 && targetHabits.map((habit) => (
-          <pre key = { habit._id }>
-            {JSON.stringify(habit, null, 2)}
-            <br></br>
-            <button onClick = {() => {linkHabit(habit._id, habit.userId)}}>Sync Habit</button>
-          </pre>
-        ))}
+      {friends && friends.length > 0 ? (
+        <div className="friends">
+          <h3>Friends List</h3>
+          {friends.map(friend => (
+            <div key={friend} className="friend">
+              <span>{friend}</span>
+              {/* <button onClick={() => removeFriend(friend._id)}>Remove Friend</button> */}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="friends">
+          <h3>No Friends Found</h3>
+        </div>
+      )}
 
-        <h3> All users: </h3>
-        { users && users.map((user) => (
-          <pre key= { user._id }>
-            {JSON.stringify(user, null, 2)}
-            <br></br>
-            <button onClick = {() => getTargetUserHabits(user._id)}>Display { user.username } habits </button>
-          </pre>
-        ))}
-      </div>
+      {pendingUsers && pendingUsers.length > 0 ? (
+        <div className="pending-users">
+          <h3>Pending Friend Requests</h3>
+          {pendingUsers.map(pendingUser => (
+            <div key={pendingUser} className="pending-user">
+              <span>{pendingUser}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="pending-users">
+          <h3>No Pending Friend Requests</h3>
+        </div>
+      )}
+      {error && <div className="error">{error}</div>}
+      {isLoading && <div className="loading">Loading...</div>}
     </>
   )
+
 }
-export default Friends
+
+export default Friends;

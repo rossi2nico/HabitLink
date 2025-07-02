@@ -4,14 +4,17 @@ import './index.css';
 import App from './App';
 import { AuthContextProvider } from './context/AuthContext'
 import { HabitsContextProvider } from './context/HabitsContext';
+import { FriendsContextProvider } from './context/FriendsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthContextProvider>
-      <HabitsContextProvider>
-        <App/>
+      <FriendsContextProvider>
+        <HabitsContextProvider>
+          <App/>
         </HabitsContextProvider>
-      </AuthContextProvider>
+      </FriendsContextProvider>  
+    </AuthContextProvider>
 );
 
 

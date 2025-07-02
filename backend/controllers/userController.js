@@ -5,6 +5,33 @@ const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET, {expiresIn: '30d'})
 }
 
+const getFriends = async (req, res) => { 
+    const userId = req.user._id;
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({error: 'User not found'})
+        }
+        res.status(200).json(user.friends);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+const getPendingUsers = async (req, res) => {
+    const userId = req.user._id;
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({error: 'User not found'})
+        }
+        res.status(200).json(user.pendingUsers);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+
 const getUsers = async (req, res) => {
     const users = await User.find({}).sort({createdAt: -1})
     res.status(200).json(users);
@@ -57,42 +84,37 @@ const sendFriendRequest = async (req, res) => {
         if (userId.toString() == targetUserId.toString()) {
             return res.status(400).json({ error: 'Can not send friend request to yourself'})
         }
-        // Ensure request is not already sent
         const alreadyRequested = targetUser.pendingUsers.some(
             (pendingUser) => pendingUser.toString() === userId.toString()
         )
         if (alreadyRequested) {
             return res.status(409).json({error: 'Request has already been sent!'})
         }
-        // Cgeck if users are already friends
         const usersAlreadyFriends = user.friends.some(
             pendingUser => pendingUser.toString() === targetUserId.toString()
         )
         if (usersAlreadyFriends) {
             return res.status(409).json({error: 'Users are already friends'})
         }
-        // Check if target user has already sent a friend request
         const targetUserPending = user.pendingUsers.some(
             (pendingUser) => pendingUser.toString() === targetUserId.toString()
         )
         if (targetUserPending) {
-            // Remove the target user from users pending user array
             user.pendingUsers = user.pendingUsers.filter(
                 (pendingUser) => pendingUser.toString() !== targetUserId.toString()
             )
-            // Add eachother as friends as they both requested each other
             user.friends.push(targetUserId);
             targetUser.friends.push(userId);
 
             await user.save();
             await targetUser.save();
 
-            return res.status(200).json({message: 'Both users pending. Successfully added friend'})
+            return res.status(200).json({ status: 'friend_added', targetUser: targetUser })
         }
         targetUser.pendingUsers.push(userId);
         await targetUser.save();
         
-        res.status(200).json({message: 'Friend request sent!'})
+        res.status(200).json({ status: 'request_sent', targetUser: targetUser})
     }
     catch (error) {
         res.status(400).json({error: error.message});
@@ -129,7 +151,7 @@ const acceptFriendRequest = async (req, res) => {
       await user.save();
       await incomingUser.save();
   
-      res.status(200).json({ message: 'Friend request accepted!' });
+      res.status(200).json(incomingUser);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -146,7 +168,7 @@ const declineFriendRequest = async (req, res) => {
             (pendingUser) => pendingUser.toString() !== incomingUserId.toString()
         )
         await user.save();
-        res.status(200).json({ message: 'Friend request declined' })
+        res.status(200).json(incomingUserId);
     }
     catch (error) {
         res.status(400).json({ error: error.message })
@@ -181,7 +203,7 @@ const removeFriend = async (req, res) => {
 
         await targetUser.save();
         await user.save();
-        res.status(200).json({message: 'Friend successfully removed'})
+        res.status(200).json(targetUser)
 
     }
     catch (error) {
@@ -189,4 +211,4 @@ const removeFriend = async (req, res) => {
     }
 }
 
-module.exports = { signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend, getUsers }
+module.exports = { getFriends, getPendingUsers, signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend, getUsers }

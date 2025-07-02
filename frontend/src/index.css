@@ -12,6 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url('https://wallpapercat.com/w/full/5/7/c/2112834-3840x2160-desktop-4k-minimalist-wallpaper-photo.jpg');
+  /* background-image: url('https://www.chromethemer.com/wallpapers/chromebook-wallpapers/images/960/batman-chromebook-wallpaper.jpg'); */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -128,15 +129,17 @@ h3 a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fffdfd ;
+  background-color: #ffffff ;
   padding: 6px 32px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   /* font-family: 'Segoe UI', sans-serif; */
   position: sticky;
+  opacity: 100%;
 top: 0;
   /* z-index: 999; */
   height: 50px;
   color: black;
+/* opacity: 100%; */
 }
 
 /* Left side nav links */
@@ -359,4 +362,15 @@ top: 0;
   /* align-items: center;  */
 }
 
+.pending-users h3, .friends h3 {
+  color: #000000;
+  font-weight: 600;
+  font-size: 24px;
+  margin-top: 10px;
+}
 
+.friends span, .pending-users span {
+  color: #000000;
+  font-weight: 500;
+  font-size: 18px;
+}

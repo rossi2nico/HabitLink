@@ -8,7 +8,7 @@ const createToken = (_id) => {
 const getFriends = async (req, res) => { 
     const userId = req.user._id;
     try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate('friends', 'username _id');
         if (!user) {
             return res.status(404).json({error: 'User not found'})
         }
@@ -21,7 +21,7 @@ const getFriends = async (req, res) => {
 const getPendingUsers = async (req, res) => {
     const userId = req.user._id;
     try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate('pendingUsers', 'username _id');
         if (!user) {
             return res.status(404).json({error: 'User not found'})
         }

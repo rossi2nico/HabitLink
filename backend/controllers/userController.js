@@ -5,6 +5,24 @@ const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET, {expiresIn: '30d'})
 }
 
+const searchUsers = async (req, res) => {
+    const searchTerm = req.query.q; // api/users/search?q=nico
+
+    try {
+        const regex = new RegExp(searchTerm, 'i');
+
+        const users = await User.find({
+            $or : [
+                { username: regex }
+            ]
+        }).limit(10);
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(400).json( {error: error.message });
+    }
+}
+
 const getFriends = async (req, res) => { 
     const userId = req.user._id;
     try {
@@ -211,4 +229,4 @@ const removeFriend = async (req, res) => {
     }
 }
 
-module.exports = { getFriends, getPendingUsers, signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend, getUsers }
+module.exports = { searchUsers, getFriends, getPendingUsers, signupUser, loginUser, sendFriendRequest, acceptFriendRequest, declineFriendRequest, removeFriend, getUsers }

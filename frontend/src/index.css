@@ -6,19 +6,49 @@ body {
   color: #F0F0F0; */
   background-color: #F0F0F0;
   opacity: 90%;
-  color: #ffffff;
+  color: #000000;
   font-weight: 550;
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('https://wallpapercat.com/w/full/5/7/c/2112834-3840x2160-desktop-4k-minimalist-wallpaper-photo.jpg');
+  /* background-image: url('https://wallpapercat.com/w/full/5/7/c/2112834-3840x2160-desktop-4k-minimalist-wallpaper-photo.jpg'); */
   /* background-image: url('https://www.chromethemer.com/wallpapers/chromebook-wallpapers/images/960/batman-chromebook-wallpaper.jpg'); */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   background-size: 100vw;
-  background-color: #000; /* optional: black background behind image */
+  background-color: #ffffff; /* optional: black background behind image */
+}
+
+
+.pending-user-card p {
+  color:#161616;
+  /* font-weight: 600; */
+  font-size: 18px;
+  margin-right: 50px;
+}
+
+.pending-user-card {
+  display: flex;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 5px;
+  justify-content: center;
+}
+
+.pending-user-card button {
+  border: 2px;
+  background-color: transparent;
+  color: #161616;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: 'Rubik', sans-serif;
+  cursor: pointer;
+}
+
+.pending-user-card button:hover {
+  color:#d7372f;
 }
 
 /* Login Stuff */
@@ -34,6 +64,7 @@ h3 a {
 h3 a:hover {
   color: #f44336;
 }
+
 /* Login form container */
 .login {
   max-width: 400px;
@@ -137,7 +168,7 @@ h3 a:hover {
   opacity: 100%;
 top: 0;
   /* z-index: 999; */
-  height: 50px;
+  height: 30px;
   color: black;
 /* opacity: 100%; */
 }
@@ -145,7 +176,7 @@ top: 0;
 /* Left side nav links */
 .navigation h3 {
   margin: 0 20px 0 0;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   display: inline-block;
 }
@@ -176,7 +207,7 @@ top: 0;
   color: #f44336;
   border: 2px solid #f44336;
   font-family: 'Segoe UI', sans-serif;
-  margin-top: 3px;
+  margin-top: 0px;
   padding: 2px 8px;
   border-radius: 6px;
   font-size: 14px;
@@ -200,6 +231,13 @@ top: 0;
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.nav-left p {
+  margin: 0;
+  font-size: 18px;
+  color: #292929; /* dark text for better contrast */
+  font-weight: 600;
 }
 
 
@@ -316,15 +354,37 @@ top: 0;
   background-color: #ffffff;  
   border-radius: 8px;
   width: 500px;
-  height: 100px;
+  height: 85px;
   /* color: #F0F0F0; */
   color: #272727;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.38);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
   padding-left: 15px;
   padding-right: 15px;
   margin: 16px;
   display: flex;
 }
+
+.toggle-complete, .delete-button {
+  background-color: transparent;
+  border: 0px;
+  color: #161616;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: block;
+  width: fit-content;
+  margin: 0;
+}
+.toggle-complete:hover , .delete-button:hover {
+  color: #f86060;
+}
+
+.habit h3 {
+  margin-top: 8px;
+}
+
 
 .privacy {
   margin-top: 25px;
@@ -373,4 +433,19 @@ top: 0;
   color: #000000;
   font-weight: 500;
   font-size: 18px;
+}
+
+.friends-page {
+  display: flex;
+}
+
+.friends-search {
+  /* display: flex; */
+  padding-left: 150px;
+  margin-top: 50px;
+  color: black;
+}
+
+.search-users {
+  width: 300px;
 }

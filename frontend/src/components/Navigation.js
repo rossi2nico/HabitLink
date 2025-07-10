@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
+import checkmark from '../assets/checkmark-red.png';
 
 export const Navigation = () => {
   const { user } = useAuthContext();
@@ -10,9 +11,8 @@ export const Navigation = () => {
     <div className="navigation">
   <div className="nav-left">
     <img
-      src="https://oyster.ignimgs.com/mediawiki/apis.ign.com/pokemon-black-and-white/1/12/Pokemans_004.gif"
-      alt="Charmander"
-      style={{ height: '74px', width: '74px', objectFit: 'contain', marginRight: '6px' }}
+      src = { checkmark }
+      style={{ height: '18px', width: '18px', objectFit: 'contain', marginRight: '10px' }}
     />
     {/* <span><Link to="/">habitLink 2027 → gross profit $3mil</Link></span> */}
     <h3><Link to="/habits">Habits</Link></h3>

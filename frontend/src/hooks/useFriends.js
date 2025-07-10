@@ -9,6 +9,33 @@ export const useFriends = () => {
   const [error, setError] = useState(null);
   const { dispatch } = useFriendsContext();
 
+  const searchUsers = async (searchTerm) => {
+    setIsLoading(true);
+    setError(null);
+    if (!user) {
+      setError('You must be logged in');
+      return false;
+    }
+
+    const res = await fetch(`/api/users/search?q=${encodeURIComponent(searchTerm)}`, {
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ user.token }` 
+      }
+    });
+
+    const json = await res.json();
+    if (!res.ok) {
+      setError(json.error);
+      setIsLoading(false);
+      return false;
+    }
+    setIsLoading(false);
+    dispatch({ type: 'SEARCH_USERS', payload: json });
+    return json;
+  }
+
   const removeFriend = async (friendId) => {
     setIsLoading(true);
     setError(null);
@@ -190,6 +217,7 @@ export const useFriends = () => {
     sendFriendRequest,
     declineFriendRequest,
     getFriends,
-    getPendingUsers
+    getPendingUsers,
+    searchUsers
   }
 }

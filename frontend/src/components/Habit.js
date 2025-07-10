@@ -56,11 +56,29 @@ export const Habit = ({ habit }) => {
     <div className = "habit">
       <div className = "left">
         <h3>{habit.name}</h3>
+        <p style = {{ marginTop: "-18px", fontSize: '12px' }}> Streak: { habit.streak }, Max: { habit.maxStreak } </p>
+
+
+        {usersHabit && (
+          <>
+            <p className = "toggle-complete" onClick = {() => toggleComplete(habit._id)}>
+              [ {complete ? 'Mark as incomplete' : 'Mark as complete'} ] 
+            </p>
+            
+            <p className = "delete-button" onClick = {() => deleteHabit(habit._id)}>
+              [ Delete Habit ]
+            </p>
+          </>
+          // <button className = "toggle-complete" onClick={() => toggleComplete(habit._id)}>
+          //   <p style={{ margin: 0 }}>
+          //     {complete ? 'Mark as incomplete' : 'Mark as complete'}
+          //   </p>
+          // </button>
+        )}
+
         {/* <p>frequency: {habit.frequency}</p>
         <p>streak: {habit.streak} </p> */}
         
-        <p className = "habit-id"> ID: {habit._id} </p>
-
         {/* {habit.privacy === 2 ? (
           <p className = "privacy"> Public </p>
         ) : habit.privacy === 1 ? (
@@ -76,7 +94,6 @@ export const Habit = ({ habit }) => {
         ) : (
           <p> Custom frequency </p>
         )} */}
-        <p style = {{ marginTop: "-5px", fontSize: '12px' }}> Streak: { habit.streak }, Max: { habit.maxStreak } </p>
 
            
       </div>
@@ -100,16 +117,7 @@ export const Habit = ({ habit }) => {
         
         {usersHabit ? (
           <>
-              <button onClick={() => toggleComplete(habit._id)}>
-                <p style={{ margin: 0 }}>
-                  {complete ? 'Mark as incomplete' : 'Mark as complete'}
-                </p>
-              </button>
-              <button onClick = { () => deleteHabit(habit._id) }>
-                <p style = {{ margin: 0 }}>
-                  Delete Habit
-                </p>
-              </button>
+              
               {/* <button onClick={() => setEditingHabit(habit)}>
                 Edit habit
               </button> */}

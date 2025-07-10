@@ -3,13 +3,16 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useEffect } from "react";
 import { useFriendsContext } from "../hooks/useFriendsContext";
 import { Navigation } from "../components/Navigation";
+import { useState } from "react";
+import { PendingUser } from "../components/PendingUser";
 
 const Friends = () => {
 
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const { user } = useAuthContext();
-
   const { friends, pendingUsers } = useFriendsContext();
-  const { removeFriend, sendFriendRequest, getPendingUsers, getFriends, acceptFriendRequest, declineFriendRequest, error, isLoading } = useFriends();
+  const { searchUsers, removeFriend, sendFriendRequest, getPendingUsers, getFriends, acceptFriendRequest, declineFriendRequest, error, isLoading } = useFriends();
 
   useEffect(() => { 
     if (user) {
@@ -18,41 +21,86 @@ const Friends = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setSearchResults([])
+      return
+    }
+    // debounce?
+    // call API, set searchResults to them
+    const delayDebounce = setTimeout(() => {
+      const fetchResults = async () => {
+        const results = await searchUsers(searchTerm);
+        setSearchResults(results || []);
+      }
+      fetchResults();
+    }, 300)
+
+    return () => clearTimeout(delayDebounce)
+  }, [searchTerm])
+
   return (
     <>
       <Navigation></Navigation>
-      {friends && friends.length > 0 ? (
-        <div className="friends">
-          <h3>Friends List</h3>
-          {friends.map(friend => (
-            <div key={friend} className="friend">
-              <span>{friend}</span>
-              {/* <button onClick={() => removeFriend(friend._id)}>Remove Friend</button> */}
+      <div className = 'friends-page'>
+        <div className = 'friends-page-left'>
+          {friends && friends.length > 0 ? (
+            <div className="friends">
+              <h3>Friends List</h3>
+              {friends.map(friend => (
+                <div key={friend._id} className="friend">
+                  <span>{friend.username}</span>
+                  {/* <button onClick={() => removeFriend(friend._id)}>Remove Friend</button> */}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="friends">
-          <h3>No Friends Found</h3>
-        </div>
-      )}
+          ) : (
+            <div className="friends">
+              <h3>No Friends Found</h3>
+            </div>
+          )}
 
-      {pendingUsers && pendingUsers.length > 0 ? (
-        <div className="pending-users">
-          <h3>Pending Friend Requests</h3>
-          {pendingUsers.map(pendingUser => (
-            <div key={pendingUser} className="pending-user">
-              <span>{pendingUser}</span>
+          {pendingUsers && pendingUsers.length > 0 ? (
+            <div className="pending-users">
+              <h3>Pending Friend Requests</h3>
+              {pendingUsers.map(pendingUser => (
+                <PendingUser key = {pendingUser._id} incomingUser = {pendingUser}></PendingUser>
+                // <div key={pendingUser._id} className="pending-user">
+                //   <span>{pendingUser.username}</span>
+                // </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            <div className="pending-users">
+              <h3>No Pending Friend Requests</h3>
+            </div>
+          )}
+          {error && <div className="error">{error}</div>}
+          {isLoading && <div className="loading">Loading...</div>}
         </div>
-      ) : (
-        <div className="pending-users">
-          <h3>No Pending Friend Requests</h3>
+        <div className = 'friends-search'>
+          <label for = "search-users">Search Users</label>
+          <input 
+            type = "search"
+            className = "search-users"
+            value = {searchTerm}
+            onChange = {(e) => setSearchTerm(e.target.value)}
+          />
         </div>
-      )}
-      {error && <div className="error">{error}</div>}
-      {isLoading && <div className="loading">Loading...</div>}
+        <div style = {{color:'Black', marginLeft:'20px'}}>
+          <h3> Search Results</h3>
+          {searchResults.length === 0 ? (
+            <p>No users found</p>
+          ) : (
+            searchResults.map(user => (
+              <div key={user._id} className="user-card">
+                <p>{user.username}</p>
+                {/* add more user info/buttons here if needed */}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     </>
   )
 

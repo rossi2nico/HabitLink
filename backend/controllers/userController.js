@@ -148,7 +148,7 @@ const acceptFriendRequest = async (req, res) => {
       const incomingUser = await User.findById(incomingUserId);
   
       if (!user || !incomingUser) {
-        return res.status(404).json({ error: 'User not found' });
+        return res.status(409).json({ error: 'User not found' });
       }
   
       const isPending = user.pendingUsers.some(

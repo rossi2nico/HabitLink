@@ -25,23 +25,25 @@ export const FriendsReducer = (state, action) => {
 
     case 'SEND_FRIEND_REQUEST':
       return {
+        ...state
         // Empty until I add outgoing request in the user schema
       };
 
     case 'ACCEPT_FRIEND_REQUEST':
       return {
-        ...state.user,
+        ...state,
         pendingUsers: state.pendingUsers.filter(
-          (user) => user !== action.payload
+          (user) => user._id.toString() !== action.payload._id.toString()
         ),
         friends: [action.payload, ...state.friends],
       };
 
-    case 'DECLINE-FRIEND-REQUEST':
+    // JSON returns incomingUserId as opposed to accept friend request incomingUser obj
+    case 'DECLINE_FRIEND_REQUEST':
       return {
-        ...state.user,
+        ...state,
         pendingUsers: state.pendingUsers.filter(
-          (user) => user !== action.payload
+          (user) => user._id.toString() !== action.payload.toString()
         ),
       };
 

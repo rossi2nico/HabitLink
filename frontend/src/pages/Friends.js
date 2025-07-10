@@ -5,6 +5,8 @@ import { useFriendsContext } from "../hooks/useFriendsContext";
 import { Navigation } from "../components/Navigation";
 import { useState } from "react";
 import { PendingUser } from "../components/PendingUser";
+import { Friend } from "../components/Friend";
+import { SearchUser } from "../components/SearchUser";
 
 const Friends = () => {
 
@@ -48,10 +50,11 @@ const Friends = () => {
             <div className="friends">
               <h3>Friends List</h3>
               {friends.map(friend => (
-                <div key={friend._id} className="friend">
-                  <span>{friend.username}</span>
-                  {/* <button onClick={() => removeFriend(friend._id)}>Remove Friend</button> */}
-                </div>
+                <Friend key = {friend._id} friend = {friend}></Friend>
+                // <div key={friend._id} className="friend">
+                //   <span>{friend.username}</span>
+                //   {/* <button onClick={() => removeFriend(friend._id)}>Remove Friend</button> */}
+                // </div>
               ))}
             </div>
           ) : (
@@ -75,6 +78,7 @@ const Friends = () => {
               <h3>No Pending Friend Requests</h3>
             </div>
           )}
+          <p>Errors and loading are showing here</p>
           {error && <div className="error">{error}</div>}
           {isLoading && <div className="loading">Loading...</div>}
         </div>
@@ -93,10 +97,11 @@ const Friends = () => {
             <p>No users found</p>
           ) : (
             searchResults.map(user => (
-              <div key={user._id} className="user-card">
-                <p>{user.username}</p>
-                {/* add more user info/buttons here if needed */}
-              </div>
+              <SearchUser key = {user._id} user = {user}></SearchUser>
+              // <div key={user._id} className="user-card">
+              //   <p>{user.username}</p>
+              //   {/* add more user info/buttons here if needed */}
+              // </div>
             ))
           )}
         </div>

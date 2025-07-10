@@ -78,7 +78,7 @@ export const useFriends = () => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${ user.token }` 
       },
-      body: JSON.stringify({ targetUserId: friendId })
+      body: JSON.stringify({ incomingUserId: friendId })
     });
     const json = await res.json();
     if (!res.ok) {
@@ -141,7 +141,7 @@ export const useFriends = () => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${ user.token }` 
       },
-      body: JSON.stringify({ targetUserId: friendId })
+      body: JSON.stringify({ incomingUserId: friendId })
     });
     const json = await res.json();
     if (!res.ok) {

@@ -383,10 +383,10 @@ top: 0;
 
 .habit {
   border-radius: 8px;
-  width: 600px;
+  width: 500px;
   height: 85px;
   color: #272727;
-  border: 2px solid rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0);
   border-radius: 50px;
   /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10); */
   padding-left: 15px;
@@ -402,32 +402,23 @@ top: 0;
 }
 
 .habit-name {
-  border: 2px solid green;
+  /* border: 2px solid green; */
   height: 100%;
-  width: 60%;
+  /* width: 60%; */
+  padding-right: 50px;
+  padding-left: 25px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  /* border: 1px solid red; */
 }
 
 .habit-mid {
   width: 70%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  border: 2px solid rgb(250, 69, 69);
-}
-
-.habit-stats {
-  /* border: 2px solid blue;
-  width: 20%;
-  height: 100%;
-  display: flex;
-  flex-direction: column; */
-  /* justify-content: space-evenly; */
-}
-
-.habit-streak {
-  /* margin-top: 50px; */
+  /* border: 2px solid rgb(250, 69, 69); */
 }
 
 .habit-left {
@@ -439,14 +430,31 @@ top: 0;
 }
 
 .habit-right {
-  border: 2px solid black;
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  /* justify-content: center;  */
+  align-items: flex-end;      /* align <p> tags to the right */
+  justify-content: center;    /* center vertically, or use 'start' or 'space-between' */
+  padding-right: 25px;
+  height: 100%;
+  gap: 6px;                   /* consistent spacing between items */
+  /* border: 2px solid green; */
 }
+
+.habit-right p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.2;
+  align-self: center;
+}
+
+/* .habit-stats {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space;
+  border: 2px solid red;
+} */
 
 
 

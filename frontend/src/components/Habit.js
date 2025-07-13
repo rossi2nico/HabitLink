@@ -64,22 +64,28 @@ export const Habit = ({ habit }) => {
         <div className = "habit-name">
           <h3> { habit.name } </h3>
         </div>
-        <div className = "habit-stats">
-          <p className = "habit-streak"> ️️‍🔥{ habit.streak } ({ habit.maxStreak }) </p>
-
-          {habit.privacy === 2 ? (
-            <p className = "habit-privacy"> 🔓Public </p>
-            ) : habit.privacy === 1 ? (
-            <p className = "habit-privacy"> 🔏Friends </p>
-            ) : (
-            <p className = "habit-privacy"> 🔏Private </p>
-            )}
-        </div>
-
+        
       </div>
       <div className = "habit-right">
+        {/* <div className = "habit-stats"> */}
+          <p className = "habit-streak">🔥{ habit.streak } (Max { habit.maxStreak }) </p>
 
-      </div>
+          <p className="habit-privacy">
+            {habit.privacy === 2
+            ? '🔓 Public'
+            : habit.privacy === 1
+            ? '🔏 Friends'
+            : '🔏 Private'}
+          </p>
+        
+          <p>
+            {syncedUsers.length > 0
+            ? `🌀 ${syncedUsers.length} users`
+            : '🌀 0 users'}
+          </p>
+
+        </div>
+      {/* </div> */}
     </div>
 
     // <div className = "habit">

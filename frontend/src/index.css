@@ -349,20 +349,6 @@ top: 0;
   z-index: 999;
 }
 
-.habit {
-  /* background-color: #272727; */
-  background-color: #ffffff;  
-  border-radius: 8px;
-  width: 500px;
-  height: 85px;
-  /* color: #F0F0F0; */
-  color: #272727;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
-  padding-left: 15px;
-  padding-right: 15px;
-  margin: 16px;
-  display: flex;
-}
 
 .toggle-complete, .delete-button {
   background-color: transparent;
@@ -381,16 +367,6 @@ top: 0;
   color: #f86060;
 }
 
-.habit h3 {
-  margin-top: 8px;
-}
-
-
-.privacy {
-  margin-top: 25px;
-  margin-bottom: -15px;
-}
-
 .habit-id {
   font-size: 12px;
   margin-top: -15px;
@@ -403,8 +379,67 @@ top: 0;
   align-items: center;
 }
 
-.right {
-  /* border: 2px solid white; */
+/* Habit CSS */
+
+.habit {
+  border-radius: 8px;
+  width: 600px;
+  height: 85px;
+  color: #272727;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 50px;
+  /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10); */
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 16px;
+  display: flex;
+}
+.toggle-img {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.habit-name {
+  border: 2px solid green;
+  height: 100%;
+  width: 60%;
+  display: flex;
+  align-items: center;
+}
+
+.habit-mid {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(250, 69, 69);
+}
+
+.habit-stats {
+  /* border: 2px solid blue;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; */
+  /* justify-content: space-evenly; */
+}
+
+.habit-streak {
+  /* margin-top: 50px; */
+}
+
+.habit-left {
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.habit-right {
+  border: 2px solid black;
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -413,14 +448,7 @@ top: 0;
   /* justify-content: center;  */
 }
 
-.left {
-  /* border: 2px solid blue; */
-  width: 50%;
-  /* display: flex;
-  flex-direction: column; */
-  /* justify-content: space-between; */
-  /* align-items: center;  */
-}
+
 
 .pending-users h3, .friends h3 {
   color: #000000;

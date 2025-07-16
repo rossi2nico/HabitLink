@@ -147,7 +147,7 @@ const toggleComplete = async (req, res) => {
             habit.completions.push(today);
             await habit.save()
             // need to calculate streak here.
-            await calculateStreak(habit);
+            // await calculateStreak(habit);
             return res.status(200).json({ habit })
         }
 
@@ -156,13 +156,13 @@ const toggleComplete = async (req, res) => {
             habit.completions.pop();
             await habit.save();
             // need to calculate streak here
-            await calculateStreak(habit);
+            // await calculateStreak(habit);
             return res.status(200).json({ habit })
         }
         habit.completions.push(today);
         await habit.save();
         // need to calculate streak here
-        await calculateStreak(habit);
+        // await calculateStreak(habit);
         res.status(200).json({ habit })
 
     }

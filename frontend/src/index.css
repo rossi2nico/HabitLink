@@ -19,6 +19,7 @@ body {
   background-attachment: fixed;
   background-size: 100vw;
   background-color: #ffffff; /* optional: black background behind image */
+
 }
 
 
@@ -374,24 +375,34 @@ top: 0;
 
 .habits {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  /* align-items: center; */
   justify-content: center;
-  align-items: center;
+  /* align-self: center; */
 }
 
-/* Habit CSS */
+.user-habits h3 {
 
+}
+.user-habits, .friend-habits, .public-habits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  /* justify-content: flex-start; */
+}
 .habit {
   border-radius: 8px;
-  width: 500px;
-  height: 85px;
+  width: clamp(250px, 350px, 500px);
+  height: 70px;
   color: #272727;
-  border: 1px solid rgb(0, 0, 0);
-  border-radius: 50px;
+  border: 2px solid rgb(85, 85, 85);
+  /* border-radius: 40px; */
   /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10); */
   padding-left: 15px;
   padding-right: 15px;
-  margin: 16px;
+  margin: 5px;
   display: flex;
 }
 .toggle-img {
@@ -399,6 +410,7 @@ top: 0;
   height: 35px;
   position: absolute;
   cursor: pointer;
+  margin-top: -15px;
 }
 
 .habit-name {
@@ -435,7 +447,7 @@ top: 0;
   flex-direction: column;
   align-items: flex-end;      /* align <p> tags to the right */
   justify-content: center;    /* center vertically, or use 'start' or 'space-between' */
-  padding-right: 25px;
+  /* padding-right: 25px; */
   height: 100%;
   gap: 6px;                   /* consistent spacing between items */
   /* border: 2px solid green; */

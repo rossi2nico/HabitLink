@@ -58,6 +58,7 @@ export const Habit = ({ habit }) => {
     <div className = "habit">
       <div className = "habit-left">
         <img className = "toggle-img" src = {complete ? tick : noTick } alt = "checkbox" onClick = {() => toggleComplete(habit._id)}></img>
+        <p style = {{ marginBottom:"-25px", marginLeft:"5px"}} className = "habit-streak">{ habit.streak }🔥 </p>
         {/* <p className = "habit-streak"> { habit.streak } </p> */}
       </div>
       <div className = "habit-mid">
@@ -68,7 +69,7 @@ export const Habit = ({ habit }) => {
       </div>
       <div className = "habit-right">
         {/* <div className = "habit-stats"> */}
-          <p className = "habit-streak">🔥{ habit.streak } (Max { habit.maxStreak }) </p>
+          {/* <p className = "habit-streak">🔥{ habit.streak } (Max { habit.maxStreak }) </p> */}
 
           <p className="habit-privacy">
             {habit.privacy === 2

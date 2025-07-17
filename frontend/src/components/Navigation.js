@@ -27,8 +27,8 @@ export const Navigation = () => {
       </>
     ) : (
       <>
-        <span>Signed in as <strong>{user.username}</strong></span>
-        <button onClick={logout}>Logout</button>
+        <span>Logged in as <strong>{user.username}</strong></span>
+        <button onClick = { logout }>Sign Out</button>
       </>
     )}
   </div>

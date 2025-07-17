@@ -3,12 +3,18 @@
 
 body {
   margin: 0;
-  /* background-color: #0a0a0a;
-  color: #F0F0F0; */
-  background-color: #F0F0F0;
-  background: linear-gradient(to bottom,  #6d9bff49,#ab8bfa3d);
-  opacity: 90%;
-  color: #000000;
+
+  /* background: linear-gradient(to bottom,  #e9effc,#babfff); */
+  /* background: radial-gradient(circle at top left, #e9effc, #ffa8a8); */
+  /* background: linear-gradient(135deg, #f0f4ff, #e2e8f0); */
+  background: linear-gradient(to bottom, #f5faff, #c7e2ff);
+  /* background: radial-gradient(circle at top left, #f5f0ff, #fce6f9); */
+  background-blend-mode: multiply;
+
+
+
+  /* opacity: 90%; */
+  color: #272727;
   font-weight: 550;
   font-family: 'Rubik', sans-serif;
   /* font-family: 'Red Hat Display', sans-serif; */
@@ -76,7 +82,7 @@ h3 a:hover {
   background-color: #ffffff;
   color:#292929;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -163,17 +169,21 @@ h3 a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff ;
-  padding: 6px 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 12px 32px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
   /* font-family: 'Segoe UI', sans-serif; */
   position: sticky;
   opacity: 100%;
   top: 0;
   /* z-index: 999; */
-  height: 30px;
+  height: 20px;
   color: black;
 /* opacity: 100%; */
+  width: 60%;
+  margin: auto;
+  margin-top: 15px;
 }
 
 /* Left side nav links */
@@ -393,7 +403,7 @@ h3 a:hover {
   /* justify-content: flex-start; */
 }
 .habit {
-  border-radius: 8px;
+  border-radius: 24px;
   width: clamp(250px, 350px, 500px);
   height: 70px;
   color: #272727;
@@ -402,7 +412,7 @@ h3 a:hover {
   padding-right: 15px;
   margin: 5px;
   display: flex;
-  background-color: #F9F9F9;
+  background-color: #ffffff;
 }
 
 .habit:hover {

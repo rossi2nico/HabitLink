@@ -274,6 +274,7 @@ const getHabits = async (req, res) => {
         if (!sameDate(new Date(habit.streakLastUpdated), today)) {
             console.log('Calculating streak')
             await calculateStreak(habit);
+            await habit.save();
         }
     }
 
@@ -302,6 +303,7 @@ const getFriendHabits = async (req, res) => {
             if (!sameDate(habit.streakLastUpdated, today)) {
                 console.log('Calculating streak')
                 await calculateStreak(habit);
+                await habit.save();
             }
         }
         
@@ -342,6 +344,7 @@ const getPublicHabits = async (req, res) => {
         if (!sameDate(habit.streakLastUpdated, today)) {
             console.log('Calculating streak!!')
             await calculateStreak(habit);
+            await habit.save();
         }
     }
 

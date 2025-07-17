@@ -4,14 +4,11 @@
 body {
   margin: 0;
 
-  /* background: linear-gradient(to bottom,  #e9effc,#babfff); */
+  background: linear-gradient(to bottom,  #e9effc,#babfff);
   /* background: radial-gradient(circle at top left, #e9effc, #ffa8a8); */
   /* background: linear-gradient(135deg, #f0f4ff, #e2e8f0); */
-  background: linear-gradient(to bottom, #f5faff, #c7e2ff);
-  /* background: radial-gradient(circle at top left, #f5f0ff, #fce6f9); */
-  background-blend-mode: multiply;
-
-
+  /* background: linear-gradient(to bottom, #e3f1ff, #eee7ffb7); */
+  /* background: radial-gradient(circle at top left, #f5f0ff, hsl(0, 95%, 84%)); */
 
   /* opacity: 90%; */
   color: #272727;
@@ -169,7 +166,9 @@ h3 a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  /* background-color: white; */
+  background-color: rgba(255, 255, 255, 0.4); /* white bg, 60% opacity */
+
   padding: 12px 32px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
@@ -181,7 +180,7 @@ h3 a:hover {
   height: 20px;
   color: black;
 /* opacity: 100%; */
-  width: 60%;
+  width: clamp(300px, 55%, 1200px);
   margin: auto;
   margin-top: 15px;
 }
@@ -219,7 +218,7 @@ h3 a:hover {
 .navigation button {
   background-color: transparent;
   color: #f44336;
-  border: 2px solid #f44336;
+  border: 1px solid #f44336;
   font-family: 'Segoe UI', sans-serif;
   margin-top: 0px;
   padding: 2px 8px;
@@ -359,60 +358,34 @@ h3 a:hover {
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.932);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 999;
-}
-
-
-.toggle-complete, .delete-button {
-  background-color: transparent;
-  border: 0px;
-  color: #161616;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: block;
-  width: fit-content;
-  margin: 0;
-}
-.toggle-complete:hover , .delete-button:hover {
-  color: #f86060;
-}
-
-.habit-id {
-  font-size: 12px;
-  margin-top: -15px;
 }
 
 .habits {
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: center; */
-  /* align-items: center; */
   justify-content: center;
-  /* align-self: center; */
+  align-items: center;
 }
 
 .user-habits, .friend-habits, .public-habits {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px;
   /* justify-content: flex-start; */
+  padding: 10px;
 }
+
 .habit {
   border-radius: 24px;
+  padding: 3px;
   width: clamp(250px, 350px, 500px);
-  height: 70px;
+  height: 50px;
   color: #272727;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding-left: 15px;
-  padding-right: 15px;
-  margin: 5px;
+  margin: 6px;
   display: flex;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.7); /* white bg, 60% opacity */
 }
 
 .habit:hover {
@@ -420,52 +393,61 @@ h3 a:hover {
   transform: scale(1.03);
 }
 
+.toggle-img:hover {
+  transition: ease 0.7s;
+  transform: scale(1.1);
+}
+
+.habit-link {
+  width: 25px;
+  cursor: pointer;
+  padding-right: 10px;
+}
+
 .toggle-img {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   position: absolute;
   cursor: pointer;
 }
 
-.habit-name {
-  /* border: 2px solid green; */
-  height: 100%;
-  width: 60%;
-  padding-right: 25px;
-  padding-left: 55px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.habit-name, .habit-username{
   text-align: center;
-  /* border: 1px solid red; */
+  padding: 0;
+  margin: 0;
+  gap: 0;
+}
+
+.habit-username {
+  margin-top: 3px;
+  font-size: 12px;
+}
+
+.habit-left {
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .habit-mid {
   width: 70%;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  /* border: 2px solid rgb(250, 69, 69); */
-}
-
-.habit-left {
-  width: 50px;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .habit-right {
-  width: 30%;
+  width: 15%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;      /* align <p> tags to the right */
   justify-content: center;    /* center vertically, or use 'start' or 'space-between' */
-  /* padding-right: 25px; */
   height: 100%;
   gap: 6px;                   /* consistent spacing between items */
-  /* border: 2px solid green; */
 }
 
 .habit-right p {
@@ -479,14 +461,6 @@ h3 a:hover {
   font-weight: 600;
   font-size: 14px;
 }
-
-/* .habit-stats {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space;
-  border: 2px solid red;
-} */
 
 .pending-users h3, .friends h3 {
   color: #000000;

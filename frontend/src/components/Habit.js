@@ -4,7 +4,8 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
 import noTick from '../assets/not_tick.png'
 import tick from '../assets/blue_tick.png'
-import del from '../assets/delete.png'
+import del from '../assets/delete-red.png'
+import link from '../assets/link.png'
 
 export const Habit = ({ habit }) => {
 
@@ -61,28 +62,62 @@ export const Habit = ({ habit }) => {
         <p className = "habit-streak"> { habit.streak } </p>
       </div>
       <div className = "habit-mid">
-        <div className = "habit-name">
+        <h4 className = "habit-name">{ habit.name }</h4>
+        {!usersHabit && (
+          <p className = "habit-username"> from <strong>{ habit.username }</strong> 👥 3 users </p>
+        )}
+        {usersHabit && (
+          <p className="habit-username">
+            {habit.privacy === 2
+              ? '🔓 Public'
+              : habit.privacy === 1
+              ? '🔏 Friends'
+              : '🔒 Private'}
+
+            {syncedUsers.length > 0 &&
+              (syncedUsers.length === 1
+                ? ' 👤 1 user'
+                : ` 👥 ${syncedUsers.length} users`)}
+          </p>
+)}
+
+        {/* <div className = "habit-name">
           <h4> { habit.name } </h4>
         </div>
+        {!usersHabit && (
+            <p style = {{fontSize:"12px"}}> { habit.username } </p>
+          )} */}
         
       </div>
       <div className = "habit-right">
         {/* <div className = "habit-stats"> */}
           {/* <p className = "habit-streak">🔥{ habit.streak } (Max { habit.maxStreak }) </p> */}
 
-          <p className="habit-privacy">
+          {usersHabit ? (
+            <img onClick = {() => deleteHabit(habit._id)} style = {{ width:"18px", paddingRight:"20px", cursor:"Pointer"}} src = {del}></img>
+          ) : (
+            <>
+              {/* <p style = {{ fontSize:"10px" }}>link habit</p> */}
+              <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
+            </>
+          )}
+          
+
+          {/* <p className="habit-privacy">
             {habit.privacy === 2
             ? '🔓 Public'
             : habit.privacy === 1
             ? '🔏 Friends'
-            : '🔏 Private'}
+            : '🔒 Private'}
           </p>
-        
-          <p>
-            {syncedUsers.length > 0
-            ? `🌀 ${syncedUsers.length} users`
-            : '🌀 0 users'}
-          </p>
+          
+          {syncedUsers.length > 0 && (
+            <p>
+              {syncedUsers.length === 1
+                ? '👤 1 user'
+                : `👥 ${syncedUsers.length} users`}
+            </p>
+          )} */}
 
         </div>
       {/* </div> */}

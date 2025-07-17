@@ -145,24 +145,21 @@ const toggleComplete = async (req, res) => {
 
         if (len === 0) {
             habit.completions.push(today);
+            await calculateStreak(habit);
             await habit.save()
-            // need to calculate streak here.
-            // await calculateStreak(habit);
             return res.status(200).json({ habit })
         }
 
         const lastItem = new Date(habit.completions[len - 1]);
         if (sameDate(lastItem, today)) {
             habit.completions.pop();
+            await calculateStreak(habit);
             await habit.save();
-            // need to calculate streak here
-            // await calculateStreak(habit);
             return res.status(200).json({ habit })
         }
         habit.completions.push(today);
+        await calculateStreak(habit);
         await habit.save();
-        // need to calculate streak here
-        // await calculateStreak(habit);
         res.status(200).json({ habit })
 
     }

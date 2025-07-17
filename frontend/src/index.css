@@ -1,14 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;800&display=swap');
 
 body {
   margin: 0;
-  /* background-color: #0a0a0a;
-  color: #F0F0F0; */
-  background-color: #F0F0F0;
-  opacity: 90%;
-  color: #000000;
+
+  /* background: linear-gradient(to bottom,  #e9effc,#babfff); */
+  /* background: radial-gradient(circle at top left, #e9effc, #ffa8a8); */
+  /* background: linear-gradient(135deg, #f0f4ff, #e2e8f0); */
+  background: linear-gradient(to bottom, #f5faff, #c7e2ff);
+  /* background: radial-gradient(circle at top left, #f5f0ff, #fce6f9); */
+  background-blend-mode: multiply;
+
+
+
+  /* opacity: 90%; */
+  color: #272727;
   font-weight: 550;
   font-family: 'Rubik', sans-serif;
+  /* font-family: 'Red Hat Display', sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-image: url('https://wallpapercat.com/w/full/5/7/c/2112834-3840x2160-desktop-4k-minimalist-wallpaper-photo.jpg'); */
@@ -19,8 +28,8 @@ body {
   background-attachment: fixed;
   background-size: 100vw;
   background-color: #ffffff; /* optional: black background behind image */
-}
 
+}
 
 .pending-user-card p {
   color:#161616;
@@ -73,7 +82,7 @@ h3 a:hover {
   background-color: #ffffff;
   color:#292929;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -160,30 +169,35 @@ h3 a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff ;
-  padding: 6px 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 12px 32px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
   /* font-family: 'Segoe UI', sans-serif; */
   position: sticky;
   opacity: 100%;
-top: 0;
+  top: 0;
   /* z-index: 999; */
-  height: 30px;
+  height: 20px;
   color: black;
 /* opacity: 100%; */
+  width: 60%;
+  margin: auto;
+  margin-top: 15px;
 }
 
 /* Left side nav links */
 .navigation h3 {
   margin: 0 20px 0 0;
   font-size: 17px;
-  font-weight: 600;
   display: inline-block;
 }
 
 .navigation a {
   text-decoration: none;
-  color: #1e3932; /* dark green like Starbucks */
+  color: #0f0f0f; /* dark green like Starbucks */
+  font-family: 'Rubik';
+  font-weight: 500;
   transition: color 0.2s ease;
 }
 
@@ -349,20 +363,6 @@ top: 0;
   z-index: 999;
 }
 
-.habit {
-  /* background-color: #272727; */
-  background-color: #ffffff;  
-  border-radius: 8px;
-  width: 500px;
-  height: 85px;
-  /* color: #F0F0F0; */
-  color: #272727;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
-  padding-left: 15px;
-  padding-right: 15px;
-  margin: 16px;
-  display: flex;
-}
 
 .toggle-complete, .delete-button {
   background-color: transparent;
@@ -381,16 +381,6 @@ top: 0;
   color: #f86060;
 }
 
-.habit h3 {
-  margin-top: 8px;
-}
-
-
-.privacy {
-  margin-top: 25px;
-  margin-bottom: -15px;
-}
-
 .habit-id {
   font-size: 12px;
   margin-top: -15px;
@@ -398,29 +388,105 @@ top: 0;
 
 .habits {
   display: flex;
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  justify-content: center;
+  /* align-self: center; */
+}
+
+.user-habits, .friend-habits, .public-habits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  /* justify-content: flex-start; */
+}
+.habit {
+  border-radius: 24px;
+  width: clamp(250px, 350px, 500px);
+  height: 70px;
+  color: #272727;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 5px;
+  display: flex;
+  background-color: #ffffff;
+}
+
+.habit:hover {
+  transition: ease 0.7s;
+  transform: scale(1.03);
+}
+
+.toggle-img {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.habit-name {
+  /* border: 2px solid green; */
+  height: 100%;
+  width: 60%;
+  padding-right: 25px;
+  padding-left: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* border: 1px solid red; */
+}
+
+.habit-mid {
+  width: 70%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* border: 2px solid rgb(250, 69, 69); */
+}
+
+.habit-left {
+  width: 50px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.right {
-  /* border: 2px solid white; */
-  width: 50%;
+.habit-right {
+  width: 30%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  /* justify-content: center;  */
+  align-items: flex-end;      /* align <p> tags to the right */
+  justify-content: center;    /* center vertically, or use 'start' or 'space-between' */
+  /* padding-right: 25px; */
+  height: 100%;
+  gap: 6px;                   /* consistent spacing between items */
+  /* border: 2px solid green; */
 }
 
-.left {
-  /* border: 2px solid blue; */
-  width: 50%;
-  /* display: flex;
-  flex-direction: column; */
-  /* justify-content: space-between; */
-  /* align-items: center;  */
+.habit-right p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.2;
+  align-self: center;
 }
+
+.habit-streak {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* .habit-stats {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space;
+  border: 2px solid red;
+} */
 
 .pending-users h3, .friends h3 {
   color: #000000;

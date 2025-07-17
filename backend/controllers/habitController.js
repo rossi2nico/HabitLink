@@ -145,24 +145,21 @@ const toggleComplete = async (req, res) => {
 
         if (len === 0) {
             habit.completions.push(today);
-            await habit.save()
-            // need to calculate streak here.
             await calculateStreak(habit);
+            await habit.save()
             return res.status(200).json({ habit })
         }
 
         const lastItem = new Date(habit.completions[len - 1]);
         if (sameDate(lastItem, today)) {
             habit.completions.pop();
-            await habit.save();
-            // need to calculate streak here
             await calculateStreak(habit);
+            await habit.save();
             return res.status(200).json({ habit })
         }
         habit.completions.push(today);
-        await habit.save();
-        // need to calculate streak here
         await calculateStreak(habit);
+        await habit.save();
         res.status(200).json({ habit })
 
     }
@@ -277,6 +274,7 @@ const getHabits = async (req, res) => {
         if (!sameDate(new Date(habit.streakLastUpdated), today)) {
             console.log('Calculating streak')
             await calculateStreak(habit);
+            await habit.save();
         }
     }
 
@@ -305,6 +303,7 @@ const getFriendHabits = async (req, res) => {
             if (!sameDate(habit.streakLastUpdated, today)) {
                 console.log('Calculating streak')
                 await calculateStreak(habit);
+                await habit.save();
             }
         }
         
@@ -345,6 +344,7 @@ const getPublicHabits = async (req, res) => {
         if (!sameDate(habit.streakLastUpdated, today)) {
             console.log('Calculating streak!!')
             await calculateStreak(habit);
+            await habit.save();
         }
     }
 

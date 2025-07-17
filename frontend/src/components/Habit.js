@@ -3,7 +3,7 @@ import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
 import noTick from '../assets/not_tick.png'
-import tick from '../assets/tick.png'
+import tick from '../assets/blue_tick.png'
 import del from '../assets/delete.png'
 
 export const Habit = ({ habit }) => {
@@ -58,12 +58,11 @@ export const Habit = ({ habit }) => {
     <div className = "habit">
       <div className = "habit-left">
         <img className = "toggle-img" src = {complete ? tick : noTick } alt = "checkbox" onClick = {() => toggleComplete(habit._id)}></img>
-        <p style = {{ marginBottom:"-25px", marginLeft:"5px"}} className = "habit-streak">{ habit.streak }🔥 </p>
-        {/* <p className = "habit-streak"> { habit.streak } </p> */}
+        <p className = "habit-streak"> { habit.streak } </p>
       </div>
       <div className = "habit-mid">
         <div className = "habit-name">
-          <h3> { habit.name } </h3>
+          <h4> { habit.name } </h4>
         </div>
         
       </div>

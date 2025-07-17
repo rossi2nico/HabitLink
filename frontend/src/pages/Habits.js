@@ -29,7 +29,7 @@ const Habits = () => {
       <Navigation></Navigation>
       <div className="habits">
         <div className = "user-habits">
-          <h3> User habits: </h3>
+          <h3> Habits </h3>
           {/* { habits && habits.map((habit) => (
             <pre key = { habit._id }>
               { JSON.stringify(habit, null, 2)}

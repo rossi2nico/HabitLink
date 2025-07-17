@@ -1,14 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;800&display=swap');
 
 body {
   margin: 0;
   /* background-color: #0a0a0a;
   color: #F0F0F0; */
   background-color: #F0F0F0;
+  background: linear-gradient(to bottom,  #6d9bff49,#ab8bfa3d);
   opacity: 90%;
   color: #000000;
   font-weight: 550;
   font-family: 'Rubik', sans-serif;
+  /* font-family: 'Red Hat Display', sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-image: url('https://wallpapercat.com/w/full/5/7/c/2112834-3840x2160-desktop-4k-minimalist-wallpaper-photo.jpg'); */
@@ -21,7 +24,6 @@ body {
   background-color: #ffffff; /* optional: black background behind image */
 
 }
-
 
 .pending-user-card p {
   color:#161616;
@@ -167,7 +169,7 @@ h3 a:hover {
   /* font-family: 'Segoe UI', sans-serif; */
   position: sticky;
   opacity: 100%;
-top: 0;
+  top: 0;
   /* z-index: 999; */
   height: 30px;
   color: black;
@@ -178,13 +180,14 @@ top: 0;
 .navigation h3 {
   margin: 0 20px 0 0;
   font-size: 17px;
-  font-weight: 600;
   display: inline-block;
 }
 
 .navigation a {
   text-decoration: none;
-  color: #1e3932; /* dark green like Starbucks */
+  color: #0f0f0f; /* dark green like Starbucks */
+  font-family: 'Rubik';
+  font-weight: 500;
   transition: color 0.2s ease;
 }
 
@@ -382,9 +385,6 @@ top: 0;
   /* align-self: center; */
 }
 
-.user-habits h3 {
-
-}
 .user-habits, .friend-habits, .public-habits {
   display: flex;
   flex-direction: column;
@@ -397,31 +397,36 @@ top: 0;
   width: clamp(250px, 350px, 500px);
   height: 70px;
   color: #272727;
-  border: 2px solid rgb(85, 85, 85);
-  /* border-radius: 40px; */
-  /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10); */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding-left: 15px;
   padding-right: 15px;
   margin: 5px;
   display: flex;
+  background-color: #F9F9F9;
 }
+
+.habit:hover {
+  transition: ease 0.7s;
+  transform: scale(1.03);
+}
+
 .toggle-img {
   width: 35px;
   height: 35px;
   position: absolute;
   cursor: pointer;
-  margin-top: -15px;
 }
 
 .habit-name {
   /* border: 2px solid green; */
   height: 100%;
-  /* width: 60%; */
-  padding-right: 50px;
-  padding-left: 25px;
+  width: 60%;
+  padding-right: 25px;
+  padding-left: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   /* border: 1px solid red; */
 }
 
@@ -460,6 +465,11 @@ top: 0;
   align-self: center;
 }
 
+.habit-streak {
+  font-weight: 600;
+  font-size: 14px;
+}
+
 /* .habit-stats {
   height: 100%;
   display: flex;
@@ -467,8 +477,6 @@ top: 0;
   justify-content: space;
   border: 2px solid red;
 } */
-
-
 
 .pending-users h3, .friends h3 {
   color: #000000;

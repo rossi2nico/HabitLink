@@ -64,7 +64,14 @@ export const Habit = ({ habit }) => {
       <div className = "habit-mid">
         <h4 className = "habit-name">{ habit.name }</h4>
         {!usersHabit && (
-          <p className = "habit-username"> from <strong>{ habit.username }</strong> 👥 3 users </p>
+          <p className = "habit-username"> from <strong>{ habit.username }</strong> 
+          
+          {syncedUsers.length > 0 &&
+              (syncedUsers.length === 1
+                ? ' 👤 1 user'
+                : ` 👥 ${syncedUsers.length} users`)}
+      
+           </p>
         )}
         {usersHabit && (
           <p className="habit-username">

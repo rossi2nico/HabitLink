@@ -28,6 +28,10 @@ body {
 
 }
 
+p, h4, h3, span {
+  cursor: default;
+}
+
 .pending-user-card p {
   color:#161616;
   /* font-weight: 600; */
@@ -393,7 +397,7 @@ h3 a:hover {
   transform: scale(1.03);
 }
 
-.toggle-img:hover {
+.toggle-img:hover, .habit-link:hover, .habit-delete:hover {
   transition: ease 0.7s;
   transform: scale(1.1);
 }

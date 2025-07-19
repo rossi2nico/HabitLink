@@ -13,6 +13,7 @@ const {
   getPublicHabits,
   getTargetHabits,
   getFriendHabits,
+  getSyncedHabits,
   toggleComplete,
 } = require('../controllers/habitController');
 
@@ -25,6 +26,7 @@ router.get('/public', getPublicHabits);
 router.get('/friends', getFriendHabits);
 router.get('/public/:targetUserId', getTargetHabits);
 router.get('/:habitId', getHabit);
+router.get('/syncedHabits/:habitId', getSyncedHabits);
 
 router.post('/', createHabit);
 router.post('/sync', syncHabit);

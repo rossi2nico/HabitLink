@@ -80,7 +80,6 @@ const calculateStreak = async (habit) => {
     }
     if (cur > maxStreak) maxStreak = cur;
 
-    // 
     day = new Date(today);
     if (!sameDate(today, lastCompleted)) {
         day.setDate(day.getDate() - 1);
@@ -141,6 +140,22 @@ const updateHabit = async (req, res) => {
 
     }
     catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+const getSyncedHabits = async (req, res) => {
+    
+    const { habitId } = req.params;
+
+    try {
+        const habit = await Habit.findById(habitId).populate('syncedHabits.habitId', 'streak maxStreak totalCompletions potentialCompletions completions username');
+        if (!habit) {
+            return res.status(404).json({ error: 'Habit not found' })
+        }
+        const syncedHabits = habit.syncedHabits;
+        return res.status(200).json({ syncedHabits }); // Returns json.syncedHabits -> { "syncedHabits": [], otherVariables needed etc }
+    } catch (error) {
         res.status(400).json({ error: error.message });
     }
 }
@@ -425,7 +440,7 @@ const updateHabit = async (req, res) => {
 
 module.exports = {
     createHabit,
-    getHabit, getHabits, getPublicHabits, getTargetHabits, getFriendHabits,
+    getHabit, getHabits, getPublicHabits, getTargetHabits, getFriendHabits, getSyncedHabits,
     deleteHabit,
     updateHabit,
     syncHabit,

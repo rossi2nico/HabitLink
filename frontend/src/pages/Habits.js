@@ -30,14 +30,6 @@ const Habits = () => {
       <div className="habits">
         <div className = "user-habits">
           <h3> Habits </h3>
-          {/* { habits && habits.map((habit) => (
-            <pre key = { habit._id }>
-              { JSON.stringify(habit, null, 2)}
-            </pre>
-          ))} */}
-          {/* { habits && habits.map((habit) => (
-            <Habit key = { habit._id } habit = { habit }></Habit>
-          ))} */}
 
           { habits && (habits.length > 0) ? (
             habits.map(habit => <Habit key = { habit._id} habit = { habit }></Habit>
@@ -54,20 +46,15 @@ const Habits = () => {
             <p> No Friends Habits found</p>
           )}
           <div className = "public-habits">
-          <h3> Public Habits </h3>
-          {/* { publicHabits && publicHabits.map((habit) => (
-            <pre key = { habit._id }>
-              { JSON.stringify(habit, null, 2)}
-            </pre>
-          ))} */}
-          { publicHabits && publicHabits.length > 0 ? publicHabits.map((publicHabit) => (
-            !isUsersHabit(publicHabit) ? (
-              <Habit key = { publicHabit._id } habit = { publicHabit }></Habit>
-            ) : null
-          )) : (
-            <p>No public habits found</p>
-          )}
-        </div>
+            <h3> Public Habits </h3>
+              { publicHabits && publicHabits.length > 0 ? publicHabits.map((publicHabit) => (
+                !isUsersHabit(publicHabit) ? (
+                  <Habit key = { publicHabit._id } habit = { publicHabit }></Habit>
+                ) : null
+              )) : (
+              <p>No public habits found</p>
+            )}
+          </div>
         </div>
         
       </div>

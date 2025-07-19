@@ -14,7 +14,6 @@ export const Navigation = () => {
       src = { checkmark }
       style={{ height: '18px', width: '18px', objectFit: 'contain', marginRight: '10px' }}
     />
-    {/* <span><Link to="/">habitLink 2027 → gross profit $3mil</Link></span> */}
     <h3><Link to="/habits">Habits</Link></h3>
     <h3><Link to="/friends">Friends</Link></h3>
   </div>

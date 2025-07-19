@@ -42,10 +42,12 @@ const calculateStreak = async (habit) => {
         day.setDate(day.getDate() - 1);
     }
     let streak = 0;
+    let totalCompletions = 0;
 
     for (let i = completions.length - 1; i >= 0; i--) {
         const date = completions[i];
         if (sameDate(date, day)) {
+            totalCompletions++;
             streak++;
             day.setDate(day.getDate() - 1);
         }
@@ -78,12 +80,25 @@ const calculateStreak = async (habit) => {
     }
     if (cur > maxStreak) maxStreak = cur;
 
-    console.log(`new streak: ${streak}`)
+    // 
+    day = new Date(today);
+    if (!sameDate(today, lastCompleted)) {
+        day.setDate(day.getDate() - 1);
+    }
+    let startDay = new Date(habit.createdAt);
+    startDay.setHours(0, 0, 0, 0);
+    const potentialCompletions = Math.floor((day - startDay) / (1000 * 60 * 60 * 24) + 1);
+
+    if (!habit.timesCompleted || typeof habit.timesCompleted !== 'object') {
+        habit.timesCompleted = { completions: 0, days: 0 };
+    }
+
+    habit.totalCompletions = totalCompletions;
+    habit.potentialCompletions = potentialCompletions;
     habit.streak = streak;
     habit.maxStreak = maxStreak;
     await habit.save();
     return;
-
 }
 
 const updateHabit = async (req, res) => {

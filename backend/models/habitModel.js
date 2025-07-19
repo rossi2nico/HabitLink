@@ -46,8 +46,11 @@ const habitSchema = new Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true
     },
-    ownerId: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    totalCompletions: {
+        type: Number
+    },
+    potentialCompletions: {
+        type: Number
     },
     username: {
         type: String

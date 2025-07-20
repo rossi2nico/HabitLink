@@ -310,6 +310,16 @@ h3 a:hover {
   align-items: center;
   padding: 0.625rem;
 }
+.advanced-habit {
+  border: 2px solid red;
+  position: absolute;
+  margin-top: 30px;
+  width: 90vw;
+  height: 80vh;
+  z-index: 10;
+  background-color: white;
+  /* opacity: %; */
+}
 
 .habit {
   border-radius: 1.5rem;

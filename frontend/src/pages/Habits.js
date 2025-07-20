@@ -5,6 +5,7 @@ import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { Habit } from '../components/Habit'
 import { Navigation } from '../components/Navigation'
+import { AdvancedHabit } from '../components/AdvancedHabit'
 
 const Habits = () => {
 
@@ -28,6 +29,7 @@ const Habits = () => {
     <>
       <Navigation></Navigation>
       <div className="habits">
+        {habits?.length > 0 && <AdvancedHabit habit={habits[1]} />}
         <div className = "user-habits">
           <h3> Habits </h3>
 

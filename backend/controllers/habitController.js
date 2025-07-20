@@ -149,10 +149,15 @@ const getSyncedHabits = async (req, res) => {
     const { habitId } = req.params;
 
     try {
-        const habit = await Habit.findById(habitId).populate('syncedHabits.habitId', 'streak maxStreak totalCompletions potentialCompletions completions username');
+        const habit = await Habit.findById(habitId).populate(
+            'syncedHabits.habitId', 
+            'streak maxStreak totalCompletions potentialCompletions completions username'
+        );
+
         if (!habit) {
             return res.status(404).json({ error: 'Habit not found' })
         }
+
         const syncedHabits = habit.syncedHabits;
         return res.status(200).json({ syncedHabits }); // Returns json.syncedHabits -> { "syncedHabits": [], otherVariables needed etc }
     } catch (error) {

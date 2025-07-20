@@ -11,8 +11,15 @@ export const AdvancedHabit = ({ habit }) => {
     const fetchData = async () => {
       try {
         const res = await getSyncedHabits(habit._id)
-        console.log(`res: ${res}`)
-        setSyncedHabits(res);
+        
+        const sortedResult = [...(res || [])].sort((a, b) => {
+          const streakA = a.habitId?.streak ?? a.streak ?? 0
+          const streakB = b.habitId?.streak ?? b.streak ?? 0
+          return streakB - streakA
+        })
+
+        setSyncedHabits(sortedResult);
+        
       } catch (error) {
         console.log(error)
       }
@@ -24,9 +31,7 @@ export const AdvancedHabit = ({ habit }) => {
 
   return (
     <div className="advanced-habit">
-      {/* <pre>
-        <code>{JSON.stringify(syncedHabits, null, 2)}</code>
-      </pre>       */}
+
       {syncedHabits?.map((h) => (
         // <pre key = {h._id}> { JSON.stringify(h, null, 2) }</pre>
         <p key={h._id}>{ h.username } ... { h.habitId.streak } </p>

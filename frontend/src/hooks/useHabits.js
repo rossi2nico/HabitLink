@@ -9,6 +9,33 @@ export const useHabits = () => {
   const { dispatch } = useHabitsContext()
   const { user } = useAuthContext()
 
+  const getSyncedHabits = async (habitId) => {
+    setIsLoading(true)
+    setError(null) 
+
+    if (!user) {
+      setError('You must be logged in');
+      return false;
+    }
+
+    const res = await fetch(`/api/habits/syncedHabits/${ habitId }`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${ user.token }`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const json = await res.json()
+    if (!res.ok) {
+      setError(json.error)
+      setIsLoading(false)
+      return false
+    }
+    setIsLoading(false)
+    return json.syncedHabits;
+  }
+
   const getHabit = async (habitId) => {
     setIsLoading(true)
     setError(null) 
@@ -322,6 +349,6 @@ export const useHabits = () => {
   }
 
   return { 
-    syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit,
+    getSyncedHabits, syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit,
     updateHabit, deleteHabit, toggleComplete, isLoading, error }
 }

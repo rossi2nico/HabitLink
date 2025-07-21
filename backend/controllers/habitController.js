@@ -13,13 +13,17 @@ const sameDate = (d1, d2) => {
 }
 
 const calculateStreak = async (habit) => {
-    const completions = habit.completions.map((d) => new Date(d))
+    const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    const completions = habit.completions.map((d) => {
+        const completion = new Date(d)
+        completion.setHours(0, 0, 0, 0);
+        return completion;
+    })
 
     const today = new Date()
     today.setHours(0, 0, 0, 0)
-
     habit.streakLastUpdated = today;
-    await habit.save();
 
     if (completions.length === 0) {
         habit.streak = 0;
@@ -28,74 +32,76 @@ const calculateStreak = async (habit) => {
         return;
     }
 
-    const lastCompleted = completions[completions.length -1]
-    const daysMissed = (today - lastCompleted) / (1000 * 60 * 60 * 24)
+    const lastCompleted = completions[completions.length - 1]
+    const daysMissed = (today - lastCompleted) / MS_PER_DAY;
 
-    if (daysMissed > 1) {
+    if (daysMissed >= 2) {
         habit.streak = 0;
         await habit.save(); 
         return;
     }
-    // Recalculate streak backward from today or yesterday
+
+    let streak = 0;
+    let totalCompletions = 0;
+    
     let day = new Date(today);
     if (!sameDate(today, lastCompleted)) {
         day.setDate(day.getDate() - 1);
     }
-    let streak = 0;
-    let totalCompletions = 0;
 
     for (let i = completions.length - 1; i >= 0; i--) {
-        const date = completions[i];
+        const date = completions[i]
         if (sameDate(date, day)) {
             totalCompletions++;
             streak++;
             day.setDate(day.getDate() - 1);
-        }
-        else {
-            break;
-        }
+        } else break;
     }
-    
+
+    habit.streak = streak;
+    habit.totalCompletions = totalCompletions;
+
     let maxStreak = 0;
-    let cur = 0;
+    streak = 1;
+    
+    for (let i = completions.length - 2; i >= 0; i--) {
+        
+        const date = completions[i]
+        const prevDate = completions[i + 1]; 
+        
+        const expectedDate = new Date(prevDate);
+        expectedDate.setDate(expectedDate.getDate() - 1);
 
-    for (let i = completions.length - 1; i >= 0; i--) {
-        const date = completions[i];
+        if (sameDate(date, expectedDate)) {
+            streak++;
+            continue;
+        } 
 
-        if (i === completions.length - 1) {
-            cur = 1;
-        } else {
-            const prevDate = completions[i + 1]; 
-            const expectedDate = new Date(prevDate);
-            expectedDate.setDate(expectedDate.getDate() - 1);
-            expectedDate.setHours(0, 0, 0, 0);
-
-            if (sameDate(date, expectedDate)) {
-                cur++;
-            } else {
-                if (cur > maxStreak) maxStreak = cur;
-                cur = 1;
-            }
-        }
+        if (streak > maxStreak) maxStreak = streak;
+        streak = 1 
     }
-    if (cur > maxStreak) maxStreak = cur;
+
+    if (streak > maxStreak) maxStreak = streak;
+
+    habit.maxStreak = maxStreak;
 
     day = new Date(today);
     if (!sameDate(today, lastCompleted)) {
         day.setDate(day.getDate() - 1);
     }
-    let startDay = new Date(habit.createdAt);
-    startDay.setHours(0, 0, 0, 0);
-    const potentialCompletions = Math.floor((day - startDay) / (1000 * 60 * 60 * 24) + 1);
 
+    let dateCreated = new Date(habit.createdAt);
+    dateCreated.setHours(0, 0, 0, 0);
+
+    const potentialCompletions = Math.floor((day - dateCreated) / MS_PER_DAY + 1);
+
+    /* This is just in case the model was not updated on the database*/
     if (!habit.timesCompleted || typeof habit.timesCompleted !== 'object') {
         habit.timesCompleted = { completions: 0, days: 0 };
     }
 
-    habit.totalCompletions = totalCompletions;
     habit.potentialCompletions = potentialCompletions;
-    habit.streak = streak;
-    habit.maxStreak = maxStreak;
+
     await habit.save();
     return;
 }
@@ -190,6 +196,7 @@ const toggleComplete = async (req, res) => {
             habit.completions.pop();
             await calculateStreak(habit);
             await habit.save();
+            console.log("new streak:", habit.streak)
             return res.status(200).json({ habit })
         }
         habit.completions.push(today);

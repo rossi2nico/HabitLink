@@ -7,6 +7,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.recharts-wrapper:focus,
+.recharts-wrapper *:focus {
+  outline: none;
+}
+
 body {
   margin: 0;
   background: linear-gradient(to bottom, #e9effc, #babfff);
@@ -336,7 +341,7 @@ h3 a:hover {
 .completion-graph, .calendar, .synced-users {
   width: 33%;
   height: 100%;
-  border: 2px solid red;
+  /* border: 2px solid red; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -356,7 +361,7 @@ h3 a:hover {
   /* Dark because my eyes hurt... */
   background: #181818;
   color: rgb(218, 218, 218);
-  border: 2px solid red;
+  /* border: 2px solid red; */
 
   display: flex;
   flex-direction: column;

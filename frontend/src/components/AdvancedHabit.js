@@ -31,11 +31,27 @@ export const AdvancedHabit = ({ habit }) => {
 
   return (
     <div className="advanced-habit">
-
-      {syncedHabits?.map((h) => (
-        // <pre key = {h._id}> { JSON.stringify(h, null, 2) }</pre>
-        <p key={h._id}>{ h.username } ... { h.habitId.streak } </p>
-      ))}
+      <div className = "advanced-habit-info">
+        <h1> { habit.name } </h1>
+        <h3 style = {{color:"#afafafff", marginTop:"-15px"}}> { habit.description }</h3>
+      </div>
+      <div className = "synced-stats">
+        <div className = "completion-graph">
+          <h2> Completion Graph </h2>
+          <h4 style = {{marginTop:"-12px"}}> [ 7d - 30d - 6m ]</h4>
+        </div>
+        <div className = "calendar">
+          <h2> Calendar </h2>
+        </div>
+        <div className = "synced-users">
+          <h2> Synced Users </h2>
+          <ol>
+          {syncedHabits?.map((h) => (
+            <li key={h._id} style = {{padding:"5px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
+          ))}
+          </ol>
+        </div>
+      </div>
     </div>
   )
 }

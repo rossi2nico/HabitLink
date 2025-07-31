@@ -7,18 +7,19 @@
 
 ## ⚙️ How features were implemented:  
 - Custom user authentication using JWT tokens in localStorage
-- Data visualization with charts and statistics to track habit progress built with Recharts
 - Instant frontend UI updates using custom context and hooks
 - RESTful APIs built with Node.js and Express for clean backend communication
 - Habit Syncing using an array of habit objects in the user schema
+- Data visualization with Recharts
+
 
 ## 🚀 Installation & Setup
-
+   ### Clone the repository
    ```bash
    git clone https://github.com/rossi2nico/HabitLink.git
    cd HabitLink
    ```
-   Split the terminal:
+   ### Split the terminal, install dependencies and run
    ```bash
    cd backend
    npm install

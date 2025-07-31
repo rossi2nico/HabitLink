@@ -95,7 +95,7 @@ const calculateStreak = async (habit) => {
 
     const potentialCompletions = Math.floor((day - dateCreated) / MS_PER_DAY + 1);
 
-    /* This is just in case the model was not updated on the database*/
+    /* This is just in case the model was not updated in the database*/
     if (!habit.timesCompleted || typeof habit.timesCompleted !== 'object') {
         habit.timesCompleted = { completions: 0, days: 0 };
     }

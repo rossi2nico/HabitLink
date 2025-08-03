@@ -1,4 +1,4 @@
-﻿# 🔗 HabitLink
+﻿# HabitLink
 ### ❤️ A community based habit tracker designed to improve accountability between friends!  
 
 - Create habits and choose to keep them private, share with friends, or make them public for accountability

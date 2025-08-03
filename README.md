@@ -32,4 +32,4 @@
    ```
 
 ## Demonstrations
-<img width="1181" height="604" alt="image" src="https://github.com/user-attachments/assets/9915dfa4-3e60-4099-a6ba-6b5208edea4c" />
+<img width="1106" height="666" alt="image" src="https://github.com/user-attachments/assets/74547925-30de-4468-8f8c-99ffd3663946" />

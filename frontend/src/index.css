@@ -215,7 +215,7 @@ h3 a:hover {
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .nav-left,
 .nav-right {

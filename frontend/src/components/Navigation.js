@@ -10,10 +10,13 @@ export const Navigation = () => {
   return (
     <div className="navigation">
   <div className="nav-left">
-    <img
+    {/* <img
       src = { checkmark }
       style={{ height: '18px', width: '18px', objectFit: 'contain', marginRight: '10px' }}
-    />
+    /> */}
+    <h3 className = "habitlink"> HabitLink </h3>
+  </div>
+  <div className = "nav-mid">
     <h3><Link to="/habits">Habits</Link></h3>
     <h3><Link to="/friends">Friends</Link></h3>
   </div>
@@ -26,8 +29,8 @@ export const Navigation = () => {
       </>
     ) : (
       <>
-        <span>Logged in as <strong>{user.username}</strong></span>
-        <button onClick = { logout }>Sign Out</button>
+        <h3 className = "nav-user">{user.username}</h3>
+        <button className = "logout" onClick = { logout }>logout</button>
       </>
     )}
   </div>

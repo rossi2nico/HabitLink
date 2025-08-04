@@ -29,9 +29,9 @@ const Habits = () => {
     <>
       <Navigation></Navigation>
       <div className="habits">
-        {habits?.length > 0 && <AdvancedHabit habit={habits[1]} />}
+        {/* {habits?.length > 0 && <AdvancedHabit habit={habits[1]} />} */}
         <div className = "user-habits">
-          <h1> Habits </h1>
+          <h1> Habits </h1> 
 
           { habits && (habits.length > 0) ? (
             habits.map(habit => <Habit key = { habit._id} habit = { habit }></Habit>

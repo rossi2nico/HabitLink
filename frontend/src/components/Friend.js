@@ -15,9 +15,7 @@ export const Friend = ({ friend }) => {
         onClick={handleRemove} 
         className="remove-friend-button"
         disabled={isLoading}
-      >
-        Remove Friend
-      </button>
+      > Remove </button>
     </div>
   );
 };

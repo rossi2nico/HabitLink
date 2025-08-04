@@ -44,22 +44,40 @@ const Friends = () => {
   return (
     <>
       <Navigation></Navigation>
+
       <div className = 'friends-page'>
-        <div className = 'friends-page-left'>
+        <div className = 'friends-search'>
+          <label for = "search-users"> <h3> Search Users </h3> </label>
+          <input 
+            type = "search"
+            className = "search-users"
+            value = {searchTerm}
+            onChange = {(e) => setSearchTerm(e.target.value)}
+          />
+          {searchResults.length === 0 ? (
+            // <p>No Results Found</p>
+            <></>
+          ) : (
+            searchResults.map(user => (
+              <SearchUser key = {user._id} user = {user}></SearchUser>
+            ))
+          )}  
+        </div>
+
+        <div className = 'friends-left'>
+
           {friends && friends.length > 0 ? (
             <div className="friends">
               <h3>Friends List</h3>
               {friends.map(friend => (
                 <Friend key = {friend._id} friend = {friend}></Friend>
-                // <div key={friend._id} className="friend">
-                //   <span>{friend.username}</span>
-                //   {/* <button onClick={() => removeFriend(friend._id)}>Remove Friend</button> */}
-                // </div>
+
               ))}
             </div>
           ) : (
             <div className="friends">
-              <h3>No Friends Found</h3>
+              <h3> Your Friends</h3>
+              <p> Friend List is Empty </p>
             </div>
           )}
 
@@ -68,43 +86,17 @@ const Friends = () => {
               <h3>Pending Friend Requests</h3>
               {pendingUsers.map(pendingUser => (
                 <PendingUser key = {pendingUser._id} incomingUser = {pendingUser}></PendingUser>
-                // <div key={pendingUser._id} className="pending-user">
-                //   <span>{pendingUser.username}</span>
-                // </div>
+  
               ))}
             </div>
           ) : (
             <div className="pending-users">
-              <h3>No Pending Friend Requests</h3>
+              <h3> Friend Requests </h3>
+              <p>No Pending Friend Requests</p>
             </div>
           )}
-          <p>Errors and loading are showing here</p>
-          {error && <div className="error">{error}</div>}
-          {isLoading && <div className="loading">Loading...</div>}
         </div>
-        <div className = 'friends-search'>
-          <label for = "search-users">Search Users</label>
-          <input 
-            type = "search"
-            className = "search-users"
-            value = {searchTerm}
-            onChange = {(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <div style = {{color:'Black', marginLeft:'20px'}}>
-          <h3> Search Results</h3>
-          {searchResults.length === 0 ? (
-            <p>No users found</p>
-          ) : (
-            searchResults.map(user => (
-              <SearchUser key = {user._id} user = {user}></SearchUser>
-              // <div key={user._id} className="user-card">
-              //   <p>{user.username}</p>
-              //   {/* add more user info/buttons here if needed */}
-              // </div>
-            ))
-          )}
-        </div>
+        
       </div>
     </>
   )

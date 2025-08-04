@@ -12,9 +12,9 @@ export const SearchUser = ({ user }) => {
     <div className="search-user-card">
       <span>{user.username}</span>
       <button 
-        onClick={handleAdd} 
-        className="add-friend-button"
-        disabled={isLoading}
+        onClick = {handleAdd} 
+        className = "add-friend-button"
+        disabled = {isLoading}
       >
         Add Friend
       </button>

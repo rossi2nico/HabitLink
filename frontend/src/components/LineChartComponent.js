@@ -23,16 +23,21 @@ const habitStats = [
 
 
   return (
-    <ResponsiveContainer width = "100%" height = "100%">
-      <LineChart data={habitStats} width={600} height={300}>
-        <XAxis dataKey="date" stroke="#fff" tick={{ fill: "#fff" }} />
-        <YAxis stroke="#fff" tick={{ fill: "#fff" }} tickFormatter={(v) => `${v}%`} />
+    <ResponsiveContainer width = "100%" height = "75%">
+      <LineChart data={habitStats} width={600} height={200}>
+        <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#fff" }} />
+        <YAxis stroke="transparent" tick={{ fill: "#fff" }} tickFormatter={(v) => `${v}%`} />
         <Tooltip />
         <Legend />
-
-        <Line type="monotone" dataKey="Karim" name="Karim" stroke="#2563eb" dot={false} activeDot={false} />
-        <Line type="monotone" dataKey="Allison" name="Allison" stroke="#7c3aed" dot={false} activeDot={false} />
-        <Line type="monotone" dataKey="Dylan" name="Dylan" stroke="#10b981" dot={false} activeDot={false} />
+        <defs>
+          <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#638dffff" />
+          <stop offset="100%" stopColor="#a5fade" />
+          </linearGradient>
+        </defs>
+        <Line type="monotone" dataKey="Karim" name="Edin" strokeWidth={3} stroke="#2563eb" dot={false} activeDot={false} />
+        <Line type="monotone" dataKey="Allison" name="Doolie" strokeWidth={3} stroke = "url(#gradient1)" dot={false} activeDot={false} />
+        <Line type="monotone" dataKey="Dylan" name="Nico" strokeWidth={3} stroke="#7c3aed" dot={false} activeDot={false} />
       </LineChart>
       
     {/* <LineChart width = {300} height = {400} data = {habitStats}>
@@ -50,10 +55,10 @@ const habitStats = [
       />
       <Legend/>
       <defs>
-      <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor="#ebf9ff" />
         <stop offset="100%" stopColor="#a5fade" />
-      </linearGradient>
+        </linearGradient>
       </defs>
 
         <Line 

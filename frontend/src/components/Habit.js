@@ -83,7 +83,7 @@ export const Habit = ({ habit }) => {
           </p>
         )}
         </div>
-        <div className = "habit-right">
+        {/* <div className = "habit-right">
           {usersHabit ? (
             <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"18px", paddingRight:"20px", cursor:"Pointer"}} src = {del}></img>
           ) : (
@@ -95,7 +95,7 @@ export const Habit = ({ habit }) => {
               )}
             </>
           )}
-        </div>
+        </div> */}
     </div>
   )
 }

@@ -145,7 +145,7 @@ p, h4, h3, span {
   align-items: center;
   background-color: transparent;
   border: 1px solid rgb(53, 53, 53);
-  box-shadow: 0 0.25rem 0.5rem rgba(83, 83, 83, 0.15);
+  box-shadow: 0 0rem 0.5rem rgba(83, 83, 83, 0.4);
   padding: 0.75rem 2rem;
   border-radius: 1rem;
   position: sticky;

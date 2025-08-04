@@ -29,9 +29,10 @@ const Habits = () => {
     <>
       <Navigation></Navigation>
       <div className="habits">
-        {habits?.length > 0 && <AdvancedHabit habit={habits[2]} />}
+        {/* {habits?.length > 0 && <AdvancedHabit habit={habits[2]} />} */}
         <div className = "user-habits">
-          <h1> Habits </h1> 
+          <h1> Your Habits </h1> 
+          <div className = "underline"></div>
 
           { habits && (habits.length > 0) ? (
             habits.map(habit => <Habit key = { habit._id} habit = { habit }></Habit>
@@ -42,6 +43,7 @@ const Habits = () => {
         
         <div className = "friend-habits">
           <h1> Friend Habits </h1>
+          <div className = "underline"></div>
           { friendHabits && (friendHabits.length > 0) ? (
             friendHabits.map(friendHabit => <Habit key = { friendHabit._id} habit = { friendHabit }></Habit>
           )) : (
@@ -49,6 +51,8 @@ const Habits = () => {
           )}
           <div className = "public-habits">
             <h1> Public Habits </h1>
+              <div className = "underline"></div>
+
               { publicHabits && publicHabits.length > 0 ? publicHabits.map((publicHabit) => (
                 !isUsersHabit(publicHabit) ? (
                   <Habit key = { publicHabit._id } habit = { publicHabit }></Habit>

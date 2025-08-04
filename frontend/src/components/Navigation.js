@@ -10,10 +10,6 @@ export const Navigation = () => {
   return (
     <div className="navigation">
   <div className="nav-left">
-    {/* <img
-      src = { checkmark }
-      style={{ height: '18px', width: '18px', objectFit: 'contain', marginRight: '10px' }}
-    /> */}
     <h3 className = "habitlink"> HabitLink </h3>
   </div>
   <div className = "nav-mid">

@@ -47,6 +47,8 @@ export const AdvancedHabit = ({ habit }) => {
         </div>
         <div className = "calendar">
           <h2> Calendar </h2>
+            <div className = "circle-ring"></div>
+            <div className = "inner-circle"></div>
         </div>
         <div className = "synced-users">
           <h2> Synced Users </h2>

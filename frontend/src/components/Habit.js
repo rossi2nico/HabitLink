@@ -64,22 +64,22 @@ export const Habit = ({ habit }) => {
           <p className = "habit-username"> from <strong>{ habit.username }</strong> 
             {syncedUsers.length > 0 &&
               (syncedUsers.length === 1
-                ? ' 👤 1 user'
-                : ` 👥 ${syncedUsers.length} users`)}
+                ? ' • 1 user'
+                : ` • ${syncedUsers.length} users`)}
           </p>
         )}
         {usersHabit && (
-          <p className="habit-username">
+          <p className="habit-username" style = {{margin: "5px"}}>
             {habit.privacy === 2
-              ? '🔓 Public'
+              ? ' Public'
               : habit.privacy === 1
-              ? '🔏 Friends'
-              : '🔒 Private'}
+              ? ' Friends-only'
+              : ' Private'}
 
             {syncedUsers.length > 0 &&
               (syncedUsers.length === 1
-                ? ' 👤 1 user'
-                : ` 👥 ${syncedUsers.length} users`)}
+                ? ' • 1 user'
+                : ` • ${syncedUsers.length} users`)}
           </p>
         )}
         </div>
@@ -91,7 +91,7 @@ export const Habit = ({ habit }) => {
               {!synced ? (
                 <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
               ) : (
-                <p>👤</p>
+                <p>Linked</p>
               )}
             </>
           )}

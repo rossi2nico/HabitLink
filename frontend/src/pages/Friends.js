@@ -36,7 +36,7 @@ const Friends = () => {
         setSearchResults(results || []);
       }
       fetchResults();
-    }, 300)
+    }, 100)
 
     return () => clearTimeout(delayDebounce)
   }, [searchTerm])
@@ -48,19 +48,24 @@ const Friends = () => {
       <div className = 'friends-page'>
         <div className = 'friends-search'>
           <label for = "search-users"> <h3> Search Users </h3> </label>
+  
           <input 
             type = "search"
             className = "search-users"
             value = {searchTerm}
             onChange = {(e) => setSearchTerm(e.target.value)}
           />
+          
           {searchResults.length === 0 ? (
             // <p>No Results Found</p>
             <></>
           ) : (
-            searchResults.map(user => (
-              <SearchUser key = {user._id} user = {user}></SearchUser>
-            ))
+            <>
+              {/* <div style = {{marginTop:"5px", width:"300px"}}className = "underline"></div> */}
+              {searchResults.map(user => (
+                <SearchUser key = {user._id} user = {user}></SearchUser>
+              ))}
+            </>
           )}  
         </div>
 
@@ -69,6 +74,7 @@ const Friends = () => {
           {friends && friends.length > 0 ? (
             <div className="friends">
               <h3>Friends List</h3>
+              <div className = "underline"></div>
               {friends.map(friend => (
                 <Friend key = {friend._id} friend = {friend}></Friend>
 
@@ -84,6 +90,7 @@ const Friends = () => {
           {pendingUsers && pendingUsers.length > 0 ? (
             <div className="pending-users">
               <h3>Pending Friend Requests</h3>
+              <div className = "underline"></div>
               {pendingUsers.map(pendingUser => (
                 <PendingUser key = {pendingUser._id} incomingUser = {pendingUser}></PendingUser>
   
@@ -92,6 +99,7 @@ const Friends = () => {
           ) : (
             <div className="pending-users">
               <h3> Friend Requests </h3>
+                <div className = "underline"></div>
               <p>No Pending Friend Requests</p>
             </div>
           )}

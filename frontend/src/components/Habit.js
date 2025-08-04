@@ -54,12 +54,27 @@ export const Habit = ({ habit }) => {
 
   return (
     <div className = "habit">
-      <div className = "habit-left">
-        <img className = "toggle-img" src = {complete ? tick : noTick } alt = "checkbox" onClick = {() => toggleComplete(habit._id)}></img>
-        <p className = "habit-streak"> { habit.streak } </p>
+      <div className = "completion-circle">
+          <div className = "circle-ring">
+            <div className = "inner-circle">
+              <p className = "habit-streak"> { habit.streak } </p>
+            </div>
+          </div>
+
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
+         <defs>
+            <linearGradient id="GradientColor">
+               {/* <stop offset="0%" stop-color="#e91e63" />
+               <stop offset="100%" stop-color="#673ab7" /> */}
+              <stop offset="0%" stop-color="#71ada5" />
+              <stop offset="100%" stop-color="#53e7a99c" /> 
+            </linearGradient>
+         </defs>
+         <circle cx="20" cy="20" r="18" stroke-linecap="round" />
+ </svg>
       </div>
       <div className = "habit-mid">
-        <h4 className = "habit-name">{ habit.name }</h4>
+        <h4 className = "habit-name"><strong>{ habit.name }</strong></h4>
         {!usersHabit && (
           <p className = "habit-username"> from <strong>{ habit.username }</strong> 
             {syncedUsers.length > 0 &&

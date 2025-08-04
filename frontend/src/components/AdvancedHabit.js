@@ -47,8 +47,23 @@ export const AdvancedHabit = ({ habit }) => {
         </div>
         <div className = "calendar">
           <h2> Calendar </h2>
-            <div className = "circle-ring"></div>
-            <div className = "inner-circle"></div>
+            <div className = "completion-circle">
+          <div className = "circle-ring">
+            <div className = "inner-circle">
+              <p className = "habit-streak"> { habit.streak } </p>
+            </div>
+          </div>
+
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
+            <defs>
+            <linearGradient id="GradientColor">
+              <stop offset="0%" stop-color="#71ada5" />
+              <stop offset="100%" stop-color="#53e7a9ff" />
+            </linearGradient>
+          </defs>
+          <circle cx="20" cy="20" r="18" stroke-linecap="round" />
+          </svg>
+        </div>
         </div>
         <div className = "synced-users">
           <h2> Synced Users </h2>

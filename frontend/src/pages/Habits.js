@@ -29,7 +29,7 @@ const Habits = () => {
     <>
       <Navigation></Navigation>
       <div className="habits">
-        {/* {habits?.length > 0 && <AdvancedHabit habit={habits[2]} />} */}
+        {habits?.length > 0 && <AdvancedHabit habit={habits[2]} />}
         <div className = "user-habits">
           <h1> Your Habits </h1> 
           <div className = "underline"></div>

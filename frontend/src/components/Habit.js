@@ -69,7 +69,7 @@ export const Habit = ({ habit }) => {
           </p>
         )}
         {usersHabit && (
-          <p className="habit-username" style = {{margin: "5px"}}>
+          <p className="habit-username">
             {habit.privacy === 2
               ? ' Public'
               : habit.privacy === 1
@@ -83,19 +83,20 @@ export const Habit = ({ habit }) => {
           </p>
         )}
         </div>
-        {/* <div className = "habit-right">
+        <div className = "habit-right">
           {usersHabit ? (
-            <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"18px", paddingRight:"20px", cursor:"Pointer"}} src = {del}></img>
+            <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"16px", cursor:"Pointer"}} src = {del}></img>
           ) : (
             <>
               {!synced ? (
                 <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
+                // <></>
               ) : (
                 <p>Linked</p>
               )}
             </>
           )}
-        </div> */}
+        </div>
     </div>
   )
 }

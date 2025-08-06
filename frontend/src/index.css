@@ -379,16 +379,14 @@ p, h4, h3, span {
   margin: 0.375rem;
   display: flex;
   -webkit-font-smoothing: subpixel-antialiased;
-  background: #191919;
+  background: #202020;
 }
 
 .habit:hover {
     -webkit-font-smoothing: subpixel-antialiased;
   transform: translateZ(0);
-  transition: ease 0.4s;
-  transform: scale(1.02);
-
-
+  transition: ease 0.2s;
+  transform: scale(1.01);
 }
 
 .habit-link {
@@ -536,7 +534,6 @@ p, h4, h3, span {
 .completion-circle {
   height: 100%;
   width: 40px;
-  border-radius: 50%;
   position: relative;
   display: flex;
   align-items: center;
@@ -565,7 +562,7 @@ p, h4, h3, span {
   align-items: center;
 }
 
-.completion-circle svg {
+svg {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -575,28 +572,45 @@ p, h4, h3, span {
 circle {
   fill: none;
   stroke: url(#GradientColor);
-  stroke-dasharray: 113; /* Circumference for r=17: 2 * π * 17 ≈ 107 */
+  stroke-dasharray: 113; /* Circumference for r=18: 2 * π * 18 ≈ 113 */
   stroke-dashoffset: 113; /* Start invisible */
   stroke-width: 3px;
   stroke-linecap: round;
-  transition: stroke-dashoffset 0.3s ease;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.completion-circle:hover circle {
-  /* animation: anim 0.6s ease-out forwards; */
-  animation: anim 0.8s cubic-bezier(0.15, 0.46, 0.45, 0.94) forwards;
+/* Hover effect (preview) */
+.completion-circle:hover:not(.completed) circle {
+  stroke-dashoffset: 0;
 }
 
-.completion-circle:not(:hover) circle {
+/* Completed state - circle fills */
+.completion-circle.completed circle {
+  stroke-dashoffset: 0;
+  animation: complete 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Uncompleted state - circle empties */
+.completion-circle:not(.completed) circle {
   stroke-dashoffset: 113;
+  animation: uncomplete 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-@keyframes anim {
+@keyframes complete {
   0% {
     stroke-dashoffset: 113;
   }
   100% {
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes uncomplete {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 113;
   }
 }
 

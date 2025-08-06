@@ -1,76 +1,152 @@
-'use-client';
+'use client';
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
+import { useHabits } from '../hooks/useHabits';
+import { useState, useEffect } from 'react'
 
-export const LineChartComponent = () => {
+export const LineChartComponent = ({ habit }) => {
+  const MS_PER_DAY = 1000 * 60 * 60 * 24;
+  
+  const { getSyncedHabits } = useHabits()
+  const [syncedHabits, setSyncedHabits] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
-const habitStats = [
-  { date: 'Jul 1',  Karim: 20, Allison: 0, Dylan: 35 },
-  { date: 'Jul 2',  Karim: 40, Allison: 15, Dylan: 50 },
-  { date: 'Jul 3',  Karim: 15, Allison: 20, Dylan: 68 },
-  { date: 'Jul 4',  Karim: 20, Allison: 25, Dylan: 92 },
-  { date: 'Jul 5',  Karim: 15, Allison: 20, Dylan: 91 },
-  { date: 'Jul 6',  Karim: 30, Allison: 40, Dylan: 79 },
-  { date: 'Jul 7',  Karim: 20, Allison: 55, Dylan: 90 },
+  useEffect(() => {
+    if (!habit) return
+    
+    const fetchData = async () => {
+      try {
+        setIsLoading(true)
+        const res = await getSyncedHabits(habit._id)    
+        setSyncedHabits(res);
+        console.log(`Fetched synced habits:`, res)
+        
+      } catch (error) {
+        console.log('Error fetching synced habits:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-  { date: 'Jul 8',  Karim: 28, Allison: 35, Dylan: 94 },
-  { date: 'Jul 9',  Karim: 42, Allison: 65, Dylan: 93 },
-  { date: 'Jul 10', Karim: 28, Allison: 55, Dylan: 88 },
-  { date: 'Jul 11', Karim: 22, Allison: 75, Dylan: 90 },
-  { date: 'Jul 12', Karim: 0, Allison: 70, Dylan: 92 },
-  { date: 'Jul 13', Karim: 5, Allison: 75, Dylan: 95 },
-  { date: 'Jul 14', Karim: 10, Allison: 60, Dylan: 91 },
-];
+    fetchData();
+  }, [habit?._id])
 
+  if (!habit || isLoading) {
+    return <div>Loading chart...</div>
+  }
+
+  const startDate = new Date(habit.createdAt);
+  startDate.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  const firstWeekStart = new Date(startDate);
+  firstWeekStart.setDate(startDate.getDate() - startDate.getDay()); // Go back to Sunday
+  
+  const totalDays = Math.floor((today - firstWeekStart) / MS_PER_DAY);
+  const totalWeeks = Math.ceil(totalDays / 7);
+  
+  const weeklyStats = [];
+
+  for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex++) {
+    const weekStart = new Date(firstWeekStart);
+    weekStart.setDate(firstWeekStart.getDate() + (weekIndex * 7));
+    
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    
+    const weekLabel = `wk. ${weekIndex + 1}`;
+    const weekData = { date: weekLabel };
+    
+    const selfCompletions = habit.completions || [];
+    let selfCompletedDaysInWeek = 0;
+    let totalDaysInWeek = 0;
+    
+    for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
+      const currentDay = new Date(weekStart);
+      currentDay.setDate(weekStart.getDate() + dayOffset);
+      
+      if (currentDay > today || currentDay < startDate) {
+        continue;
+      }
+      
+      totalDaysInWeek++;
+      
+      const selfCompletedOnDate = selfCompletions.some(date => {
+        const completionDate = new Date(date);
+        return (
+          completionDate.getFullYear() === currentDay.getFullYear() &&
+          completionDate.getMonth() === currentDay.getMonth() &&
+          completionDate.getDate() === currentDay.getDate()
+        );
+      });
+      
+      if (selfCompletedOnDate) {
+        selfCompletedDaysInWeek++;
+      }
+    }
+    
+    const selfWeeklyPercentage = totalDaysInWeek > 0 ? 
+      Math.round((selfCompletedDaysInWeek / totalDaysInWeek) * 100) : 0;
+    
+    weekData[habit.username] = selfWeeklyPercentage;
+    
+    for (const syncedHabit of syncedHabits) {
+      const completions = syncedHabit?.habitId?.completions || [];
+      let completedDaysInWeek = 0;
+      
+      for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
+        const currentDay = new Date(weekStart);
+        currentDay.setDate(weekStart.getDate() + dayOffset);
+        
+        if (currentDay > today || currentDay < startDate) {
+          continue;
+        }
+        
+        const completedOnDate = completions.some(date => {
+          const completionDate = new Date(date);
+          return (
+            completionDate.getFullYear() === currentDay.getFullYear() &&
+            completionDate.getMonth() === currentDay.getMonth() &&
+            completionDate.getDate() === currentDay.getDate()
+          );
+        });
+        
+        if (completedOnDate) {
+          completedDaysInWeek++;
+        }
+      }
+      
+      const weeklyPercentage = totalDaysInWeek > 0 ? 
+        Math.round((completedDaysInWeek / totalDaysInWeek) * 100) : 0;
+      
+      weekData[syncedHabit.username] = weeklyPercentage;
+    }
+    
+    weeklyStats.push(weekData);
+  }
 
   return (
-    <ResponsiveContainer width = "100%" height = "75%">
-      <LineChart data={habitStats} width={600} height={200}>
-        <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#fff" }} />
-        <YAxis stroke="transparent" tick={{ fill: "#fff" }} tickFormatter={(v) => `${v}%`} />
-        <Tooltip />
-        <Legend />
-        <defs>
-          <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#638dffff" />
-          <stop offset="100%" stopColor="#a5fade" />
-          </linearGradient>
-        </defs>
-        <Line type="monotone" dataKey="Karim" name="Edin" strokeWidth={3} stroke="#2563eb" dot={false} activeDot={false} />
-        <Line type="monotone" dataKey="Allison" name="Doolie" strokeWidth={3} stroke = "url(#gradient1)" dot={false} activeDot={false} />
-        <Line type="monotone" dataKey="Dylan" name="Nico" strokeWidth={3} stroke="#7c3aed" dot={false} activeDot={false} />
-      </LineChart>
-      
-    {/* <LineChart width = {300} height = {400} data = {habitStats}>
-      <YAxis
-        dataKey="completionPercentage"
-        domain={[0, 100]}
-        tickFormatter={(value) => `${value}%`}
-        stroke="#ffffff" 
-        tick={{ fill: "#ffffff" }} 
-      />
-      <XAxis 
-        dataKey="date"
-        stroke="#ffffff"
-        tick={{ fill: "#ffffff" }}
-      />
-      <Legend/>
-      <defs>
-        <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#ebf9ff" />
-        <stop offset="100%" stopColor="#a5fade" />
-        </linearGradient>
-      </defs>
+    <ResponsiveContainer width="100%" height="75%">
+      <LineChart data={weeklyStats} width={600} height={200}>
+        <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#424242ff", fontSize: 13 }} />
+        <YAxis stroke="transparent" tick={{ fill: "#424242ff", fontSize: 13 }} tickFormatter={v => `${v}%`} domain={[0, 100]} />
 
-        <Line 
-          type = "monotone" 
-          dataKey = "completionPercentage"
-          stroke = "url(#gradient1)"
-          strokeWidth={4}
-          fill = "#1c64ffff"
-          dot={false}
-          activeDot={false}
-        />
-      </LineChart> */}
+        <defs>
+          <filter id="shadow" height="150%">
+            <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="#95f7d6" floodOpacity="0.8" />
+          </filter>
+        </defs>
+      
+        {syncedHabits.map( syncedHabit =>
+          <Line type = "monotone" key = { syncedHabit.habitId.username } dataKey = { syncedHabit.habitId.username } name = {syncedHabit.habitId.username }
+          strokeWidth={2} stroke = "#424242ff" connectNulls = {true}
+          ></Line>
+        )}
+
+        <Line type="monotone" dataKey={habit.username} name={habit.username} strokeWidth={3} animationBegin = {1000} animationDuration = {3000} stroke="#95f7d6d2" style={{ filter: "url(#shadow)" }} />
+
+
+      </LineChart>
     </ResponsiveContainer>
   )
 }

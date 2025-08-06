@@ -3,8 +3,6 @@ import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
 
-import noTick from '../assets/not_tick.png'
-import tick from '../assets/blue_tick.png'
 import del from '../assets/delete-red.png'
 import link from '../assets/link.png'
 
@@ -54,7 +52,8 @@ export const Habit = ({ habit }) => {
 
   return (
     <div className = "habit">
-      <div className = "completion-circle">
+
+      <div className = {`completion-circle ${ complete  ? 'completed' : '' }`} onClick = {() => toggleComplete(habit)} >
           <div className = "circle-ring">
             <div className = "inner-circle">
               <p className = "habit-streak"> { habit.streak } </p>

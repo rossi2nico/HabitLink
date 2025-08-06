@@ -28,7 +28,7 @@ export const AdvancedHabit = ({ habit }) => {
     }
 
     fetchData();
-    console.log(`synced: ${syncedHabits}`)
+    console.log(`synced habits: ${syncedHabits}`)
   }, [habit?._id])
 
   return (
@@ -38,32 +38,16 @@ export const AdvancedHabit = ({ habit }) => {
         <h3 style = {{color:"#afafafff", marginTop:"-15px"}}> { habit.description }</h3>
       </div>
       <div className = "synced-stats">
+        <div className = "calendar">
+          <h2> Calendar </h2>
+
+        </div>
         <div className = "completion-graph">
           <h2> Completion Graph </h2>
           <h4 style = {{marginTop:"-12px"}}> [ 7d - 30d - 6m ]</h4>
-          <div style = {{marginRight:"25px", height:"300px", width:"350px", backgroundColor:"transparent"}}>
-            <LineChartComponent/>
+          <div style = {{marginRight:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
+            <LineChartComponent habit = { habit }/>
           </div>
-        </div>
-        <div className = "calendar">
-          <h2> Calendar </h2>
-            <div className = "completion-circle">
-          <div className = "circle-ring">
-            <div className = "inner-circle">
-              <p className = "habit-streak"> { habit.streak } </p>
-            </div>
-          </div>
-
-          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
-            <defs>
-            <linearGradient id="GradientColor">
-              <stop offset="0%" stop-color="#71ada5" />
-              <stop offset="100%" stop-color="#53e7a9ff" />
-            </linearGradient>
-          </defs>
-          <circle cx="20" cy="20" r="18" stroke-linecap="round" />
-          </svg>
-        </div>
         </div>
         <div className = "synced-users">
           <h2> Synced Users </h2>

@@ -126,24 +126,25 @@ export const LineChartComponent = ({ habit }) => {
   }
 
   return (
-    <ResponsiveContainer width="100%" height="75%">
-      <LineChart data={weeklyStats} width={600} height={200}>
-        <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#424242ff", fontSize: 13 }} />
-        <YAxis stroke="transparent" tick={{ fill: "#424242ff", fontSize: 13 }} tickFormatter={v => `${v}%`} domain={[0, 100]} />
-
+    <ResponsiveContainer width="100%" height="65%">
+      <LineChart data={weeklyStats} >
+        <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#424242ff", fontSize: 13, dy: 10 }} />
+        <YAxis tickFormatter={v => `${v}%`} stroke = "transparent" tick = {{ fill: "#424242ff", fontSize: 12, dx: -20 }}></YAxis>
+        <YAxis stroke = "transparent"></YAxis>
         <defs>
           <filter id="shadow" height="150%">
-            <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="#95f7d6" floodOpacity="0.8" />
+            <feDropShadow dx="0" dy="0" stdDeviation="1.2" floodColor="#50dab7ff" floodOpacity="0.8" />
           </filter>
         </defs>
       
         {syncedHabits.map( syncedHabit =>
           <Line type = "monotone" key = { syncedHabit.habitId.username } dataKey = { syncedHabit.habitId.username } name = {syncedHabit.habitId.username }
-          strokeWidth={2} stroke = "#424242ff" connectNulls = {true}
+          strokeWidth={1} stroke = "#cee3ecff" animationBegin = {2000} connectNulls = {true}
           ></Line>
         )}
 
-        <Line type="monotone" dataKey={habit.username} name={habit.username} strokeWidth={3} animationBegin = {1000} animationDuration = {3000} stroke="#95f7d6d2" style={{ filter: "url(#shadow)" }} />
+        <Line type="monotone" dataKey={habit.username} name={habit.username} strokeLinecap="round" strokeWidth={1} animationDuration = {2000}
+         stroke="#45d8a0d2" style={{ filter: "url(#shadow)" }} />
 
 
       </LineChart>

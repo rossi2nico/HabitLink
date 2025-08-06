@@ -326,7 +326,7 @@ p, h4, h3, span {
 }
 
 .advanced-habit-info {
-  height: 20%;
+  height: 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -334,36 +334,33 @@ p, h4, h3, span {
 
 .synced-stats {
   display: flex;
+  justify-content: center;
   height: 80%;
 }
 .completion-graph, .calendar, .synced-users {
   width: 30%;
   margin: 0px 15px 0px 15px;
-  height: 90%;
+  height: 80%;
   border: 1px solid #262626;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: c;
 }
 
 
 .advanced-habit {
-  /* position: absolute; */
-  margin-top: 30px;
+  margin-top: 10px;
   width: 100vw;
   height: 75vh;
-  /* border-radius: 18px; */
-  z-index: 1;
-  background: linear-gradient(to top, #a0ffc8, #f3fdf4);
-  background: linear-gradient(to bottom, #ebf9ff, #a5fade);
 
-  /* Dark because my eyes hurt... */
-  background: #181818;
   color: rgb(218, 218, 218);
-  /* border: 2px solid red; */
 
   display: flex;
   flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  border: 2px solid #262626;
 }
 
 .habit {

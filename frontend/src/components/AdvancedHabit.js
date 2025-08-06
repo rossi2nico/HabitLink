@@ -6,7 +6,7 @@ import { LineChart } from "recharts"
 export const AdvancedHabit = ({ habit }) => {
   const { getSyncedHabits } = useHabits()
   const [syncedHabits, setSyncedHabits] = useState([])
-  // const syncedHabits = getSyncedHabits(habit._id)
+
   useEffect(() => {
     if (!habit) return
     
@@ -35,22 +35,24 @@ export const AdvancedHabit = ({ habit }) => {
     <div className="advanced-habit">
       <div className = "advanced-habit-info">
         <h1> { habit.name } </h1>
-        <h3 style = {{color:"#afafafff", marginTop:"-15px"}}> { habit.description }</h3>
+        <h3 style = {{color:"#afafafff", marginTop:"-15px"}}> I'm Going to make it.{ habit.description }</h3>
+        {/* <div className = "underline"></div> */}
+
       </div>
-      <div className = "synced-stats">
+      <div className = "synced-stats" style = {{marginTop: "50px"}}>
         <div className = "calendar">
-          <h2> Calendar </h2>
+          <h3> Calendar </h3>
 
         </div>
         <div className = "completion-graph">
-          <h2> Completion Graph </h2>
-          <h4 style = {{marginTop:"-12px"}}> [ 7d - 30d - 6m ]</h4>
-          <div style = {{marginRight:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
+          <h3> Completion Graph </h3>
+
+          <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
             <LineChartComponent habit = { habit }/>
           </div>
         </div>
         <div className = "synced-users">
-          <h2> Synced Users </h2>
+          <h3> Synced Users </h3>
           <ol>
           {syncedHabits?.map((h) => (
             <li key={h._id} style = {{padding:"5px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>

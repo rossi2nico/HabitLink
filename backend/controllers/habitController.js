@@ -110,6 +110,7 @@ const updateHabit = async (req, res) => {
 
     const { habitId } = req.params;
     console.log("habitId:", habitId);
+
     if (!mongoose.Types.ObjectId.isValid(habitId)) {
         return res.status(404).json({error: "Habit not found"})
     }
@@ -119,7 +120,7 @@ const updateHabit = async (req, res) => {
 
     try {
         const habit = await Habit.findById(habitId);
-        if (!habit) {
+        if (!habit) { 
             return res.status(400).json({ error: 'Habit not found' });
         }
 
@@ -379,18 +380,20 @@ const getTargetHabits = async (req, res) => {
 }
 
 const getPublicHabits = async (req, res) => {
-    const habits = await Habit.find({ privacy: 2 }).sort({ createdAt: 1 })
-    const today = new Date()
-    
-    for (const habit of habits) {
-        if (!sameDate(habit.streakLastUpdated, today)) {
-            console.log('Calculating streak!!')
-            await calculateStreak(habit);
+    try {
+        const today = new Date()
+        const habits = await Habit.find({ privacy: 2 }).sort({ createdAt: 1 })
+
+        for (const habit of habits) {
+            await calculateStreak(habit)
             await habit.save();
         }
+
+        return res.status(200).json(habits)
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
     }
 
-    res.status(200).json(habits)
 }
 
 const deleteHabit = async (req, res) => {

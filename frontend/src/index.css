@@ -618,3 +618,9 @@ circle {
   background-color: #95f7d6d2;
   box-shadow: 0 0.1rem 0.2rem #53e7b6fb;  
 }
+
+.calendar-box {
+  width: 300px;
+  height: 300px;
+  border: 1px solid #262626;
+}

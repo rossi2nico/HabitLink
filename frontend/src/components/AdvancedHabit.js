@@ -2,6 +2,7 @@ import { LineChartComponent } from "./LineChartComponent"
 import { useHabits } from "../hooks/useHabits"
 import { useState, useEffect } from 'react'
 import { LineChart } from "recharts"
+import { Calendar } from "./Calendar"
 
 export const AdvancedHabit = ({ habit }) => {
   const { getSyncedHabits } = useHabits()
@@ -42,6 +43,7 @@ export const AdvancedHabit = ({ habit }) => {
       <div className = "synced-stats" style = {{marginTop: "50px"}}>
         <div className = "calendar">
           <h3> Calendar </h3>
+          <Calendar></Calendar>
 
         </div>
         <div className = "completion-graph">

@@ -337,7 +337,7 @@ p, h4, h3, span {
   justify-content: center;
   height: 80%;
 }
-.completion-graph, .calendar, .synced-users {
+.completion-graph, .calendar-container, .synced-users {
   width: 30%;
   margin: 0px 15px 0px 15px;
   height: 80%;

@@ -41,12 +41,12 @@ export const AdvancedHabit = ({ habit }) => {
 
       </div>
       <div className = "synced-stats" style = {{marginTop: "50px"}}>
-        <div className = "calendar">
+        <div className = "calendar-container">
           <h3> Calendar </h3>
           <Calendar></Calendar>
 
         </div>
-        <div className = "completion-graph">
+        {/* <div className = "completion-graph">
           <h3> Completion Graph </h3>
 
           <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
@@ -60,7 +60,7 @@ export const AdvancedHabit = ({ habit }) => {
             <li key={h._id} style = {{padding:"5px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
           ))}
           </ol>
-        </div>
+        </div> */}
       </div>
     </div>
   )

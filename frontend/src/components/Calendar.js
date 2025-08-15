@@ -1,16 +1,12 @@
 import { useState } from 'react';
-import { eachDayOfInterval, endOfMonth, format, startOfMonth, startOfToday, startOfWeek, endOfWeek, isSameMonth, isSameDay, isAfter, parse, add } from 'date-fns'
+import { eachDayOfInterval, endOfMonth, format, startOfMonth, startOfToday, startOfWeek, endOfWeek, isSameMonth, isSameDay, isAfter, parse, add, isBefore } from 'date-fns'
 
 export const Calendar = ({ habit }) => {
 
   let today = startOfToday()
-  let newDays = eachDayOfInterval({ 
-    start: startOfWeek(startOfMonth(today)), 
-    end: endOfWeek(endOfMonth(today)) })
-
   const [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
-
   let firstDayCurrentMonth = parse(currentMonth, 'MMMM-yyyy', new Date())
+  const createdAt = new Date(habit.createdAt)
 
   const nextMonth = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
@@ -21,8 +17,15 @@ export const Calendar = ({ habit }) => {
 
   const prevMonth = () => {
     let firstDayPrevMonth = add(firstDayCurrentMonth, { months: -1 })
-    setCurrentMonth(format(firstDayPrevMonth, 'MMMM-yyyy'))
+    if (!isBefore(firstDayPrevMonth, startOfMonth(createdAt))) {
+      setCurrentMonth(format(firstDayPrevMonth, 'MMMM-yyyy'))
+    }
   }
+
+  let newDays = eachDayOfInterval({ 
+    start: startOfWeek(startOfMonth(firstDayCurrentMonth)), 
+    end: endOfWeek(endOfMonth(firstDayCurrentMonth)) 
+  })
 
   return (
     <div className = "calendar">  
@@ -38,13 +41,12 @@ export const Calendar = ({ habit }) => {
       </div>
       <div className = "calendar-grid">
         {newDays.map(day => (
-          
           <div 
             key={day.toString()} 
             style={{
               color: isSameDay(today, day) 
                 ? '#53e7b6fb' 
-                : isAfter(day, today) 
+                : isAfter(day, today) || isBefore(day, createdAt)
                   ? '#666' 
                   : 'white'
             }}
@@ -57,7 +59,7 @@ export const Calendar = ({ habit }) => {
               }}
               dateTime={day.toISOString()}
             >
-              {isSameMonth(today, day) && format(day, 'd')}
+              {isSameMonth(firstDayCurrentMonth, day) && format(day, 'd')}
             </time>
           </div>
         ))}

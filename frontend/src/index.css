@@ -139,6 +139,15 @@ p, h4, h3, span {
   font-weight: 500;
 }
 
+h1, h2, h3, h4 {
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+h1 {
+  font-size: 25px;
+}
+
 .navigation {
   display: flex;
   justify-content: space-between;
@@ -326,7 +335,7 @@ p, h4, h3, span {
 }
 
 .advanced-habit-info {
-  height: 25%;
+  height: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -360,16 +369,17 @@ p, h4, h3, span {
   flex-direction: column;
   /* align-items: center; */
   justify-content: center;
-  border: 2px solid #262626;
+  /* border: 2px solid #262626; */
 }
 
 .habit {
-  border-radius: .3rem;
+  border-radius: .5rem;
   padding: 0.1875rem;
   width: clamp(15.625rem, 19rem, 31.25rem);
-  height: 3.2rem;
+  height: 3rem;
   color: #272727;
   color: rgb(240, 240, 240);
+  color: #bbb;
   /* border: 1px solid #3b3b3b83; */
   border: 1px solid #262626;
   box-shadow: 0 0.25rem 0.5rem rgba(83, 83, 83, 0.1);
@@ -377,6 +387,13 @@ p, h4, h3, span {
   display: flex;
   -webkit-font-smoothing: subpixel-antialiased;
   background: #202020;
+  /* background: transparent; */
+  font-weight: 400;
+  padding: 5px;
+}
+
+.habit h4 {
+  font-weight: 350;
 }
 
 .habit:hover {

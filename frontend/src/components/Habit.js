@@ -56,7 +56,7 @@ export const Habit = ({ habit }) => {
       <div className = {`completion-circle ${ complete  ? 'completed' : '' }`} onClick = {() => toggleComplete(habit)} >
           <div className = "circle-ring">
             <div className = "inner-circle">
-              <p className = "habit-streak"> { habit.streak } </p>
+              <p className = "habit-streak"> <strong>{ habit.streak } </strong></p>
             </div>
           </div>
 

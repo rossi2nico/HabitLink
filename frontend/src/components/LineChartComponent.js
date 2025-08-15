@@ -128,8 +128,8 @@ export const LineChartComponent = ({ habit }) => {
   return (
     <ResponsiveContainer width="100%" height="65%">
       <LineChart data={weeklyStats} >
-        <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#424242ff", fontSize: 13, dy: 10 }} />
-        <YAxis tickFormatter={v => `${v}%`} stroke = "transparent" tick = {{ fill: "#424242ff", fontSize: 12, dx: -20 }}></YAxis>
+        <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#666", fontSize: 13, dy: 10 }} />
+        <YAxis tickFormatter={v => `${v}%`} stroke = "transparent" tick = {{ fill: "#666", fontSize: 12, dx: -20 }}></YAxis>
         <YAxis stroke = "transparent"></YAxis>
         <defs>
           <filter id="shadow" height="150%">

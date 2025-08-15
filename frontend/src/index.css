@@ -624,3 +624,45 @@ circle {
   height: 300px;
   border: 1px solid #262626;
 }
+
+.calendar {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* border: 2px solid red; */
+
+}
+
+.calendar header {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  /* border: 1px solid green; */
+}
+
+.days {
+  display: grid; /* grid */
+  grid-template-columns: repeat(7, minmax(0, 1fr)); /* grid-cols-7 */
+  margin-top: 0.5rem; /* mt-2 */
+  font-size: 0.875rem; /* text-sm */
+  width: 90%;
+  text-align: center;
+  color:#a1a1a1;
+  /* border: 1px solid yellow; */
+}
+
+.calendar-grid {
+  /* border: 1px solid red; */
+  width: 90%;
+  height: 70%;
+  display: grid; /* grid */
+  grid-template-columns: repeat(7, minmax(0, 1fr)); /* grid-cols-7 */
+  font-size: 0.875rem; /* text-sm */
+  padding: 15px;
+  text-align: center;
+}

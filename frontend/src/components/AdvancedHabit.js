@@ -42,7 +42,7 @@ export const AdvancedHabit = ({ habit }) => {
       </div>
       <div className = "synced-stats" style = {{marginTop: "50px"}}>
         <div className = "calendar-container">
-          <h3> Calendar </h3>
+          {/* <h3> Calendar </h3> */}
           <Calendar></Calendar>
 
         </div>

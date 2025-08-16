@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { eachDayOfInterval, endOfMonth, format, startOfMonth, startOfToday, startOfWeek, endOfWeek, isSameMonth, isSameDay, isAfter, parse, add, isBefore } from 'date-fns'
 
-export const Calendar = ({ habit }) => {
+export const Calendar = ({ habit, toggleComplete }) => {
+
+  const completions = habit.completions;
+  console.log("completions", completions)
 
   let today = startOfToday()
   const [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
@@ -27,6 +30,22 @@ export const Calendar = ({ habit }) => {
     end: endOfWeek(endOfMonth(firstDayCurrentMonth)) 
   })
 
+  // Optimized: Create a Set of completion dates for O(1) lookups
+  // This runs once per render when completions change
+  const completionSet = useMemo(() => {
+    return new Set(
+      habit.completions.map(completionDate => 
+        format(new Date(completionDate), 'yyyy-MM-dd')
+      )
+    );
+  }, [habit.completions]);
+
+  // O(1) lookup instead of O(n)
+  const isDayComplete = (day) => {
+    const dayKey = format(day, 'yyyy-MM-dd');
+    return completionSet.has(dayKey);
+  }
+
   return (
     <div className = "calendar">  
       <header>
@@ -40,29 +59,56 @@ export const Calendar = ({ habit }) => {
         <p>S</p><p>M</p><p>T</p><p>W</p><p>T</p><p>F</p><p>S</p>
       </div>
       <div className = "calendar-grid">
-        {newDays.map(day => (
-          <div 
-            key={day.toString()} 
-            style={{
-              color: isSameDay(today, day) 
-                ? '#53e7b6fb' 
-                : isAfter(day, today) || isBefore(day, createdAt)
-                  ? '#666' 
-                  : 'white'
-            }}
-            className='calendar-day'
-          >
-            <time
+        {newDays.map(day => {
+          const isCompleted = isDayComplete(day);
+          
+          return (
+            <div 
+              key={day.toString()} 
               style={{
-                display: 'inline-block',
-                padding: '0.25rem',
+                color: isSameDay(today, day) 
+                  ? '#53e7b6fb' 
+                  : isAfter(day, today) || isBefore(day, createdAt)
+                    ? '#666' 
+                    : 'white'
               }}
-              dateTime={day.toISOString()}
+              className='calendar-day'
             >
-              {isSameMonth(firstDayCurrentMonth, day) && format(day, 'd')}
-            </time>
-          </div>
-        ))}
+              {isSameMonth(firstDayCurrentMonth, day) && 
+              <div
+                className={`completion-circle-calendar ${isCompleted ? 'completed' : ''}`}
+                onClick={() => toggleComplete(habit, day)}
+              >
+                <div className="circle-ring-calendar">
+                  <div className="inner-circle-calendar">
+                    <time
+                      style={{
+                        display: 'inline-block',
+                        padding: '0.25rem',
+                        fontSize: '12px'
+                      }}
+                      dateTime={day.toISOString()}
+                    >
+                      {format(day, 'd')}
+                    </time>
+                  </div>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="30px" height="30px">
+                  <defs>
+                    <linearGradient id="GradientColor">
+                      <stop offset="0%" stopColor="#71ada5" />
+                      <stop offset="100%" stopColor="#53e7a99c" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="15" cy="15" r="13.5" strokeLinecap="round" />
+                </svg>
+
+              </div>
+              }
+            </div>
+          )
+        })}
       </div>
     </div>
   )

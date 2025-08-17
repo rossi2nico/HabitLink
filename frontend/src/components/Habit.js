@@ -103,10 +103,11 @@ export const Habit = ({ habit }) => {
           ) : (
             <>
               {!synced ? (
-                <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
+                // <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
+                <h3 style = {{marginRight:"10px"}}onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)} >⇄</h3>
                 // <></>
               ) : (
-                <p>Linked</p>
+                <p style = {{marginRight:"15px", color:"white"}}>Linked</p>
               )}
             </>
           )}

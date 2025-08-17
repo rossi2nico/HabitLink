@@ -74,7 +74,7 @@ export const Calendar = ({ habit, toggleComplete }) => {
               }}
               className='calendar-day'
             >
-              {isSameMonth(firstDayCurrentMonth, day) && 
+              {isSameMonth(firstDayCurrentMonth, day) && !isAfter(day, today) && !isBefore(day, createdAt) &&
               <div
                 className={`completion-circle-calendar ${isCompleted ? 'completed' : ''}`}
                 onClick={() => toggleComplete(habit, day)}
@@ -84,8 +84,8 @@ export const Calendar = ({ habit, toggleComplete }) => {
                     <time
                       style={{
                         display: 'inline-block',
-                        padding: '0.25rem',
-                        fontSize: '12px'
+                        padding: '0.5rem',
+                        // fontSize: '12px'
                       }}
                       dateTime={day.toISOString()}
                     >
@@ -93,19 +93,38 @@ export const Calendar = ({ habit, toggleComplete }) => {
                     </time>
                   </div>
                 </div>
-
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="30px" height="30px">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="34px" height="34px">
                   <defs>
                     <linearGradient id="GradientColor">
                       <stop offset="0%" stopColor="#71ada5" />
                       <stop offset="100%" stopColor="#53e7a99c" />
                     </linearGradient>
                   </defs>
-                  <circle cx="15" cy="15" r="13.5" strokeLinecap="round" />
+                  <circle className = "circle-calendar" cx="17" cy="17" r="16" strokeLinecap="round" />
                 </svg>
 
               </div>
               }
+              {isSameMonth(firstDayCurrentMonth, day) && (isAfter(day, today) || isBefore(day, createdAt)) &&
+                  <div
+                className={`completion-circle-calendar`}
+              >
+                <div className="circle-ring-calendar" style = {{background:'transparent'}}>
+                  <div className="inner-circle-calendar" style = {{background:'transparent'}}>
+                    <time
+                      style={{
+                        display: 'inline-block',
+                        padding: '0.25rem',
+                        // fontSize: '12px'
+                      }}
+                      dateTime={day.toISOString()}
+                    >
+                      {format(day, 'd')}
+                    </time>
+                  </div>
+                </div>
+              </div>
+                }
             </div>
           )
         })}

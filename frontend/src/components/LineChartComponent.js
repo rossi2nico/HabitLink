@@ -127,27 +127,62 @@ export const LineChartComponent = ({ habit }) => {
 
   return (
     <ResponsiveContainer width="100%" height="65%">
-      <LineChart data={weeklyStats} >
-        <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#666", fontSize: 13, dy: 10 }} />
-        <YAxis tickFormatter={v => `${v}%`} stroke = "transparent" tick = {{ fill: "#666", fontSize: 12, dx: -20 }}></YAxis>
-        <YAxis stroke = "transparent"></YAxis>
+      <LineChart data={weeklyStats}>
+        <XAxis
+          dataKey="date"
+          stroke="transparent"
+          tick={{ fill: "#666", fontSize: 13, dy: 10 }}
+        />
+        <YAxis
+          tickFormatter={(v) => `${v}%`}
+          stroke="transparent"
+          tick={{ fill: "#666", fontSize: 12, dx: -20 }}
+        />
+        <YAxis stroke="transparent" />
+
         <defs>
+          <linearGradient id="GradientColor" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#2ae6ffd2" stopOpacity={1} />
+            <stop offset="100%" stopColor="#00ffaaff" stopOpacity={1} />
+          </linearGradient>
+
           <filter id="shadow" height="150%">
-            <feDropShadow dx="0" dy="0" stdDeviation="1.2" floodColor="#50dab7ff" floodOpacity="0.8" />
+            <feDropShadow
+              dx="0"
+              dy="0"
+              stdDeviation="1.2"
+              floodColor="#50dab7"
+              floodOpacity="0.8"
+            />
           </filter>
         </defs>
-      
-        {syncedHabits.map( syncedHabit =>
-          <Line type = "monotone" key = { syncedHabit.habitId.username } dataKey = { syncedHabit.habitId.username } name = {syncedHabit.habitId.username }
-          strokeWidth={1} stroke = "#cee3ecff" animationBegin = {2000} connectNulls = {true}
-          ></Line>
-        )}
 
-        <Line type="monotone" dataKey={habit.username} name={habit.username} strokeLinecap="round" strokeWidth={1} animationDuration = {2000}
-         stroke="#45d8a0d2" style={{ filter: "url(#shadow)" }} />
+        {syncedHabits.map((syncedHabit) => (
+          <Line
+            key={syncedHabit.habitId.username}
+            type="monotone"
+            dataKey={syncedHabit.habitId.username}
+            name={syncedHabit.habitId.username}
+            strokeWidth={1}
+            stroke="#cee3ec"
+            animationBegin={2000}
+            connectNulls
+          />
+        ))}
 
-
+        <Line
+          type="monotone"
+          dataKey={habit.username}
+          name={habit.username}
+          strokeLinecap="round"
+          strokeWidth={1.5}
+          stroke="url(#GradientColor)"
+          animationDuration={2000}
+          connectNulls
+          style={{ filter: "url(#shadow)" }}
+        />
       </LineChart>
     </ResponsiveContainer>
+
   )
 }

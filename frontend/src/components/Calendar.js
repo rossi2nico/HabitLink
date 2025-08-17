@@ -96,8 +96,8 @@ export const Calendar = ({ habit, toggleComplete }) => {
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="34px" height="34px">
                   <defs>
                     <linearGradient id="GradientColor">
-                      <stop offset="0%" stopColor="#71ada5" />
-                      <stop offset="100%" stopColor="#53e7a99c" />
+                      <stop offset="0%" stopColor="#2ae6ffaf" />
+                      <stop offset="100%" stopColor="#00ff95a2" />
                     </linearGradient>
                   </defs>
                   <circle className = "circle-calendar" cx="17" cy="17" r="16" strokeLinecap="round" />

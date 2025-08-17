@@ -481,7 +481,6 @@ h1 {
 .friends-page {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   width: 100vw;
 }
@@ -629,8 +628,9 @@ circle {
   height: 1px;
   margin: -5px 0px 20px 0px;
   width: 100px;
-  background-color: #95f7d6d2;
-  box-shadow: 0 0.1rem 0.2rem #53e7b6fb;  
+  /* background-color: #95f7d6d2;
+  box-shadow: 0 0.1rem 0.2rem #00fda9fb;  */
+  background: linear-gradient(135deg, #2ae6ffd2 0%, #50dab7 100%);
 }
 
 .calendar-box {
@@ -705,8 +705,8 @@ circle {
 
 .inner-circle-calendar {
   background: #191919;
-  height: 28px;
-  width: 28px;
+  height: 30px;
+  width: 30px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -717,8 +717,8 @@ circle {
   fill: none;
   stroke: url(#GradientColor);
   stroke-dasharray: 107; /* Circumference for r=18: 2 * π * 18 ≈ 113 */
-  stroke-dashoffset: 1077; /* Start invisible */
-  stroke-width: 3px;
+  stroke-dashoffset: 107; /* Start invisible */
+  stroke-width: 2.5px;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }

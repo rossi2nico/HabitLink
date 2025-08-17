@@ -65,12 +65,12 @@ export const Habit = ({ habit }) => {
             <linearGradient id="GradientColor">
                {/* <stop offset="0%" stop-color="#e91e63" />
                <stop offset="100%" stop-color="#673ab7" /> */}
-              <stop offset="0%" stop-color="#71ada5" />
-              <stop offset="100%" stop-color="#53e7a99c" /> 
+              <stop offset="0%" stop-color="#01f8d7ff" />
+              <stop offset="100%" stop-color="#00fda9fb" /> 
             </linearGradient>
          </defs>
          <circle cx="20" cy="20" r="18" stroke-linecap="round" />
- </svg>
+        </svg>
       </div>
       <div className = "habit-mid">
         <h4 className = "habit-name"><strong>{ habit.name }</strong></h4>

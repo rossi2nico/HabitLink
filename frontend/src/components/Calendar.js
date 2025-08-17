@@ -1,15 +1,28 @@
 import { useState, useMemo } from 'react';
 import { eachDayOfInterval, endOfMonth, format, startOfMonth, startOfToday, startOfWeek, endOfWeek, isSameMonth, isSameDay, isAfter, parse, add, isBefore } from 'date-fns'
+import { useHabits } from '../hooks/useHabits'
+
 
 export const Calendar = ({ habit, toggleComplete }) => {
 
   const completions = habit.completions;
-  console.log("completions", completions)
 
   let today = startOfToday()
   const [currentMonth, setCurrentMonth] = useState(format(today, 'MMMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMMM-yyyy', new Date())
-  const createdAt = new Date(habit.createdAt)
+  let createdAt = new Date(habit.createdAt)
+  createdAt.setHours(0, 0, 0 , 0)
+
+  // Wait to implement this.
+
+  // const firstCompleted = new Date(completions[0])
+  // firstCompleted.setHours(0, 0, 0, 0)
+  // if (isBefore(firstCompleted, createdAt)) {
+  //   createdAt = firstCompleted
+  // }
+
+  // Need to update toggleComplete to include a date.
+  // const { toggleComplete } = useHabits()
 
   const nextMonth = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
@@ -30,8 +43,6 @@ export const Calendar = ({ habit, toggleComplete }) => {
     end: endOfWeek(endOfMonth(firstDayCurrentMonth)) 
   })
 
-  // Optimized: Create a Set of completion dates for O(1) lookups
-  // This runs once per render when completions change
   const completionSet = useMemo(() => {
     return new Set(
       habit.completions.map(completionDate => 
@@ -40,7 +51,6 @@ export const Calendar = ({ habit, toggleComplete }) => {
     );
   }, [habit.completions]);
 
-  // O(1) lookup instead of O(n)
   const isDayComplete = (day) => {
     const dayKey = format(day, 'yyyy-MM-dd');
     return completionSet.has(dayKey);
@@ -49,11 +59,9 @@ export const Calendar = ({ habit, toggleComplete }) => {
   return (
     <div className = "calendar">  
       <header>
-        <button onClick = {() => prevMonth()}>prev</button>
+        <button style = {{cursor:'pointer',color:'rgb(218, 218, 218)',border:'1px', marginBottom:'2px',background:'transparent',fontSize:'20px',marginRight:'5px', fontFamily: 'Calibri, sans-serif'}}onClick = {() => prevMonth()}>&lt;</button>
         <p> { format(firstDayCurrentMonth, 'MMMM yyyy') } </p>
-        <button onClick = {() => nextMonth()}>
-          next
-        </button>
+        <button style = {{cursor:'pointer', color:'rgb(218, 218, 218)',border:'1px', marginBottom:'2px',background:'transparent',fontSize:'20px',marginLeft:'5px', fontFamily: 'Calibri, sans-serif'}}onClick = {() => nextMonth()}>&gt;</button>
       </header>
       <div className = "days">
         <p>S</p><p>M</p><p>T</p><p>W</p><p>T</p><p>F</p><p>S</p>
@@ -96,7 +104,7 @@ export const Calendar = ({ habit, toggleComplete }) => {
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="34px" height="34px">
                   <defs>
                     <linearGradient id="GradientColor">
-                      <stop offset="0%" stopColor="#2ae6ffaf" />
+                      <stop offset="0%" stopColor="#76efffc0" />
                       <stop offset="100%" stopColor="#00ff95a2" />
                     </linearGradient>
                   </defs>

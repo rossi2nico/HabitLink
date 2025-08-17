@@ -47,7 +47,7 @@ export const AdvancedHabit = ({ habit }) => {
 
         </div>
         <div className = "completion-graph">
-          <h3> Completion Graph </h3>
+          <h3> Habit Mastery </h3>
 
           <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
             <LineChartComponent habit = { habit }/>

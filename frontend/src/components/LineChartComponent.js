@@ -54,7 +54,7 @@ export const LineChartComponent = ({ habit }) => {
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 6);
     
-    const weekLabel = `wk. ${weekIndex + 1}`;
+    const weekLabel = `wk${weekIndex + 1}`;
     const weekData = { date: weekLabel };
     
     const selfCompletions = habit.completions || [];
@@ -141,20 +141,10 @@ export const LineChartComponent = ({ habit }) => {
         <YAxis stroke="transparent" />
 
         <defs>
-          <linearGradient id="GradientColor" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2ae6ffd2" stopOpacity={1} />
-            <stop offset="100%" stopColor="#00ffaaff" stopOpacity={1} />
+          <linearGradient id="GradientColor2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#2ae6ffff" stopOpacity={1} />
+            <stop offset="100%" stopColor="#00ff88ff" stopOpacity={1} />
           </linearGradient>
-
-          <filter id="shadow" height="150%">
-            <feDropShadow
-              dx="0"
-              dy="0"
-              stdDeviation="1.2"
-              floodColor="#50dab7"
-              floodOpacity="0.8"
-            />
-          </filter>
         </defs>
 
         {syncedHabits.map((syncedHabit) => (
@@ -163,9 +153,10 @@ export const LineChartComponent = ({ habit }) => {
             type="monotone"
             dataKey={syncedHabit.habitId.username}
             name={syncedHabit.habitId.username}
-            strokeWidth={1}
-            stroke="#cee3ec"
+            strokeWidth={2}
+            stroke="#c4f6ff21"
             animationBegin={2000}
+            animationDuration={500}
             connectNulls
           />
         ))}
@@ -175,11 +166,10 @@ export const LineChartComponent = ({ habit }) => {
           dataKey={habit.username}
           name={habit.username}
           strokeLinecap="round"
-          strokeWidth={1.5}
-          stroke="url(#GradientColor)"
-          animationDuration={2000}
+          strokeWidth={4}
+          stroke="url(#GradientColor2)"
+          animationDuration={2500}
           connectNulls
-          style={{ filter: "url(#shadow)" }}
         />
       </LineChart>
     </ResponsiveContainer>

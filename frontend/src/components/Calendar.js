@@ -59,8 +59,9 @@ export const Calendar = ({ habit, toggleComplete }) => {
   return (
     <div className = "calendar">  
       <header>
+        {/* <p> &lt; user &gt;</p> */}
         <button style = {{cursor:'pointer',color:'rgb(218, 218, 218)',border:'1px', marginBottom:'2px',background:'transparent',fontSize:'20px',marginRight:'5px', fontFamily: 'Calibri, sans-serif'}}onClick = {() => prevMonth()}>&lt;</button>
-        <p> { format(firstDayCurrentMonth, 'MMMM yyyy') } </p>
+        <h3 style = {{fontSize:'18px'}}> { format(firstDayCurrentMonth, 'MMMM yyyy') }  </h3>
         <button style = {{cursor:'pointer', color:'rgb(218, 218, 218)',border:'1px', marginBottom:'2px',background:'transparent',fontSize:'20px',marginLeft:'5px', fontFamily: 'Calibri, sans-serif'}}onClick = {() => nextMonth()}>&gt;</button>
       </header>
       <div className = "days">

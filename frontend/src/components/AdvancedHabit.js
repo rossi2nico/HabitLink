@@ -54,7 +54,7 @@ export const AdvancedHabit = ({ habit }) => {
           </div>
         </div>
         <div className = "synced-users">
-          <h3> Synced Users </h3>
+          <h3> Leaderboard </h3>
           <ol>
           {syncedHabits?.map((h) => (
             <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>

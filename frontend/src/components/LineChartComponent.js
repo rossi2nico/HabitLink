@@ -142,8 +142,8 @@ export const LineChartComponent = ({ habit }) => {
 
         <defs>
           <linearGradient id="GradientColor2" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2ae6ffff" stopOpacity={1} />
-            <stop offset="100%" stopColor="#00ff88ff" stopOpacity={1} />
+            <stop offset="0%" stopColor="#ff1e00ff" stopOpacity={1} />
+            <stop offset="100%" stopColor="#e00056ff" stopOpacity={1} />
           </linearGradient>
         </defs>
 

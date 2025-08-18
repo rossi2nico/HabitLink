@@ -94,7 +94,7 @@ export const useHabits = () => {
     return true
   }
 
-  const toggleComplete = async (habitId) => {
+  const toggleComplete = async (habitId, dateCompleted) => {
     setIsLoading(true)
     setError(null)
 
@@ -106,7 +106,8 @@ export const useHabits = () => {
     const res = await fetch('/api/habits/complete', {
       method: 'POST',
       body: JSON.stringify({
-        habitId
+        habitId,
+        dateCompleted
       }),
       headers: {
         'Authorization': `Bearer ${ user.token }`,

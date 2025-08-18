@@ -3,7 +3,7 @@ import { eachDayOfInterval, endOfMonth, format, startOfMonth, startOfToday, star
 import { useHabits } from '../hooks/useHabits'
 
 
-export const Calendar = ({ habit, toggleComplete }) => {
+export const Calendar = ({ habit }) => {
 
   const completions = habit.completions;
 
@@ -22,7 +22,7 @@ export const Calendar = ({ habit, toggleComplete }) => {
   // }
 
   // Need to update toggleComplete to include a date.
-  // const { toggleComplete } = useHabits()
+  const { toggleComplete } = useHabits()
 
   const nextMonth = () => {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })

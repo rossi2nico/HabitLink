@@ -140,9 +140,9 @@ const updateHabit = async (req, res) => {
                 }
             }
             habit[key] = updates[key];
-            await habit.save();
         }
 
+        await habit.save();
         res.status(200).json(habit);
 
     }
@@ -299,7 +299,6 @@ const syncHabit = async (req, res) => {
 }
 
 const createHabit = async (req, res) => {
-    // Name, description, privacy, frequency, userId
     const { name, description, privacy, frequency } = req.body;
     if (name.length > 25)  {
         return res.status(400).json({ error: 'habit name must be 25 characters or less'})
@@ -350,7 +349,6 @@ const getHabits = async (req, res) => {
         if (!sameDate(new Date(habit.streakLastUpdated), today)) {
             console.log('Calculating streak')
             await calculateStreak(habit);
-            await habit.save();
         }
     }
 
@@ -379,7 +377,6 @@ const getFriendHabits = async (req, res) => {
             if (!sameDate(habit.streakLastUpdated, today)) {
                 console.log('Calculating streak')
                 await calculateStreak(habit);
-                await habit.save();
             }
         }
         
@@ -419,7 +416,6 @@ const getPublicHabits = async (req, res) => {
 
         for (const habit of habits) {
             await calculateStreak(habit)
-            await habit.save();
         }
 
         return res.status(200).json(habits)
@@ -462,29 +458,10 @@ const deleteHabit = async (req, res) => {
         })
     }
     catch (error) {
-        console.error("DELETE habit error:", error); // not just error.message
+        console.error("DELETE habit error:", error); 
         return res.status(400).json({ error: error.message })
     }
 }
-
-/*
-const updateHabit = async (req, res) => {
-
-    const { habitId } = req.params
-    if (!mongoose.Types.ObjectId.isValid(habitId)) {
-        return res.statsus(404).json({error: "Habit not found"})
-    }
-
-    const habit = await Habit.findOneAndUpdate({_id: habitId}, {
-        ...req.body
-    })
-    if (!habit) {
-        return res.status(404).json({error: "Habit not found"})
-    }
-
-    res.status(200).json(habit)
-}
-*/
 
 module.exports = {
     createHabit,

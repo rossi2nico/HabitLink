@@ -173,40 +173,73 @@ const getSyncedHabits = async (req, res) => {
 }
 
 const toggleComplete = async (req, res) => {
-
     const today = new Date();
-    const { habitId } = req.body;
+    const { habitId, dateCompleted } = req.body;
 
     try {
         const habit = await Habit.findById(habitId);
         if (!habit) {
-            return res.status(400).json( { error: 'Habit not found' });
-        }        
+            return res.status(400).json({ error: 'Habit not found' });
+        }      
         
         const len = habit.completions.length;
+        
+        if (!dateCompleted) {
+            if (len === 0) {
+                habit.completions.push(today);
+                await calculateStreak(habit);
+                await habit.save()
+                return res.status(200).json({ habit })
+            }
 
-        if (len === 0) {
+            const lastItem = new Date(habit.completions[len - 1]);
+            if (sameDate(lastItem, today)) {
+                habit.completions.pop();
+                await calculateStreak(habit);
+                await habit.save();
+                return res.status(200).json({ habit })
+            }
             habit.completions.push(today);
-            await calculateStreak(habit);
-            await habit.save()
-            return res.status(200).json({ habit })
         }
+        else {
+            if (len === 0) {
+                habit.completions.push(new Date(dateCompleted));
+                await calculateStreak(habit);
+                await habit.save()
+                return res.status(200).json({ habit })
+            }
 
-        const lastItem = new Date(habit.completions[len - 1]);
-        if (sameDate(lastItem, today)) {
-            habit.completions.pop();
-            await calculateStreak(habit);
-            await habit.save();
-            console.log("new streak:", habit.streak)
-            return res.status(200).json({ habit })
+            let left = 0;
+            let right = habit.completions.length - 1;
+            const targetDate = new Date(dateCompleted);
+
+            while (left <= right) {
+                const mid = Math.floor((left + right) / 2);
+                const currentDate = new Date(habit.completions[mid]);
+
+                if (currentDate.toDateString() === targetDate.toDateString()) {
+                    habit.completions.splice(mid, 1);
+                    await calculateStreak(habit);
+                    await habit.save();
+                    return res.status(200).json({ habit });
+                }
+                else if (currentDate < targetDate) {
+                    left = mid + 1;
+                }
+                else {
+                    right = mid - 1;
+                }
+            }
+            
+            console.log("adding");
+            habit.completions.splice(left, 0, new Date(dateCompleted));
         }
-        habit.completions.push(today);
+        
         await calculateStreak(habit);
         await habit.save();
         res.status(200).json({ habit })
 
-    }
-    catch (error) {
+    } catch (error) {
         res.status(400).json({ error: error.message }) 
     }
 }

@@ -341,7 +341,7 @@ const getHabit = async (req, res) => {
 const getHabits = async (req, res) => {
 
     const userId  = req.user._id
-    const habits = await Habit.find({ userId }).sort({ createdAt: 1 });
+    const habits = await Habit.find({ userId }).sort({ createdAt: -1 });
 
     const today = new Date()
     
@@ -398,10 +398,10 @@ const getTargetHabits = async (req, res) => {
         )
         if (areFriends) {
             // Find habits that are either public or private
-            const habits = await Habit.find({ userId: targetUserId, privacy: { $gt: 0 }}).sort( { createdAt: 1 })
+            const habits = await Habit.find({ userId: targetUserId, privacy: { $gt: 0 }}).sort( { createdAt: -1 })
             return res.status(200).json(habits)
         }
-        const habits = await Habit.find({ userId: targetUserId, privacy: 2 }).sort({ createdAt: 1 })
+        const habits = await Habit.find({ userId: targetUserId, privacy: 2 }).sort({ createdAt: -1 })
         return res.status(200).json(habits)
     }
     catch (error) {
@@ -412,7 +412,7 @@ const getTargetHabits = async (req, res) => {
 const getPublicHabits = async (req, res) => {
     try {
         const today = new Date()
-        const habits = await Habit.find({ privacy: 2 }).sort({ createdAt: 1 })
+        const habits = await Habit.find({ privacy: 2 }).sort({ createdAt: -1 })
 
         for (const habit of habits) {
             await calculateStreak(habit)

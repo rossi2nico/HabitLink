@@ -6,7 +6,7 @@ import { EditHabitForm } from './EditHabitForm'
 import del from '../assets/delete-red.png'
 import link from '../assets/link.png'
 
-export const Habit = ({ habit }) => {
+export const Habit = ({ habit, onClick }) => {
 
   const { getHabit, toggleComplete, syncHabit, deleteHabit } = useHabits();
   const { user } = useAuthContext();
@@ -51,7 +51,7 @@ export const Habit = ({ habit }) => {
   const newPrivacy = 0;
 
   return (
-    <div className = "habit">
+    <div onClick = {onClick} className = "habit">
 
       <div className = {`completion-circle ${ complete  ? 'completed' : '' }`} onClick = {() => toggleComplete(habit)} >
           <div className = "circle-ring">
@@ -99,7 +99,7 @@ export const Habit = ({ habit }) => {
         </div>
         <div className = "habit-right">
           {usersHabit ? (
-            <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"16px", cursor:"Pointer"}} src = {del}></img>
+            <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}} src = {del}></img>
           ) : (
             <>
               {!synced ? (

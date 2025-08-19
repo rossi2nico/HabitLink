@@ -324,18 +324,29 @@ const createHabit = async (req, res) => {
 }
 
 const getHabit = async (req, res) => {
-    
+   
     const { habitId } = req.params
-    if(!mongoose.Types.ObjectId.isValid(habitId)) {
-        return res.status(404).json({error: 'No such habit'})
-    }
 
-    const habit = await Habit.findById(habitId)
-    if (!habit) {
-        return res.status(404).json({error: 'No habit found'})
-    }
+    try {
+       
+       if(!mongoose.Types.ObjectId.isValid(habitId)) {
+           return res.status(400).json({error: 'Invalid habit ID'})
+       }
 
-    res.status(200).json(habit)
+       const habit = await Habit.findById(habitId)       
+       if (!habit) {
+           return res.status(404).json({error: 'Habit not found'})
+       }
+
+       if (habit.userId.toString() !== req.user.id) {
+           return res.status(403).json({error: 'Access denied'})
+       }
+
+       res.status(200).json(habit)
+       
+   } catch (error) {
+       res.status(500).json({error: 'Server error'})
+   }
 }
 
 const getHabits = async (req, res) => {

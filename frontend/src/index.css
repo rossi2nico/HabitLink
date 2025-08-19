@@ -184,8 +184,8 @@ h1 {
 
 .navigation a:hover {
   /* box-shadow: 0 0.5rem 1rem rgba(83, 231, 182, 0.73); */
-  color: #93f8d6c5;
   transition: 0.3s ease;
+  color: #1ddab1
 }
 
 .navigation > :last-child {
@@ -347,9 +347,9 @@ h1 {
   height: 80%;
 }
 .completion-graph, .calendar-container, .synced-users {
-  width: 30%;
+  width: 325px;
   margin: 0px 15px 0px 15px;
-  height: 80%;
+  height: 400px;
   border: 1px solid #262626;
   border-radius: 20px;
   display: flex;
@@ -361,40 +361,44 @@ h1 {
 
 .advanced-habit {
   margin-top: 10px;
-  width: 100vw;
+  width: 75vw;
   height: 75vh;
-
+  background-color: #151515;
   color: rgb(218, 218, 218);
-
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
   /* border: 2px solid #262626; */
+  position: absolute;
+  z-index: 1;
 }
 
 .habit {
   border-radius: .5rem;
   padding: 0.1875rem;
-  width: clamp(15.625rem, 19rem, 31.25rem);
+  width: clamp(15.625rem, 18.5rem, 31.25rem);
   height: 3rem;
   color: #272727;
   color: rgb(240, 240, 240);
   color: #bbb;
-  /* border: 1px solid #3b3b3b83; */
   border: 1px solid #262626;
   box-shadow: 0 0.25rem 0.5rem rgba(83, 83, 83, 0.1);
   margin: 0.375rem;
   display: flex;
   -webkit-font-smoothing: subpixel-antialiased;
   background: #202020;
-  /* background: transparent; */
   font-weight: 400;
   padding: 5px;
 }
 
 .habit h4 {
   font-weight: 350;
+}
+
+.habit h4:hover {
+  transition: 0.4s ease;
+  color: rgb(4, 216, 181);
+  cursor: pointer;
 }
 
 .habit:hover {
@@ -406,8 +410,8 @@ h1 {
     rgba(255, 68, 124, 0.527) 50%, 
     rgba(255, 255, 255, 0) 100%
   ); */
-  
-  transform: scale(1.02);
+
+  transform: scale(1.01);
 }
   
 

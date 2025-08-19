@@ -124,7 +124,6 @@ export const Calendar = ({ habit }) => {
                       style={{
                         display: 'inline-block',
                         padding: '0.25rem',
-                        // fontSize: '12px'
                       }}
                       dateTime={day.toISOString()}
                     >

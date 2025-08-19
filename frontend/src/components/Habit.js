@@ -51,7 +51,7 @@ export const Habit = ({ habit, onClick }) => {
   const newPrivacy = 0;
 
   return (
-    <div onClick = {onClick} className = "habit">
+    <div className = "habit">
 
       <div className = {`completion-circle ${ complete  ? 'completed' : '' }`} onClick = {() => toggleComplete(habit)} >
           <div className = "circle-ring">
@@ -63,17 +63,15 @@ export const Habit = ({ habit, onClick }) => {
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
          <defs>
             <linearGradient id="GradientColor">
-               {/* <stop offset="0%" stop-color="#e91e63" />
-               <stop offset="100%" stop-color="#673ab7" /> */}
-              <stop offset="0%" stop-color="#01f8d7ff" />
-              <stop offset="100%" stop-color="#00fda9fb" /> 
+              <stop offset="0%" stopColor="#41ccdfff" />
+              <stop offset="100%" stopColor="#00e284ff" /> 
             </linearGradient>
          </defs>
          <circle cx="20" cy="20" r="18" stroke-linecap="round" />
         </svg>
       </div>
       <div className = "habit-mid">
-        <h4 className = "habit-name"><strong>{ habit.name }</strong></h4>
+        <h4 onClick = {onClick} className = "habit-name"><strong>{ habit.name }</strong></h4>
         {!usersHabit && (
           <p className = "habit-username"> from <strong>{ habit.username }</strong> 
             {syncedUsers.length > 0 &&

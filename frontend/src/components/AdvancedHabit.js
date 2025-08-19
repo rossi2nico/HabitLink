@@ -36,7 +36,7 @@ export const AdvancedHabit = ({ habit }) => {
     <div className="advanced-habit">
       <div className = "advanced-habit-info">
         <h1> { habit.name } </h1>
-        <h3 style = {{color:"#afafafff", marginTop:"-15px"}}> I'm Going to make it.{ habit.description }</h3>
+        <h3 style = {{color:"#afafafff", marginTop:"-15px"}}> { habit.description } </h3>
         {/* <div className = "underline"></div> */}
 
       </div>

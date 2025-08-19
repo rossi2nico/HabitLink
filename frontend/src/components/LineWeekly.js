@@ -3,7 +3,7 @@ import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Lege
 import { useHabits } from '../hooks/useHabits';
 import { useState, useEffect } from 'react'
 
-export const LineChartComponent = ({ habit }) => {
+export const LineWeekly = ({ habit }) => {
   const MS_PER_DAY = 1000 * 60 * 60 * 24;
   
   const { getSyncedHabits } = useHabits()

@@ -4,6 +4,8 @@ import Friends from './pages/Friends';
 import Habits from './pages/Habits';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Stats from './pages/Stats';
+import { AdvancedHabit } from './components/AdvancedHabit';
 
 function App() {
 
@@ -13,14 +15,17 @@ function App() {
       
       <div className="pages">
             <Routes>
-            <Route
+              <Route
                 path="/"
                 element={user ? <Habits /> : <Navigate to ="/login" />}
               />
               <Route
                 path="/habits"
                 element={user ? <Habits /> : <Navigate to ="/login" />}
-                // element= <Habits/>
+              />
+              <Route
+                path="/habits/:habitId"
+                element = {<AdvancedHabit/>}
               />
               <Route
                 path="/login"

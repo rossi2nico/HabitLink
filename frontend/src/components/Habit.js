@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
+import { Link } from 'react-router-dom';
 
 import del from '../assets/delete-red.png'
 import link from '../assets/link.png'
@@ -71,7 +72,12 @@ export const Habit = ({ habit, onClick }) => {
         </svg>
       </div>
       <div className = "habit-mid">
-        <h4 onClick = {onClick} className = "habit-name"><strong>{ habit.name }</strong></h4>
+        {/* <h4 onClick = {onClick} className = "habit-name"><strong>{ habit.name }</strong></h4> */}
+        <h4 className="habit-name">
+          <strong>
+            <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>
+          </strong>
+        </h4>
         {!usersHabit && (
           <p className = "habit-username"> from <strong>{ habit.username }</strong> 
             {syncedUsers.length > 0 &&

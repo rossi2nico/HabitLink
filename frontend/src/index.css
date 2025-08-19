@@ -335,6 +335,7 @@ h1 {
 }
 
 .advanced-habit-info {
+  margin-top: 30px;
   height: 10%;
   display: flex;
   flex-direction: column;
@@ -358,19 +359,15 @@ h1 {
   justify-content: c;
 }
 
-
 .advanced-habit {
-  margin-top: 10px;
-  width: 75vw;
-  height: 75vh;
+  width: 100vw;
+  height: 100vh;
   background-color: #151515;
   color: rgb(218, 218, 218);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* border: 2px solid #262626; */
   position: absolute;
-  z-index: 1;
 }
 
 .habit {
@@ -395,7 +392,7 @@ h1 {
   font-weight: 350;
 }
 
-.habit h4:hover {
+.habit h4:hover, .habit a:hover {
   transition: 0.4s ease;
   color: rgb(4, 216, 181);
   cursor: pointer;
@@ -434,6 +431,9 @@ h1 {
   padding: 0;
   margin: 0;
   gap: 0;
+  color: whitesmoke;
+  text-decoration: none;
+  /* font-weight: 500; */
 }
 
 .habit-username {
@@ -640,8 +640,6 @@ circle {
   height: 1px;
   margin: -5px 0px 20px 0px;
   width: 100px;
-  /* background-color: #95f7d6d2;
-  box-shadow: 0 0.1rem 0.2rem #00fda9fb;  */
   background: linear-gradient(135deg, #2ae6ffd2 0%, #50dab7 100%);
 }
 
@@ -653,13 +651,11 @@ circle {
 
 .calendar {
   height: 100%;
-  width: 100%;
+  width: 325px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* border: 2px solid red; */
-
 }
 
 .calendar header {
@@ -668,27 +664,25 @@ circle {
   align-items: center;
   width: 100%;
   justify-content: center;
-  /* border: 1px solid green; */
 }
 
 .days {
-  display: grid; /* grid */
-  grid-template-columns: repeat(7, minmax(0, 1fr)); /* grid-cols-7 */
-  margin-top: 0.5rem; /* mt-2 */
-  font-size: 0.875rem; /* text-sm */
+  display: grid; 
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  margin-top: 0.5rem; 
+  font-size: 0.875rem; 
   width: 90%;
   text-align: center;
   color:#a1a1a1;
-  /* border: 1px solid yellow; */
+
 }
 
 .calendar-grid {
-  /* border: 1px solid red; */
   width: 90%;
   height: 70%;
-  display: grid; /* grid */
-  grid-template-columns: repeat(7, minmax(0, 1fr)); /* grid-cols-7 */
-  font-size: 0.875rem; /* text-sm */
+  display: grid; 
+  grid-template-columns: repeat(7, minmax(0, 1fr)); 
+  font-size: 0.875rem; 
   padding: 15px;
   text-align: center;
   background-color: transparent;
@@ -702,7 +696,7 @@ circle {
   align-items: center;
   justify-content: center;
   margin-left: 10px;
-  cursor: pointer; /* Make it clear it's interactive */
+  cursor: pointer; 
 }
 
 .circle-ring-calendar {
@@ -749,3 +743,17 @@ circle {
   animation: uncomplete 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
+.habit-categories {
+  /* border: 2px solid #95f7d6; */
+  display: flex;
+  width: 100vw;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+}
+
+.habit-categories h1 {
+  margin: 0px 30px 0px 30px;
+  padding: 5px 10px 5px 10px;
+  /* border: 2px solid #f3467a; */
+}

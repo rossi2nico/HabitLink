@@ -335,7 +335,7 @@ const getHabit = async (req, res) => {
 
        const habit = await Habit.findById(habitId)       
        if (!habit) {
-           return res.status(404).json({error: 'Habit not found'})
+           return res.status(404).json({error: 'Habit does not exist'})
        }
 
        if (habit.userId.toString() !== req.user.id) {

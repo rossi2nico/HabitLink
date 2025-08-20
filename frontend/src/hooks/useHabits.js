@@ -37,32 +37,26 @@ export const useHabits = () => {
   }
 
   const getHabit = async (habitId) => {
-    setIsLoading(true)
-    setError(null) 
-
     if (!user) {
-      setError('You must be logged in');
-      return false;
+      return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch(`/api/habits/${ habitId }`, {
+    const res = await fetch(`/api/habits/${habitId}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${ user.token }`,
+        'Authorization': `Bearer ${user.token}`,
         'Content-Type': 'application/json'
       }
     })
 
     const json = await res.json()
-    console.log("json: ", json)
+
     if (!res.ok) {
-      setError(json.error)
-      setIsLoading(false)
-      return false
+      return { success: false, error: json.error }
     }
-    setIsLoading(false)
+
     dispatch({ type: 'GET_HABIT', payload: json })
-    return json;
+    return { success: true, habit: json }
   }
 
   const updateHabit = async (habitId, ...updates) => {

@@ -13,7 +13,7 @@ export const AdvancedHabit = () => {
   const { getSyncedHabits, getHabit } = useHabits()
   const [syncedHabits, setSyncedHabits] = useState([])
   const [habit, setHabit] = useState(null)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState("")
   const { user } = useAuthContext()
   const { habitId } = useParams()  
 
@@ -31,10 +31,13 @@ export const AdvancedHabit = () => {
       const fetchHabit = async () => {
         try {
           const res = await getHabit(habitId)
-          console.log("fetched?", res)
-          setHabit(res)
+          if (res.success == true) {
+            setHabit(res.habit)
+          } else {
+            setError(res.error)
+          }
         } catch (err) {
-          setError(true)
+          setError(err)
         }
       }
       fetchHabit()
@@ -48,6 +51,7 @@ export const AdvancedHabit = () => {
     const fetchSynced = async () => {
       try {
         const res = await getSyncedHabits(habit._id)
+        console.log("synced habit results: ", res)
 
         const sortedResult = [...(res || [])].sort((a, b) => {
           const streakA = a.habitId?.streak ?? a.streak ?? 0
@@ -57,20 +61,30 @@ export const AdvancedHabit = () => {
 
         setSyncedHabits(sortedResult)
       } catch (error) {
-        console.log(error)
+        console.log("synced error:", error)
       }
     }
 
     fetchSynced()
   }, [habit])
 
+  if (error) {
+    return (
+      <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+        <Navigation></Navigation> 
+        <h1 style={{marginTop:'250px'}}>{error}</h1>
+      </div>
+    )
+  }
+
   if (!habit) {
     return (
-      <div style = {{display:'flex', flexDirection:'column', alignItems:'center'}}>
+      <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
         <Navigation></Navigation>
-      <h1 style = {{marginTop:'250px'}}>Loading advanced habit data ...</h1>
+        <h1 style={{marginTop:'250px'}}>Loading advanced habit data ...</h1>
       </div>
-  )}  
+    )
+  } 
 
   return (
     <div className="advanced-habit">

@@ -269,7 +269,6 @@ export const useHabits = () => {
     const json = await res.json()
     
     if (!res.ok) {
-      console.log("we here")
       return { success: false, error: json.error }
     }
 
@@ -277,7 +276,8 @@ export const useHabits = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`
+        'Authorization': `Bearer ${user.token}`,
+        'Access-Type': 'sync'
       }
     })
     

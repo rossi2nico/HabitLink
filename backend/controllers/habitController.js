@@ -326,6 +326,7 @@ const createHabit = async (req, res) => {
 const getHabit = async (req, res) => {
    
     const { habitId } = req.params
+    const { 'access-type': accessType } = req.headers
 
     try {
        
@@ -338,8 +339,8 @@ const getHabit = async (req, res) => {
            return res.status(404).json({error: 'Habit does not exist'})
        }
 
-       if (habit.userId.toString() !== req.user.id) {
-           return res.status(403).json({error: 'Access denied'})
+        if (habit.userId.toString() !== req.user.id && accessType != 'sync') {
+            return res.status(403).json({error: 'Access denied'})
        }
 
        res.status(200).json(habit)

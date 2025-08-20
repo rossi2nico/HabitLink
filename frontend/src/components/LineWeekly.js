@@ -9,6 +9,7 @@ export const LineWeekly = ({ habit }) => {
   const { getSyncedHabits } = useHabits()
   const [syncedHabits, setSyncedHabits] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState("")
 
   useEffect(() => {
     if (!habit) return
@@ -16,12 +17,17 @@ export const LineWeekly = ({ habit }) => {
     const fetchData = async () => {
       try {
         setIsLoading(true)
-        const res = await getSyncedHabits(habit._id)    
-        setSyncedHabits(res);
-        console.log(`Fetched synced habits:`, res)
-        
+        const res = await getSyncedHabits(habit._id)
+
+        if (res.success == false) {
+          setError(res.error)
+        }
+        else {
+          setSyncedHabits(res.syncedHabits)
+        }
+  
       } catch (error) {
-        console.log('Error fetching synced habits:', error)
+        console.error(error.message)
       } finally {
         setIsLoading(false)
       }

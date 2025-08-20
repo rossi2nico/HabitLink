@@ -14,6 +14,7 @@ export const AdvancedHabit = () => {
   const [syncedHabits, setSyncedHabits] = useState([])
   const [habit, setHabit] = useState(null)
   const [error, setError] = useState("")
+  const [syncedError, setSyncedError] = useState("")
   const { user } = useAuthContext()
   const { habitId } = useParams()  
 
@@ -51,17 +52,20 @@ export const AdvancedHabit = () => {
     const fetchSynced = async () => {
       try {
         const res = await getSyncedHabits(habit._id)
-        console.log("synced habit results: ", res)
-
-        const sortedResult = [...(res || [])].sort((a, b) => {
+        if (res.success == false) {
+          setSyncedError(res.error)
+        }
+        else {
+          const sortedResult = [...(res.syncedHabits || [])].sort((a, b) => {
           const streakA = a.habitId?.streak ?? a.streak ?? 0
           const streakB = b.habitId?.streak ?? b.streak ?? 0
           return streakB - streakA
-        })
-
+          })
         setSyncedHabits(sortedResult)
+        }
+        
       } catch (error) {
-        console.log("synced error:", error)
+        console.error(error.message)
       }
     }
 

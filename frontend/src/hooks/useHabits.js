@@ -4,37 +4,8 @@ import { useAuthContext } from './useAuthContext'
 
 export const useHabits = () => {
 
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(null)
   const { dispatch } = useHabitsContext()
   const { user } = useAuthContext()
-
-  const getSyncedHabits = async (habitId) => {
-    setIsLoading(true)
-    setError(null) 
-
-    if (!user) {
-      setError('You must be logged in');
-      return false;
-    }
-
-    const res = await fetch(`/api/habits/syncedHabits/${ habitId }`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${ user.token }`,
-        'Content-Type': 'application/json'
-      }
-    })
-
-    const json = await res.json()
-    if (!res.ok) {
-      setError(json.error)
-      setIsLoading(false)
-      return false
-    }
-    setIsLoading(false)
-    return json.syncedHabits;
-  }
 
   const getHabit = async (habitId) => {
     if (!user) {
@@ -59,43 +30,200 @@ export const useHabits = () => {
     return { success: true, habit: json }
   }
 
-  const updateHabit = async (habitId, ...updates) => {
-    setIsLoading(true)
-    setError(null)
-
+  const getHabits = async () => {
     if (!user) {
-      setError('You must be logged in')
-      return false;
+      return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch(`/api/habits/${ habitId }`, {
+    const res = await fetch('/api/habits', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+    
+    const json = await res.json()
+    
+    if (!res.ok) {
+      return { success: false, error: json.error }
+    }
+    
+    dispatch({ type: 'SET_HABITS', payload: json})
+    return { success: true, habits: json }
+  }
+
+  const getFriendHabits = async () => {
+    if (!user) {
+      return { success: false, error: 'You must be logged in' }
+    }
+
+    const res = await fetch(`/api/habits/friends/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+    
+    const json = await res.json()
+    
+    if (!res.ok) {
+      // Originally returned []
+      return { success: false, error: json.error }
+    }
+    
+    dispatch({ type: 'SET_FRIEND_HABITS', payload: json })
+    return { success: true, habits: json }
+  }
+
+  const getPublicHabits = async () => {
+    if (!user) {
+      return { success: false, error: 'You must be logged in' }
+    }
+
+    const res = await fetch('/api/habits/public', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+    
+    const json = await res.json()
+    
+    if (!res.ok) {
+      // Originally returned []
+      return { success: false, error: json.error }
+    }
+    
+    dispatch({ type: 'SET_PUBLIC_HABITS', payload: json })
+    return { success: true, habits: json }
+  }
+
+  const getSyncedHabits = async (habitId) => {
+    if (!user) {
+      return { success: false, error: 'You must be logged in' }
+    }
+
+    const res = await fetch(`/api/habits/syncedHabits/${habitId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${user.token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const json = await res.json()
+    
+    if (!res.ok) {
+      return { success: false, error: json.error }
+    }
+    
+    return { success: true, syncedHabits: json.syncedHabits }
+  }
+
+  const getTargetHabits = async (targetUserId) => {
+    if (!user) {
+      return { success: false, error: 'You must be logged in' }
+    }
+
+    const res = await fetch(`/api/habits/public/${targetUserId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+    
+    const json = await res.json()
+    
+    if (!res.ok) {
+      return { success: false, error: json.error }
+    }
+    
+    return { success: true, habits: json }
+  }
+
+  // Modify this so that frequency and privacy are strings, then inside here convert it to the appropriate integer
+  const createHabit = async (name, description, frequency, privacy) => {
+    if (!user) {
+      return { success: false, error: "You must be logged in" }
+    }
+
+    const habit = { name, description, frequency, privacy }
+
+    const res = await fetch('/api/habits', {
+      method: 'POST',
+      body: JSON.stringify(habit),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+    
+    const json = await res.json()
+    
+    if (!res.ok) {
+      return { success: false, error: json.error }
+    }
+    
+    dispatch({ type: 'CREATE_HABIT', payload: json })
+    return { success: true, habit: json }
+  }
+
+  const deleteHabit = async (habitId) => {
+    if (!user) {
+      return { success: false, error: "You must be logged in" }
+    }
+
+    const res = await fetch(`/api/habits/${habitId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+    
+    const json = await res.json()
+    
+    if (!res.ok) {
+      return { success: false, error: json.error }
+    }
+    
+    dispatch({ type: 'DELETE_HABIT', payload: json })
+    return { success: true, habit: json }
+  }
+
+  const updateHabit = async (habitId, ...updates) => {
+    if (!user) {
+      return { success: false, error: 'You must be logged in' }
+    }
+
+    const res = await fetch(`/api/habits/${habitId}`, {
       method: 'PATCH',
       body: JSON.stringify({
         updates
       }),
       headers: {
-        'Authorization': `Bearer ${ user.token }`,
+        'Authorization': `Bearer ${user.token}`,
         'Content-Type': 'application/json'
       }
     })
+    
     const json = await res.json()
+    
     if (!res.ok) {
-      setError(json.error)
-      setIsLoading(false)
-      return false
+      return { success: false, error: json.error }
     }
-    setIsLoading(false)
+    
     dispatch({ type: 'UPDATE_HABIT', payload: json.habit})
-    return true
+    return { success: true, habit: json.habit }
   }
 
   const toggleComplete = async (habitId, dateCompleted) => {
-    setIsLoading(true)
-    setError(null)
-
     if (!user) {
-      setError('You must be logged in')
-      return false;
+      return { success: false, error: 'You must be logged in' }
     }
 
     const res = await fetch('/api/habits/complete', {
@@ -105,29 +233,24 @@ export const useHabits = () => {
         dateCompleted
       }),
       headers: {
-        'Authorization': `Bearer ${ user.token }`,
+        'Authorization': `Bearer ${user.token}`,
         'Content-Type': 'application/json'
       }
     })
+    
     const json = await res.json()
+    
     if (!res.ok) {
-      setError(json.error)
-      setIsLoading(false)
-      return false
+      return { success: false, error: json.error }
     }
-    setIsLoading(false)
+    
     dispatch({ type: 'TOGGLE_COMPLETE', payload: json.habit})
-    return true
+    return { success: true, habit: json.habit }
   }
 
   const syncHabit = async (originalHabitId, originalUserId, newPrivacy) => {
-    // Privacy needs to be modified later
-    setIsLoading(true)
-    setError(null)
-
     if (!user) {
-      setError('You must be logged in')
-      return false;
+      return { success: false, error: 'You must be logged in' }
     }
 
     const res = await fetch('/api/habits/sync', {
@@ -139,212 +262,40 @@ export const useHabits = () => {
       }),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ user.token }`
+        'Authorization': `Bearer ${user.token}`
       }
     })
+    
     const json = await res.json()
+    
     if (!res.ok) {
-      setError(json.error)
-      setIsLoading(false)
-      return false
+      console.log("we here")
+      return { success: false, error: json.error }
     }
 
     const originalHabit = await fetch(`/api/habits/${originalHabitId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ user.token }`
+        'Authorization': `Bearer ${user.token}`
       }
     })
+    
     const jsonOriginal = await originalHabit.json()
+    
     if (!originalHabit.ok) {
-      setError(jsonOriginal.error || "Failed to fetch original habit");
-      setIsLoading(false);
-      return false;
+      return { success: false, error: jsonOriginal.error || "Failed to fetch original habit" }
     }
 
-    setIsLoading(false)
     dispatch({ type: 'SYNC_HABIT', payload: {
       newHabit: json,
       originalHabit: jsonOriginal
-    }
-    })
-    return true
-  }
-
-  const getFriendHabits = async () => {
-
-    setIsLoading(true)
-    setError(null)
-
-    if (!user) {
-      setError('You must be logged in')
-      return false;
-    }
-
-    const res = await fetch(`/api/habits/friends/`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ user.token }`
-      }
-    })
-    const json = await res.json()
-    if (!res.ok) {
-      setIsLoading(false)
-      setError(json.error)
-      return []
-    }
-    setIsLoading(false)
-    dispatch({ type: 'SET_FRIEND_HABITS', payload: json })
-    return json;
-  }
-
-  const getTargetHabits = async (targetUserId) => {
-
-    setIsLoading(true)
-    setError(null)
-
-    if (!user) {
-      setError('You must be logged in')
-      return false;
-    }
-
-    const res = await fetch(`/api/habits/public/${ targetUserId }`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ user.token }`
-      }
-    })
-    const json = await res.json()
-    if (!res.ok) {
-      setIsLoading(false)
-      setError(json.error)
-      return []
-    }
-    setIsLoading(false)
-    return json;
-  }
-
-  const getPublicHabits = async () => {
-
-    setIsLoading(true)
-    setError(null)
-
-    if (!user) {
-      setError('You must be logged in')
-      return false;
-    }
-
-    const res = await fetch('/api/habits/public', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ user.token }`
-      }
-    })
-    const json = await res.json()
-    if (!res.ok) {
-      setIsLoading(false)
-      setError(json.error)
-      return []
-    }
-    setIsLoading(false)
-    dispatch({ type: 'SET_PUBLIC_HABITS', payload: json })
-    return json;
-
-  }
-  const getHabits = async () => {
-
-    setIsLoading(true)
-    setError(null)
-
-    if (!user) {
-      setError('You must be logged in')
-      return false;
-    }
-
-    const res = await fetch('/api/habits', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ user.token }`
-      }
-    })
-    const json = await res.json()
-    if (!res.ok) {
-      setError(json.error)
-      setIsLoading(false)
-      return false
-    }
-    console.log('Retrieved all habits')
-    dispatch({ type: 'SET_HABITS', payload: json})
-    setIsLoading(false)
-    return true
-  }
-
-  // Modify this so that frequency and privacy are strings, then inside here convert it to the appropriate integer
-  const createHabit = async (name, description, frequency, privacy) => {
+    }})
     
-    const habit = { name, description, frequency, privacy }
-    setIsLoading(true)
-    setError(null)
-
-    if (!user) {
-      setError("You must be logged in")
-      return false
-    }
-
-    const res = await fetch('/api/habits', {
-      method: 'POST',
-      body: JSON.stringify(habit),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ user.token }`
-      }
-    })
-    const json = await res.json()
-    if (!res.ok) {
-      setError(json.error)
-      setIsLoading(false)
-      return false;
-    }
-    console.log('New habit created')
-    dispatch({ type: 'CREATE_HABIT', payload: json })
-    setIsLoading(false)
-    return true;
-  }
-
-  const deleteHabit = async (habitId) => {
-    setIsLoading(true)
-    setError(null)
-
-    if (!user) {
-      setError("You must be logged in")
-      return false
-    }
-
-    const res = await fetch(`/api/habits/${ habitId }`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ user.token }`
-      }
-    })
-    const json = await res.json()
-    if (!res.ok) {
-      setError(json.error)
-      setIsLoading(false)
-      return false;
-    }
-    console.log('Habit successfully deleted')
-    dispatch({ type: 'DELETE_HABIT', payload: json })
-    setIsLoading(false)
-    return true;
+    return { success: true, newHabit: json, originalHabit: jsonOriginal }
   }
 
   return { 
     getSyncedHabits, syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit,
-    updateHabit, deleteHabit, toggleComplete, isLoading, error }
+    updateHabit, deleteHabit, toggleComplete }
 }

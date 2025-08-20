@@ -54,13 +54,14 @@ export const useHabits = () => {
     })
 
     const json = await res.json()
+    console.log("json: ", json)
     if (!res.ok) {
       setError(json.error)
       setIsLoading(false)
       return false
     }
     setIsLoading(false)
-    // dispatch({ type: 'GET_HABIT', payload: json })
+    dispatch({ type: 'GET_HABIT', payload: json })
     return json;
   }
 

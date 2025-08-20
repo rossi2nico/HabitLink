@@ -3,6 +3,12 @@ import { createContext, useReducer } from 'react'
 export const HabitsReducer = (state, action) => {
   switch(action.type) {
 
+    case 'GET_HABIT': {
+      return {
+        ...state,
+        habits: [action.payload]
+      }
+    }
     case 'SET_HABITS':
       return {
         ...state,

@@ -37,7 +37,6 @@ const Habits = () => {
     if (!isUsersHabit(habit)) {
       return 
     }
-    <Link to = "\stats"></Link>
     setSelectedHabit(habit)
   }
 
@@ -54,7 +53,7 @@ const Habits = () => {
       <Navigation></Navigation>
       <div className="habits-page">
         <div className = "habit-categories">
-          <button onClick = {changeActiveLeft}>left</button>
+          <button onClick = {changeActiveLeft}>⬅</button>
           <div>
             {activeView === 0 ? (
               <h1>Your Habits</h1>
@@ -71,7 +70,6 @@ const Habits = () => {
 
         <div className="habits">
 
-          {/* {habits?.length > 0 && selectedHabit && <AdvancedHabit habit={selectedHabit} />} */}
           {activeView == 0 && <div className = "user-habits">
             <div style = {{marginTop:"-30px"}} className = "underline"></div>
 

@@ -1,32 +1,46 @@
 import { LineWeekly } from "./LineWeekly"
 import { useHabits } from "../hooks/useHabits"
 import { useState, useEffect } from 'react'
-import { LineChart } from "recharts"
 import { Calendar } from "./Calendar"
 import { useParams } from 'react-router-dom'
 import { Navigation } from "./Navigation"
+import { useHabitsContext } from "../hooks/useHabitsContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 export const AdvancedHabit = () => {
 
+  const { habits } = useHabitsContext()
   const { getSyncedHabits, getHabit } = useHabits()
   const [syncedHabits, setSyncedHabits] = useState([])
   const [habit, setHabit] = useState(null)
-
+  const [error, setError] = useState(false)
+  const { user } = useAuthContext()
   const { habitId } = useParams()  
 
   useEffect(() => {
-    if (!habitId) return
-
-    const fetchHabit = async () => {
-      try {
-        const res = await getHabit(habitId)
-        setHabit(res)
-      } catch (err) {
-        console.error("Error fetching habit:", err)
-      }
+    if (!user) {
+      return
     }
-    fetchHabit()
-  }, [habitId])
+    /* We will only find the habit in context if we previously clicked from the habits page with the context. */
+    const habitFromContext = habits.find(h => h._id === habitId)
+    if (habitFromContext) {
+      setHabit(habitFromContext)
+    }
+    /* This should fetch the habit and update habits context */
+    else {
+      const fetchHabit = async () => {
+        try {
+          const res = await getHabit(habitId)
+          console.log("fetched?", res)
+          setHabit(res)
+        } catch (err) {
+          setError(true)
+        }
+      }
+      fetchHabit()
+    }
+
+  }, [habitId, habits, user])
 
   useEffect(() => {
     if (!habit) return

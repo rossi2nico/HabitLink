@@ -206,17 +206,20 @@ h1 {
   background-color: transparent;
 }
 
+.nav-right {
+  width: 150px;
+}
+
+.login-nav, .register-nav {
+  padding: 0px;
+  margin: 0px;
+  width: 70px;
+}
+
 .navigation a:hover {
   /* box-shadow: 0 0.5rem 1rem rgba(83, 231, 182, 0.73); */
   transition: 0.3s ease;
   color: #1ddab1
-}
-
-.navigation > :last-child {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
 .navigation button {
@@ -246,15 +249,8 @@ h1 {
   justify-content: flex-start;
 }
 
-.nav-mid a {
+.nav-mid a, .nav-right a {
   font-size: 15px;
-}
-
-.nav-left,
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
 .nav-left p {

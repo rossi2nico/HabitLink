@@ -8,6 +8,8 @@ const Login = () => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [forgotText, setForgotText] = useState("forgot your password?")
+
     const { login, error, isLoading } = useLogin()
 
     const handleSubmit = async (e) => {
@@ -19,30 +21,32 @@ const Login = () => {
         <>
             <Navigation></Navigation>
             <form className = "login" onSubmit = {handleSubmit}>
-                <h3>Login</h3>
+                <h3>Log in to HabitLink</h3>
 
-                <label>Username:</label>
+                {/* <label>Username:</label> */}
                 <input
                     type = "username"
                     name="username"
+                    placeholder='username'
                     onChange={(e) => setUsername(e.target.value)}
                     value = {username}
                 />
-                <label>Password:</label>
+                {/* <label>Password:</label> */}
                 <input
                     type = "password"
                     name="password"
+                    placeholder='password'
                     onChange={(e) => setPassword(e.target.value)}
                     value = {password}
                 />
-                
+                <p onClick = {() => {setForgotText("that sucks :(")}} style = {{fontFamily:"Manrope", fontWeight:"600", marginTop:"-15px", marginBottom:"15px", marginRight:"-120px", border: "none", color:"#636363ff", background:"transparent", height:"20px", width:"150px", fontSize:"13px", textAlign:"right", cursor:"pointer"}}>{forgotText}</p>
                 <button type="submit" disabled={isLoading}>Log in</button>
                 {error && <div className="error">{error}</div>}
-            
+                {/* <p style = {{fontSize:"15px", color:"#575757ff"}}>Don't have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/signup"><strong>Sign up</strong></Link></p> */}
+
             </form>
-            <h3 style={{ marginTop: "-45px" }}>
-                <Link to="/signup">Don't have an account? Register here</Link>
-            </h3>
+            <p style = {{fontSize:"15px", color:"#575757ff"}}>Don't have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/signup"><strong>Sign up</strong></Link></p>
+
         </>
     )
 }

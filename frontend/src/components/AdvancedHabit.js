@@ -1,4 +1,5 @@
 import { LineWeekly } from "./LineWeekly"
+import { BarGraphWeekly } from "./BarGraphWeekly"
 import { useHabits } from "../hooks/useHabits"
 import { useState, useEffect } from 'react'
 import { Calendar } from "./Calendar"
@@ -106,7 +107,7 @@ export const AdvancedHabit = () => {
 
         </div>
         <div className = "completion-graph">
-          <h3> Habit Mastery </h3>
+          <h3> Habit Mastery - arrows to swap between bar / line</h3>
 
           <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
             <LineWeekly habit = { habit }/>

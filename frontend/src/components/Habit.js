@@ -5,9 +5,8 @@ import { EditHabitForm } from './EditHabitForm'
 import { Link } from 'react-router-dom';
 
 import del from '../assets/delete-red.png'
-import link from '../assets/link.png'
 
-export const Habit = ({ habit, onClick }) => {
+export const Habit = ({ habit }) => {
 
   const { getHabit, toggleComplete, syncHabit, deleteHabit } = useHabits();
   const { user } = useAuthContext();
@@ -68,11 +67,10 @@ export const Habit = ({ habit, onClick }) => {
               <stop offset="100%" stopColor="#00e284ff" /> 
             </linearGradient>
          </defs>
-         <circle cx="20" cy="20" r="18" stroke-linecap="round" />
+         <circle cx="20" cy="20" r="18" strokeLinecap="round" />
         </svg>
       </div>
       <div className = "habit-mid">
-        {/* <h4 onClick = {onClick} className = "habit-name"><strong>{ habit.name }</strong></h4> */}
         <h4 className="habit-name">
           <strong>
             <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>

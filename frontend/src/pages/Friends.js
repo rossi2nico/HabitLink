@@ -47,7 +47,7 @@ const Friends = () => {
 
       <div className = 'friends-page'>
         <div className = 'friends-search'>
-          <label for = "search-users"> <h3> Search Users </h3> </label>
+          <label ><h3> Search Users </h3> </label>
   
           <input 
             type = "search"
@@ -56,12 +56,12 @@ const Friends = () => {
             onChange = {(e) => setSearchTerm(e.target.value)}
           />
           
-          {searchResults.length === 0 ? (
-            // <p>No Results Found</p>
+          {searchResults.length === 0 && searchTerm != "" ? (
+            <p>No users found</p>
+          ) : searchResults.length === 0 ? 
             <></>
-          ) : (
+          : (
             <>
-              {/* <div style = {{marginTop:"5px", width:"300px"}}className = "underline"></div> */}
               {searchResults.map(user => (
                 <SearchUser key = {user._id} user = {user}></SearchUser>
               ))}

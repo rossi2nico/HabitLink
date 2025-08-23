@@ -53,7 +53,7 @@ const Habits = () => {
       <Navigation></Navigation>
       <div className="habits-page">
         <div className = "habit-categories">
-          <button onClick = {changeActiveLeft}>⬅</button>
+          <button onClick = {changeActiveLeft}>&lt;</button>
           <div>
             {activeView === 0 ? (
               <h1>Your Habits</h1>
@@ -64,30 +64,54 @@ const Habits = () => {
             ) : null}
             
           </div>
-          
-          <button onClick = {changeActiveRight}> right </button>
+      
+          <button onClick = {changeActiveRight}> &gt; </button>
         </div>
+        
+        <div style={{margin: '-10px auto 0', width: '360px' }} className="underline"></div>
+
 
         <div className="habits">
+          {activeView == 0 && 
+          <>
+            <div className = "user-create">
+              {/* <CreateHabitForm></CreateHabitForm>  */}
+              
+            </div>
+            <div className = "user-habits">
+              
+              { habits && habits.length > 0 ? (
+                habits.map(habit => (
+                  <Habit 
+                    onClick = {() => selectHabit(habit)} 
+                    key = {habit._id} 
+                    habit = {habit} 
+                  />
+                ))
+              ) : (
+                <p>
+                  No habits found...<br />
+                  <span 
+                    style={{ fontWeight: 'bold', color: 'rgba(129, 240, 221, 1)', cursor: 'pointer' }} 
+                    onClick={() => console.log('Navigate to create habit')}>
+                      Create your first habit
+                  </span> or sync with another user!
+                </p>
+              )}
+              { habits && habits.length > 0 && (
+                  <p style = {{marginTop:'60px', marginBottom:'-15px'}}>You have { habits.length } habits!</p>
+              )}
+              { habits && habits.length > 0 && (
+                  <p>Click on any habit to view advanced statistics!</p>
+              )}
+              <button className = "create-habit-button">Create new habit</button>
+              {/* <CreateHabitForm></CreateHabitForm> */}
 
-          {activeView == 0 && <div className = "user-habits">
-            <div style = {{marginTop:"-30px"}} className = "underline"></div>
-
-            { habits && habits.length > 0 ? (
-              habits.map(habit => (
-                <Habit 
-                  onClick = {() => selectHabit(habit)} 
-                  key = {habit._id} 
-                  habit = {habit} 
-                />
-              ))
-            ) : (
-              <p>No Habits found</p>
-            )}
-          </div>}
+            </div>
+          </>
+          }
 
           {activeView == 1 && <div className="friend-habits">
-            <div style = {{marginTop:"-30px"}} className="underline"></div>
             {friendHabits && friendHabits.length > 0 ? (
               friendHabits.map(friendHabit => (
                 <Habit 
@@ -101,7 +125,6 @@ const Habits = () => {
           </div>}
 
           {activeView == 2 && <div className="public-habits">
-            <div style = {{marginTop:"-30px"}} className="underline"></div>
             {publicHabits && publicHabits.length > 0 ? (
               publicHabits.map(publicHabit => (
                 !isUsersHabit(publicHabit) ? (
@@ -118,7 +141,6 @@ const Habits = () => {
             
         </div>
       </div>
-      <CreateHabitForm></CreateHabitForm>
     </>
   )
 }

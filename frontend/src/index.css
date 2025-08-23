@@ -49,6 +49,7 @@ body {
 
 p, h4, h3, span {
   cursor: default;
+  font-family: 'Manrope';
 }
 
 .login {
@@ -146,16 +147,6 @@ p, h4, h3, span {
   margin-top: 1.25rem;
 }
 
-.login a {
-  color: #00754a;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.login a:hover {
-  text-decoration: underline;
-}
-
 .habitlink {
   color: #ffffff;
   margin-right: 50px;
@@ -180,11 +171,10 @@ h1 {
   border: 1px solid rgb(53, 53, 53);
   box-shadow: 0 0rem 0.5rem rgba(83, 83, 83, 0.4);
   padding: 0.75rem 2rem;
-  border-radius: 1rem;
+  border-radius: 0.4rem;
   position: sticky;
   top: 0;
-  height: 1.25rem;
-  color: black;
+  height: 1.5rem;
   width: clamp(18.75rem, 55%, 75rem);
   margin: 0.9375rem auto 0;
   z-index: 100;
@@ -306,18 +296,32 @@ h1 {
   padding: 0.625rem 1rem;
   font-size: 0.875rem;
   border: none;
-  border-radius: 0.375rem;
   cursor: pointer;
   background-color: #292929;
   color: white;
   transition: background-color 0.2s ease;
 }
 
+.create-habit-button {
+  font-family: 'Manrope';
+  /* border: 2px solid #202020; */
+  background: transparent;
+  color: white;
+  /* width: 200px; */
+  height: 40px;
+  font-size: 15px;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .create-habit-form button:hover,
 .create-habit-button:hover,
 .close-popup:hover {
-  background-color: #d7372f;
-  transition: background-color 0.6s ease;
+  /* background-color: #5a5a5a; */
+  transition: 0.6s ease;
+  color:#95f7d6;
 }
 
 .close-popup {
@@ -337,11 +341,6 @@ h1 {
   width: 100%;
   background: rgba(0, 0, 0, 0.7);
   z-index: 999;
-}
-
-.habits {
-  display: flex;
-  justify-content: center;
 }
 
 .user-habits,
@@ -390,8 +389,43 @@ h1 {
   position: absolute;
 }
 
+.habit-categories button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 600;
+  font-family: 'Manrope';
+}
+
+.habit-categories button:hover {
+  transition: 0.7s ease;
+  color: #1ddab1;
+}
+
+.habits {
+  display: flex;
+  justify-content: center;
+}
+
+.underline {
+  height: 2px;
+  margin: -5px 0px 20px 0px;
+  width: 100px;
+  background: linear-gradient(135deg, #2ae6ffd2 0%, #50dab7 100%);
+}
+
+.user-habits {
+  /* border: 2px solid #202020; */
+  padding: 30px 15px 30px 15px;
+  border-radius: 2px;
+  width: 325px;
+  text-align: center;
+}
+
 .habit {
-  border-radius: .5rem;
+  border-radius: 0.3rem;
   padding: 0.1875rem;
   width: clamp(15.625rem, 18.5rem, 31.25rem);
   height: 3rem;
@@ -654,12 +688,7 @@ circle {
   }
 }
 
-.underline {
-  height: 1px;
-  margin: -5px 0px 20px 0px;
-  width: 100px;
-  background: linear-gradient(135deg, #2ae6ffd2 0%, #50dab7 100%);
-}
+
 
 .calendar-box {
   width: 300px;

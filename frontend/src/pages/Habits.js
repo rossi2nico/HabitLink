@@ -68,16 +68,12 @@ const Habits = () => {
           <button onClick = {changeActiveRight}> &gt; </button>
         </div>
         
-        <div style={{margin: '-10px auto 0', width: '250px' }} className="underline"></div>
+        <div style={{margin: '-20px auto 0', width: '250px' }} className="underline"></div>
 
 
         <div className="habits">
           {activeView === 0 && 
           <>
-            <div className = "user-create">
-              {/* <CreateHabitForm></CreateHabitForm>  */}
-              
-            </div>
             <div className = "user-habits">
               
               { habits && habits.length > 0 ? (
@@ -96,7 +92,7 @@ const Habits = () => {
                 </p>
               )}
               { habits && habits.length > 0 && (
-                  <p style = {{marginTop:'30px', marginBottom:'-15px'}}>You have { habits.length } habits!</p>
+                  <p style = {{marginTop:'25px', marginBottom:'-15px'}}>You have { habits.length } habits!</p>
               )}
               { habits && habits.length > 0 && (
                   <p style = {{marginTop:'17px'}}>Click on any habit to view advanced statistics!</p>

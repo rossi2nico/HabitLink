@@ -23,7 +23,7 @@ export const Navigation = () => {
           </>
         ) : (
           <>
-            <h3 className="nav-user">{user.username}</h3>
+            <h3 className="nav-user">{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</h3>
             <button className="logout" onClick={logout}>logout</button>
           </>
         )}

@@ -1,5 +1,3 @@
-
-import React from 'react';
 import { useFriends } from '../hooks/useFriends';
 
 export const PendingUser = ({ incomingUser }) => {
@@ -15,7 +13,7 @@ export const PendingUser = ({ incomingUser }) => {
 
   return (
     <div className="pending-user-card">
-      <span>{incomingUser.username}</span>
+      <span>{incomingUser.username.charAt(0).toUpperCase() + incomingUser.username.slice(1)}</span>
       <button 
         onClick={handleAccept} 
         className="accept-button"

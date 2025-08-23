@@ -10,7 +10,7 @@ export const Friend = ({ friend }) => {
 
   return (
     <div className="friend-card">
-      <span>{friend.username}</span>
+      <span>{friend.username.charAt(0).toUpperCase() + friend.username.slice(1)}</span>
       <button 
         onClick={handleRemove} 
         className="remove-friend-button"

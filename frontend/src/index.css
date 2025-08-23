@@ -417,11 +417,14 @@ h1 {
 }
 
 .user-habits {
-  /* border: 2px solid #202020; */
+  border: 2px solid #202020;
   padding: 30px 15px 30px 15px;
   border-radius: 2px;
   width: 325px;
   text-align: center;
+  margin-top: 30px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .habit {

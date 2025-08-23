@@ -22,13 +22,13 @@ const Habits = () => {
 
   const changeActiveLeft = () => {
     setSelectedHabit(null)
-    if (activeView == 0) setActiveView(2);
+    if (activeView === 0) setActiveView(2);
     else setActiveView(activeView - 1)
   }
 
   const changeActiveRight = () => {
     setSelectedHabit(null)
-    if (activeView == 2) setActiveView(0);
+    if (activeView === 2) setActiveView(0);
     else setActiveView(activeView + 1);
     
   }
@@ -68,11 +68,11 @@ const Habits = () => {
           <button onClick = {changeActiveRight}> &gt; </button>
         </div>
         
-        <div style={{margin: '-10px auto 0', width: '360px' }} className="underline"></div>
+        <div style={{margin: '-10px auto 0', width: '250px' }} className="underline"></div>
 
 
         <div className="habits">
-          {activeView == 0 && 
+          {activeView === 0 && 
           <>
             <div className = "user-create">
               {/* <CreateHabitForm></CreateHabitForm>  */}
@@ -91,27 +91,27 @@ const Habits = () => {
               ) : (
                 <p>
                   No habits found...<br />
-                  <span 
-                    style={{ fontWeight: 'bold', color: 'rgba(129, 240, 221, 1)', cursor: 'pointer' }} 
-                    onClick={() => console.log('Navigate to create habit')}>
-                      Create your first habit
-                  </span> or sync with another user!
+                  Create your own habit or sync with another users habit!
+                  
                 </p>
               )}
               { habits && habits.length > 0 && (
-                  <p style = {{marginTop:'60px', marginBottom:'-15px'}}>You have { habits.length } habits!</p>
+                  <p style = {{marginTop:'30px', marginBottom:'-15px'}}>You have { habits.length } habits!</p>
               )}
               { habits && habits.length > 0 && (
-                  <p>Click on any habit to view advanced statistics!</p>
+                  <p style = {{marginTop:'17px'}}>Click on any habit to view advanced statistics!</p>
               )}
               <button className = "create-habit-button">Create new habit</button>
               {/* <CreateHabitForm></CreateHabitForm> */}
 
             </div>
+            {/* <div className = "user-habits">
+              gmi
+            </div> */}
           </>
           }
 
-          {activeView == 1 && <div className="friend-habits">
+          {activeView === 1 && <div className="friend-habits">
             {friendHabits && friendHabits.length > 0 ? (
               friendHabits.map(friendHabit => (
                 <Habit 
@@ -124,7 +124,7 @@ const Habits = () => {
             )}
           </div>}
 
-          {activeView == 2 && <div className="public-habits">
+          {activeView === 2 && <div className="public-habits">
             {publicHabits && publicHabits.length > 0 ? (
               publicHabits.map(publicHabit => (
                 !isUsersHabit(publicHabit) ? (

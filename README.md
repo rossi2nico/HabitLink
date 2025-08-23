@@ -32,14 +32,11 @@
    ```
 
 ## Demonstrations  
-<img width="847" height="519" alt="image" src="https://github.com/user-attachments/assets/e9cf556c-5842-4dc9-9b0e-bc8b9c9d5bd8" />
+<img align = "center" width="847" height="519" alt="image" src="https://github.com/user-attachments/assets/e9cf556c-5842-4dc9-9b0e-bc8b9c9d5bd8" />
 
 ---  
-<img width="847" height="519" alt="image" src="https://github.com/user-attachments/assets/74d0c11d-e66a-44ed-82a5-5dfc305a1c33" />
+<img width="430" height="571" alt="image" src="https://github.com/user-attachments/assets/a3a12830-e34b-4b36-87dc-9918f56b671f" />
+<img width="458" height="575" alt="image" src="https://github.com/user-attachments/assets/d6717b01-f04f-4766-be52-3878735c6ab4" />
 
 ---  
-<img width="1340" height="648" alt="image" src="https://github.com/user-attachments/assets/97187a75-c99e-4f4e-944f-b3bb97a34c23" />  
-
----  
-<img width="902" height="585" alt="image" src="https://github.com/user-attachments/assets/578569f0-32ce-4173-8526-da85a05a72a7" />
-
+<img width="1167" height="587" alt="image" src="https://github.com/user-attachments/assets/d0175989-b9cd-4485-a338-7861ace8b87d" />

@@ -28,7 +28,7 @@ export const CreateHabitForm = ({setCreateActive}) => {
   
   return (
     <div className="create-habit-form-container">
-      <h4 style={{fontWeight: 500, color: '#ffffffff'}}> The best time to plant a tree was 20 years ago. The next best time is now.</h4>
+      <h4 style={{fontWeight: 500, color: '#eeeeeeff'}}> The best time to plant a tree was 20 years ago. The next best time is now.</h4>
 
       <form className="create-habit-form" onSubmit={handleSubmit}>
 

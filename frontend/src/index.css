@@ -404,11 +404,12 @@ h1 {
 .underline {
   display: flex;
   height: 2px;
-  margin: -5px 0px 20px 0px;
+  margin: 0px 0px 15px 0px;
   width: 100px;
   margin-left: auto;
   margin-right: auto;
   background: linear-gradient(135deg, #2ae6ffd2 0%, #50dab7 100%);
+  background: #4df3ff;
 }
 
 .user-habits {
@@ -806,7 +807,7 @@ circle {
 .cancel {
   border: none;
   background-color: transparent;
-  color: rgb(240, 240, 240);
+  color: rgb(250, 108, 120);
   font-family: 'Manrope';
   font-size: 14px;
   font-weight: 700;

@@ -25,22 +25,13 @@ html {
 
 body {
   margin: 0;
-  background: linear-gradient(to bottom, #e9effc, #babfff);
-  background: linear-gradient(to bottom, #ebf9ff, #95f7d6);
-  background: linear-gradient(to bottom, #ebf9ff, #a5fade);
-  /* background: linear-gradient(to top, #a0ffc8, #f3fdf4); */
-
-  /* color: #272727; */
   font-weight: 550;
   font-size: 1rem;
   background-size: 100vw;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-
-  /* Remove for light background, add option to switch later*/
   background: #151515;
-  /* background: #343541; */
   /* background-image: url("https://www.chromethemer.com/wallpapers/chromebook-wallpapers/images/960/batman-chromebook-wallpaper.jpg"); */
   background-size: 100%;
   background-repeat: no-repeat;
@@ -57,9 +48,6 @@ p, h4, h3, span {
   margin: 5rem auto;
   padding: 0 1.25rem 1.875rem;
   color: rgb(240, 240, 240);
-  /* border: 1px solid #262626; */
-  /* background: #202020; */
-  /* box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); */
   border-radius: 0.35rem;
   display: flex;
   flex-direction: column;
@@ -302,18 +290,23 @@ h1 {
   transition: background-color 0.2s ease;
 }
 
+
 .create-habit-button {
-  font-family: 'Manrope';
-  /* border: 2px solid #202020; */
-  background: transparent;
-  color: #95f7d6;
-  /* width: 200px; */
-  height: 40px;
-  font-size: 15px;
-  text-decoration: underline;
+  align-self: center;
+  border-radius: 5px;
+  height: 25px;
+  height: 32px;
+  line-height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: transparent;
+  font-family: 'Manrope';
+  font-weight: 700;
+  margin-top: 15px;
+  border: 2px solid #1f1f1f;
 }
 
 .create-habit-form button:hover,
@@ -409,16 +402,19 @@ h1 {
 }
 
 .underline {
+  display: flex;
   height: 2px;
   margin: -5px 0px 20px 0px;
   width: 100px;
+  margin-left: auto;
+  margin-right: auto;
   background: linear-gradient(135deg, #2ae6ffd2 0%, #50dab7 100%);
 }
 
 .user-habits {
   border: 2px solid #202020;
   padding: 20px 10px 15px 10px;
-  border-radius: 2px;
+  border-radius: 6px;
   width: 325px;
   text-align: center;
   margin-top: 20px;
@@ -806,4 +802,78 @@ circle {
   margin: 0px 30px 0px 30px;
   padding: 5px 10px 5px 10px;
   /* border: 2px solid #f3467a; */
+}
+
+.cancel {
+  border: none;
+  background-color: transparent;
+  color: rgb(240, 240, 240);
+  font-family: 'Manrope';
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom:20px;
+}
+
+.cancel:hover {
+  color:#1ddab1;
+  transition: 0.8s ease;
+}
+
+.create-habit-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+}
+
+.create-habit-form input, .create-habit-form select {
+  border-radius: 8px;
+  font-family: 'Manrope';
+  height: 32px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: #252525;
+  color: white;
+  border: none;
+  width: 200px;
+}
+
+.create-habit-form input:focus, .create-habit-form select:focus {
+  border: none;
+  outline: none;
+  border-color: #00a58f85;
+}
+
+.create-habit-button button {
+  background-color: white ;
+}
+
+/* .create-habit-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+
+.create-habit-form button {
+  align-self: center;
+  border-radius: 5px;
+  height: 25px;
+  height: 32px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: transparent;
+  font-family: 'Manrope';
+  font-weight: 700;
+  margin-top: 15px;
+  border: 2px solid #1f1f1f;
 }

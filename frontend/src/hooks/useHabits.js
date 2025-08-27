@@ -145,7 +145,6 @@ export const useHabits = () => {
     return { success: true, habits: json }
   }
 
-  // Modify this so that frequency and privacy are strings, then inside here convert it to the appropriate integer
   const createHabit = async (name, description, frequency, privacy) => {
     if (!user) {
       return { success: false, error: "You must be logged in" }

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { Navigation } from "./Navigation"
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
+import { HabitMastery } from "./HabitMastery"
 
 export const AdvancedHabit = () => {
 
@@ -120,6 +121,11 @@ export const AdvancedHabit = () => {
             <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
           ))}
           </ol>
+        </div>
+        <div className = "completion-graph">
+          <h3> Habit Mastery.</h3>
+
+          <HabitMastery habit = { habit }/>
         </div>
       </div>
     </div>

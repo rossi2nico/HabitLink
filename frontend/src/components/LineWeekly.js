@@ -132,7 +132,7 @@ export const LineWeekly = ({ habit }) => {
   }
 
   return (
-    <ResponsiveContainer width="100%" height="65%">
+    <ResponsiveContainer width="100%" height="85%">
       <LineChart data={weeklyStats}>
         <XAxis
           dataKey="date"

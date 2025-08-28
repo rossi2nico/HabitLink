@@ -39,13 +39,13 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     value = {password}
                 />
-                <p onClick = {() => {setForgotText("that sucks :(")}} style = {{fontFamily:"Manrope", fontWeight:"600", marginTop:"-15px", marginBottom:"15px", marginRight:"-120px", border: "none", color:"#636363ff", background:"transparent", height:"20px", width:"150px", fontSize:"13px", textAlign:"right", cursor:"pointer"}}>{forgotText}</p>
+                <p onClick = {() => {setForgotText("that sucks :(")}} style = {{fontFamily:"Manrope", fontWeight:"600", marginTop:"-15px", marginBottom:"0px", marginRight:"-120px", border: "none", color:"#636363ff", background:"transparent", height:"20px", width:"150px", fontSize:"13px", textAlign:"right", cursor:"pointer"}}>{forgotText}</p>
                 <button type="submit" disabled={isLoading}>Log in</button>
                 {error && <div className="error">{error}</div>}
-                {/* <p style = {{fontSize:"15px", color:"#575757ff"}}>Don't have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/signup"><strong>Sign up</strong></Link></p> */}
+                <p style = {{fontSize:"15px", color:"#575757ff"}}>Don't have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/signup"><strong>Sign up</strong></Link></p>
 
             </form>
-            <p style = {{fontSize:"15px", color:"#575757ff"}}>Don't have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/signup"><strong>Sign up</strong></Link></p>
+            {/* <p style = {{fontSize:"15px", color:"#575757ff"}}>Don't have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/signup"><strong>Sign up</strong></Link></p> */}
 
         </>
     )

@@ -108,25 +108,25 @@ export const AdvancedHabit = () => {
 
         </div>
         <div className = "completion-graph">
-          <h3> Habit Mastery - arrows to swap between bar / line</h3>
+          <h3> Habit Mastery</h3>
 
           <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
             <LineWeekly habit = { habit }/>
           </div>
         </div>
-        <div className = "synced-users">
+        {/* <div className = "synced-users">
           <h3> Leaderboard </h3>
           <ol>
           {syncedHabits?.map((h) => (
             <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
           ))}
           </ol>
-        </div>
-        <div className = "completion-graph">
+        </div> */}
+        {/* <div className = "completion-graph">
           <h3> Habit Mastery.</h3>
 
           <HabitMastery habit = { habit }/>
-        </div>
+        </div> */}
       </div>
     </div>
   )

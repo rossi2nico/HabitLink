@@ -42,7 +42,7 @@ const Signup = () => {
         {error && <div className='error'>{error}</div>}
           </form>
         
-        <p style = {{marginTop:"-35px", fontSize:"15px", color:"#575757ff"}}>Already have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/login"><strong>Sign in</strong></Link></p>
+        <p style = {{marginTop:"-75px", fontSize:"15px", color:"#575757ff"}}>Already have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/login"><strong>Sign in</strong></Link></p>
       </>
   )
 }

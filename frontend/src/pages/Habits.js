@@ -27,12 +27,14 @@ const Habits = () => {
 
   const changeActiveLeft = () => {
     setSelectedHabit(null)
+    setCreateActive(false)
     if (activeView === 0) setActiveView(2);
     else setActiveView(activeView - 1)
   }
 
   const changeActiveRight = () => {
     setSelectedHabit(null)
+    setCreateActive(false)
     if (activeView === 2) setActiveView(0);
     else setActiveView(activeView + 1);
   }
@@ -59,7 +61,7 @@ const Habits = () => {
       <Navigation />
       <div className="habits-page">
         <div className="habit-categories">
-          <button onClick={changeActiveLeft}>&lt;</button>
+          <button style = {{marginTop:'-4px'}} onClick={changeActiveLeft}>&lt;</button>
           <div>
             {activeView === 0 ? (
               <p>Habits</p>
@@ -69,7 +71,7 @@ const Habits = () => {
               <p>Public Habits</p>
             ) : null}
           </div>
-          <button onClick={changeActiveRight}>&gt;</button>
+          <button style = {{marginTop:'-3px'}} onClick={changeActiveRight}>&gt;</button>
         </div>
         
         {/* <div style={{margin: '-20px auto 0', width: '0px'}} className="underline"></div> */}
@@ -121,7 +123,6 @@ const Habits = () => {
               
               {createActive && (
                 <div className="user-habits">
-                  
                   <CreateHabitForm setCreateActive={setCreateActive}/>
                   <button className = "cancel" onClick={() => setCreateActive(false)}>
                     cancel

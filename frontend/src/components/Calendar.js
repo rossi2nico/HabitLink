@@ -59,10 +59,11 @@ export const Calendar = ({ habit }) => {
   return (
     <div className = "calendar">  
       <header>
-        {/* <p> &lt; user &gt;</p> */}
-        <button style = {{cursor:'pointer',color:'rgb(218, 218, 218)',border:'1px', marginBottom:'2px',background:'transparent',fontSize:'20px',marginRight:'5px', fontFamily: 'Calibri, sans-serif'}}onClick = {() => prevMonth()}>&lt;</button>
-        <h3 style = {{fontSize:'18px'}}> { format(firstDayCurrentMonth, 'MMMM yyyy') }  </h3>
-        <button style = {{cursor:'pointer', color:'rgb(218, 218, 218)',border:'1px', marginBottom:'2px',background:'transparent',fontSize:'20px',marginLeft:'5px', fontFamily: 'Calibri, sans-serif'}}onClick = {() => nextMonth()}>&gt;</button>
+        {/* <p> &lt; user &gt;</p> */} 
+        <button className="calendar-btn prev" onClick={() => prevMonth()}>&lt;</button>
+        <h3 className="calendar-title">{format(firstDayCurrentMonth, 'MMMM yyyy')}</h3>
+        <button className="calendar-btn next" onClick={() => nextMonth()}>&gt;</button>
+
       </header>
       <div className = "days">
         <p>S</p><p>M</p><p>T</p><p>W</p><p>T</p><p>F</p><p>S</p>

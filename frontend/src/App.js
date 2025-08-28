@@ -24,7 +24,7 @@ function App() {
               />
               <Route
                 path="/habits/:habitId"
-                element = {<AdvancedHabit/>}
+                element={user ? <AdvancedHabit /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="/login"

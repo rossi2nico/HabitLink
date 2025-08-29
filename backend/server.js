@@ -7,7 +7,7 @@ const cors = require('cors');
 
 const app = express() // Express: handles requests and interacts with database.
 app.use(cors({
-    origin: 'process.env.FRONTEND_URL',
+    origin: true,
     credentials: true  // If you're sending cookies/auth headers
   }));
 // Middleware: parse JSON into req.body

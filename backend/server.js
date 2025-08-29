@@ -13,17 +13,10 @@ app.use(cors({
     optionsSuccessStatus: 200 // This is key for preflight
 }));
 // Explicitly handle all OPTIONS requests
-app.options('*', cors());
-// Middleware: parse JSON into req.body
+// app.options('*', cors());
+
 app.use(express.json())
-// Middleware: logs every incoming HTTP request's path and method 
-// app.use((req, res, next) => {
-//     console.log(req.path, req.method)
-//     next()
-// })
 
-
-// Find these routes when we come to a specific path
 app.use('/api/habits', habitRoutes)
 app.use('/api/users', userRoutes)
 

@@ -85,10 +85,10 @@ const Habits = () => {
                       />
                     ))
                   ) : (
-                    <p>
-                      No habits found...<br />
-                      Create your own habit or sync with another users habit!
-                    </p>
+                    <div style = {{marginBottom:'-25px'}}>
+                      <h1 style = {{fontWeight:'600'}}>No habits found.</h1>
+                      <p>Create your own habit or sync with other users habits!</p>
+                    </div>
                   )}
                   
                   {/* {habits && habits.length > 0 && (
@@ -106,6 +106,13 @@ const Habits = () => {
                   >
                     Create new habit
                   </button>
+                  {habits && habits.length === 0 && (<button 
+                    style = {{ marginTop: '10px' }}
+                    onClick={() => setActiveView(2)}
+                    className="create-habit-button"
+                  >
+                    Sync with existing habit
+                  </button>)}
                   {habits && habits.length > 0 && (
                     <p style={{marginTop: '17px'}}>
                       Click on any habit to view advanced statistics!

@@ -800,23 +800,6 @@ circle {
   /* border: 2px solid #f3467a; */
 }
 
-.cancel {
-  border: none;
-  background-color: transparent;
-  color: rgb(250, 108, 120);
-  font-family: 'Manrope';
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 15px;
-  margin-bottom:20px;
-}
-
-.cancel:hover {
-  color:#1ddab1;
-  transition: 0.8s ease;
-}
-
 .create-habit-form-container {
   display: flex;
   flex-direction: column;
@@ -859,6 +842,7 @@ circle {
 .create-habit-form button {
   align-self: center;
   border-radius: 5px;
+  
   height: 25px;
   height: 32px;
   line-height: 32px;
@@ -911,4 +895,21 @@ circle {
 .calendar-title {
   font-size: 18px;
   font-family: 'Manrope', sans-serif;
+}
+
+.create-habit-form .cancel {
+  border: none;
+  background-color: transparent;
+  color: rgb(250, 108, 120);
+  font-family: 'Manrope';
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: -10px;
+  margin-bottom:20px;
+}
+
+.cancel:hover {
+  color:#6cda1d;
+  transition: 0.8s ease;
 }

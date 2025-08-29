@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { CreateHabitForm } from '../components/CreateHabitForm'
+import { useNavigate } from 'react-router-dom'
 import { useHabitsContext } from '../hooks/useHabitsContext'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { Habit } from '../components/Habit'
 import { Navigation } from '../components/Navigation'
 import { AdvancedHabit } from '../components/AdvancedHabit'
-import { Link } from "react-router-dom"
 import { useFriends } from '../hooks/useFriends'
 import { useFriendsContext } from '../hooks/useFriendsContext'
 
@@ -19,7 +18,7 @@ const Habits = () => {
   const { user } = useAuthContext()
   const [selectedHabit, setSelectedHabit] = useState(null)
   const [activeView, setActiveView] = useState(0)
-  const [createActive, setCreateActive] = useState(false)
+  const navigate = useNavigate();
 
   const isUsersHabit = (habit) => {
     return user?._id?.toString() === habit?.userId?.toString();
@@ -27,14 +26,12 @@ const Habits = () => {
 
   const changeActiveLeft = () => {
     setSelectedHabit(null)
-    setCreateActive(false)
     if (activeView === 0) setActiveView(2);
     else setActiveView(activeView - 1)
   }
 
   const changeActiveRight = () => {
     setSelectedHabit(null)
-    setCreateActive(false)
     if (activeView === 2) setActiveView(0);
     else setActiveView(activeView + 1);
   }
@@ -78,8 +75,6 @@ const Habits = () => {
 
         <div className="habits">
           {activeView === 0 && 
-            <>
-              {!createActive && (
                 <div className="user-habits">
                   {habits && habits.length > 0 ? (
                     habits.map(habit => (
@@ -106,7 +101,7 @@ const Habits = () => {
 
                   <button 
                     style = {{ marginTop: '10px' }}
-                    onClick={() => setCreateActive(true)} 
+                    onClick={() => navigate('/habits/create')}
                     className="create-habit-button"
                   >
                     Create new habit
@@ -118,18 +113,7 @@ const Habits = () => {
                   )}
                   
                   
-                </div>
-              )}
-              
-              {createActive && (
-                <div className="user-habits">
-                  <CreateHabitForm setCreateActive={setCreateActive}/>
-                  <button className = "cancel" onClick={() => setCreateActive(false)}>
-                    cancel
-                  </button>
-                </div>
-              )}
-            </>
+                </div>              
           }
 
           {activeView === 1 && (

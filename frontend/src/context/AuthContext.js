@@ -2,46 +2,45 @@ import { createContext, useReducer } from 'react'
 import { useEffect } from 'react'
 
 export const authReducer = (state, action) => {
-
   switch(action.type) {
     case 'LOGIN':
-      return { user: action.payload }
+      return { ...state, user: action.payload, loading: false };
 
     case 'LOGOUT':
-      return { user: null }
+      return { ...state, user: null, loading: false };
+
+    case 'LOADING_DONE':
+      return { ...state, loading: false };
 
     case 'SEND-FRIEND-REQUEST':
-      return { user: {
-        ...state.user, // keep all other properties in user
-        pendingUsers: [action.payload, ...state.user.pendingUsers]
-      }} 
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          pendingUsers: [action.payload, ...state.user.pendingUsers]
+        }
+      };
 
     case 'ACCEPT-FRIEND-REQUEST':
-      return { user: {
-        ...state.user,
-        pendingUsers: state.user.pendingUsers.filter(
-          user => user !== action.payload
-        ),
-        friends: [action.payload, ...state.user.friends]
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          pendingUsers: state.user.pendingUsers.filter(
+            u => u !== action.payload
+          ),
+          friends: [action.payload, ...state.user.friends]
         }
-      }
-      
-    case 'DECLINE-FRIEND-REQUEST':
-      return { user: {
-        ...state.user,
-        pendingUsers: state.user.pendingUsers.filter(
-          user => user !== action.payload 
-        )
-      }}
-    default:
-      return state
-  }
+      };
 
+    default:
+      return state;
+  }
 }
 
 export const AuthContext = createContext()
 export const AuthContextProvider = ({ children }) => { 
-    const [state, dispatch] = useReducer(authReducer, { user: null })
+    const [state, dispatch] = useReducer(authReducer, { user: null, loading: true });
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
@@ -49,6 +48,7 @@ export const AuthContextProvider = ({ children }) => {
         if (user) {
             dispatch({type: 'LOGIN', payload: user})
         }
+        dispatch({ type: 'LOADING_DONE' });
     }, [])
     console.log('AuthContext state: ', state)
 

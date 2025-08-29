@@ -5,13 +5,15 @@ const habitRoutes = require('./routes/habits')
 const userRoutes = require('./routes/user')
 const cors = require('cors');
 
-app.use(cors({
-    origin: true,
-    credentials: true
-}))
-
 const app = express() // Express: handles requests and interacts with database.
 
+app.use(cors({
+    origin: true,
+    credentials: true,
+    optionsSuccessStatus: 200 // This is key for preflight
+}));
+// Explicitly handle all OPTIONS requests
+app.options('*', cors());
 // Middleware: parse JSON into req.body
 app.use(express.json())
 // Middleware: logs every incoming HTTP request's path and method 

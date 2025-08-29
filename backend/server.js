@@ -5,11 +5,13 @@ const habitRoutes = require('./routes/habits')
 const userRoutes = require('./routes/user')
 const cors = require('cors');
 
-const app = express() // Express: handles requests and interacts with database.
 app.use(cors({
     origin: true,
-    credentials: true  // If you're sending cookies/auth headers
-  }));
+    credentials: true
+}))
+
+const app = express() // Express: handles requests and interacts with database.
+
 // Middleware: parse JSON into req.body
 app.use(express.json())
 // Middleware: logs every incoming HTTP request's path and method 

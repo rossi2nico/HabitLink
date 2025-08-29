@@ -106,6 +106,15 @@ const calculateStreak = async (habit) => {
     return;
 }
 
+const calculateHabitMastery = async (habit) => {
+    let habitMastery = 0
+    let multiplier = 1
+
+    const startDate = today();
+    const completions = habit.completions
+
+}
+
 const updateHabit = async (req, res) => {
 
     const { habitId } = req.params;

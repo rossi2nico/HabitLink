@@ -3,6 +3,7 @@ import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
 import { Link } from 'react-router-dom';
+import link from '../assets/sync2.png'
 
 import del from '../assets/delete-red.png'
 
@@ -105,11 +106,13 @@ export const Habit = ({ habit }) => {
           ) : (
             <>
               {!synced ? (
-                // <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
-                <h3 style = {{marginRight:"10px"}}onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)} >⇄</h3>
+                <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
+                // <h3 style = {{marginRight:"10px"}}onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)} >⇄</h3>
                 // <></>
               ) : (
-                <p style = {{marginRight:"15px", color:"white"}}>Linked</p>
+                <img src = "https://www.citypng.com/public/uploads/preview/hd-white-tick-mark-icon-symbol-sign-transparent-png-701751695044638vkmy5iy1kv.png"
+                style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}}></img>
+                // <p style = {{fontWeight:'600',marginRight:"15px", fontSize:'12px'}}>Linked</p>
               )}
             </>
           )}

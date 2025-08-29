@@ -1,6 +1,8 @@
 import { useAuthContext } from "./useAuthContext";
 import { useState } from "react";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 export const useLogin = () => {
 
     const [error, setError] = useState(null)
@@ -13,12 +15,12 @@ export const useLogin = () => {
         setError(null)
         const username = rawUsername.toLowerCase()
 
-        const response = await fetch('/api/users/login', {
+        const response = await fetch(`${BACKEND_URL}/api/users/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username,password})
-
+            body: JSON.stringify({ username, password })
         })
+
         const json = await response.json()
         if (!response.ok) {
             setIsLoading(false)
@@ -26,7 +28,7 @@ export const useLogin = () => {
         }
         if (response.ok) {
             localStorage.setItem('user', JSON.stringify(json))
-            dispatch({type: 'LOGIN', payload: json})
+            dispatch({ type: 'LOGIN', payload: json })
             setIsLoading(false)
         }
     }

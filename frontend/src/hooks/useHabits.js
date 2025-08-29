@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useHabitsContext } from './useHabitsContext'
 import { useAuthContext } from './useAuthContext'
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 export const useHabits = () => {
 
   const { dispatch } = useHabitsContext()
@@ -12,7 +14,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch(`/api/habits/${habitId}`, {
+    const res = await fetch(`${BACKEND_URL}/api/habits/${habitId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${user.token}`,
@@ -35,7 +37,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch('/api/habits', {
+    const res = await fetch(`${BACKEND_URL}/api/habits`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +60,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch(`/api/habits/friends/`, {
+    const res = await fetch(`${BACKEND_URL}/api/habits/friends/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +71,6 @@ export const useHabits = () => {
     const json = await res.json()
     
     if (!res.ok) {
-      // Originally returned []
       return { success: false, error: json.error }
     }
     
@@ -82,7 +83,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch('/api/habits/public', {
+    const res = await fetch(`${BACKEND_URL}/api/habits/public`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +94,6 @@ export const useHabits = () => {
     const json = await res.json()
     
     if (!res.ok) {
-      // Originally returned []
       return { success: false, error: json.error }
     }
     
@@ -106,7 +106,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch(`/api/habits/syncedHabits/${habitId}`, {
+    const res = await fetch(`${BACKEND_URL}/api/habits/syncedHabits/${habitId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${user.token}`,
@@ -128,7 +128,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch(`/api/habits/public/${targetUserId}`, {
+    const res = await fetch(`${BACKEND_URL}/api/habits/public/${targetUserId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ export const useHabits = () => {
 
     const habit = { name, description, frequency, privacy }
 
-    const res = await fetch('/api/habits', {
+    const res = await fetch(`${BACKEND_URL}/api/habits`, {
       method: 'POST',
       body: JSON.stringify(habit),
       headers: {
@@ -176,7 +176,7 @@ export const useHabits = () => {
       return { success: false, error: "You must be logged in" }
     }
 
-    const res = await fetch(`/api/habits/${habitId}`, {
+    const res = await fetch(`${BACKEND_URL}/api/habits/${habitId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch(`/api/habits/${habitId}`, {
+    const res = await fetch(`${BACKEND_URL}/api/habits/${habitId}`, {
       method: 'PATCH',
       body: JSON.stringify({
         updates
@@ -225,7 +225,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch('/api/habits/complete', {
+    const res = await fetch(`${BACKEND_URL}/api/habits/complete`, {
       method: 'POST',
       body: JSON.stringify({
         habitId,
@@ -252,7 +252,7 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
-    const res = await fetch('/api/habits/sync', {
+    const res = await fetch(`${BACKEND_URL}/api/habits/sync`, {
       method: 'POST',
       body: JSON.stringify({
         originalHabitId,
@@ -271,7 +271,7 @@ export const useHabits = () => {
       return { success: false, error: json.error }
     }
 
-    const originalHabit = await fetch(`/api/habits/${originalHabitId}`, {
+    const originalHabit = await fetch(`${BACKEND_URL}/api/habits/${originalHabitId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

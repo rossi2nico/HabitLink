@@ -3,8 +3,13 @@ const express = require('express')
 const mongoose = require('mongoose')
 const habitRoutes = require('./routes/habits')
 const userRoutes = require('./routes/user')
-const app = express() // Express: handles requests and interacts with database.
+const cors = require('cors');
 
+const app = express() // Express: handles requests and interacts with database.
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true  // If you're sending cookies/auth headers
+  }));
 // Middleware: parse JSON into req.body
 app.use(express.json())
 // Middleware: logs every incoming HTTP request's path and method 
@@ -12,6 +17,7 @@ app.use(express.json())
 //     console.log(req.path, req.method)
 //     next()
 // })
+
 
 // Find these routes when we come to a specific path
 app.use('/api/habits', habitRoutes)

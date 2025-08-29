@@ -2,6 +2,8 @@ import { AuthContext } from "../context/AuthContext"
 import { useContext, useState } from "react";
 import { useFriendsContext } from "./useFriendsContext";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 export const useFriends = () => {
 
   const { user } = useContext(AuthContext);
@@ -17,7 +19,7 @@ export const useFriends = () => {
       return false;
     }
 
-    const res = await fetch(`/api/users/search?q=${encodeURIComponent(searchTerm)}`, {
+    const res = await fetch(`${BACKEND_URL}/api/users/search?q=${encodeURIComponent(searchTerm)}`, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +46,7 @@ export const useFriends = () => {
       return false;
     }
 
-    const res = await fetch('/api/users/remove-friend', {
+    const res = await fetch(`${BACKEND_URL}/api/users/remove-friend`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +74,7 @@ export const useFriends = () => {
       return false;
     }
 
-    const res = await fetch('/api/users/accept-friend-request', {
+    const res = await fetch(`${BACKEND_URL}/api/users/accept-friend-request`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -100,7 +102,7 @@ export const useFriends = () => {
       return false;
     }
 
-    const res = await fetch('/api/users/send-friend-request', {
+    const res = await fetch(`${BACKEND_URL}/api/users/send-friend-request`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +137,7 @@ export const useFriends = () => {
       setError('You must be logged in');  
       return false;
     }
-    const res = await fetch('/api/users/decline-friend-request', {
+    const res = await fetch(`${BACKEND_URL}/api/users/decline-friend-request`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -164,7 +166,7 @@ export const useFriends = () => {
       return false;
     }
 
-    const res = await fetch(`/api/users/${ userId }/friends`, {
+    const res = await fetch(`${BACKEND_URL}/api/users/${ userId }/friends`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -191,7 +193,7 @@ export const useFriends = () => {
       return false;
     }
 
-    const res = await fetch(`/api/users/${ userId }/pending-users`, {
+    const res = await fetch(`${BACKEND_URL}/api/users/${ userId }/pending-users`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

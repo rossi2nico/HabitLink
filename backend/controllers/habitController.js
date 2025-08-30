@@ -42,7 +42,6 @@ const calculateStreak = async (habit) => {
     }
 
     let streak = 0;
-    let totalCompletions = 0;
     
     let day = new Date(today);
     if (!sameDate(today, lastCompleted)) {
@@ -52,14 +51,13 @@ const calculateStreak = async (habit) => {
     for (let i = completions.length - 1; i >= 0; i--) {
         const date = completions[i]
         if (sameDate(date, day)) {
-            totalCompletions++;
             streak++;
             day.setDate(day.getDate() - 1);
         } else break;
     }
 
     habit.streak = streak;
-    habit.totalCompletions = totalCompletions;
+    habit.totalCompletions = completions.length;
 
     let maxStreak = 0;
     streak = 1;

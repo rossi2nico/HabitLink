@@ -8,6 +8,7 @@ import { Navigation } from "./Navigation"
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 import sync from '../assets/sync4.png'
+import { UserCard } from "./UserCard"
 import { HabitMastery } from "./HabitMastery"
 
 export const AdvancedHabit = () => {
@@ -100,7 +101,7 @@ export const AdvancedHabit = () => {
     <div className="advanced-habit">
       <Navigation></Navigation>
       <div className = "advanced-habit-info">
-        <h1> { habit.name } <p style = {{marginBottom:'-5px'}}> 
+        <h1 style = {{textAlign:'center'}}> { habit.name } <p style = {{textAlign:'center', marginBottom:'-5px'}}> 
           {habit.privacy === 0
             ? "🔒 Private"
             : habit.privacy === 1
@@ -123,18 +124,14 @@ export const AdvancedHabit = () => {
           </p>
           <p> Completed { habit.totalCompletions } out of { habit.potentialCompletions} total days!
             <br/>
-            Overall { percentCompleted }% completion!
+            🚀 Overall { percentCompleted }% completion!
           </p>
         </div>
         {/* <div className = "underline"></div> */}
 
       </div>
       <div className = "synced-stats" style = {{marginTop: "50px"}}>
-        <div className = "calendar-container">
-          {/* <h3> Calendar </h3> */}
-          <Calendar habit = {habit}></Calendar>
 
-        </div>
         <div className = "completion-graph">
           <h3> Habit Mastery</h3>
 
@@ -142,8 +139,9 @@ export const AdvancedHabit = () => {
             <LineWeekly habit = { habit }/>
           </div>
         </div>
+        
         <div className = "synced-users">
-          <h3> Linked Users </h3>
+          <h3 style = {{marginBottom:'-15px', fontWeight:'600'}}> Linked Users </h3>
           { syncedHabits && syncedHabits.length == 1 ? (
           <p>
             <img style = {{width:'15px', marginRight:'5px'}}src = { sync } ></img> 
@@ -153,13 +151,19 @@ export const AdvancedHabit = () => {
             <img style = {{marginBottom:'-2px', width:'15px', marginRight:'5px'}}src = { sync } ></img>  
             There are { syncedHabits.length } synced users</p>
         )}
-          <ol>
             
           {syncedHabits?.map((h) => (
-            <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
+            // <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
+            <UserCard habit = { h }></UserCard>
           ))}
-          </ol>
         </div>
+
+        <div className = "calendar-container">
+          {/* <h3> Calendar </h3> */}
+          <Calendar habit = {habit}></Calendar>
+
+        </div>
+        
         {/* <div className = "completion-graph">
           <h3> Habit Mastery.</h3>
 

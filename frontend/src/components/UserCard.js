@@ -12,7 +12,7 @@ export const UserCard = ( { habit } ) => {
         <p> 🔥 { habit.habitId.streak } 🏹 { habit.habitId.maxStreak } 🚀 { percentCompleted }%</p>
       </div>
       <div className = "synced-user-right">
-        <img style = {{marginTop:'5px', width:'30px'}}src = { unsync }></img>
+        <img style = {{marginLeft: '15px', marginTop:'5px', width:'30px'}}src = { unsync }></img>
       </div>
       
     </div>

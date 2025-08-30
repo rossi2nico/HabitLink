@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { Navigation } from "./Navigation"
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
+import sync from '../assets/sync4.png'
 import { HabitMastery } from "./HabitMastery"
 
 export const AdvancedHabit = () => {
@@ -92,12 +93,39 @@ export const AdvancedHabit = () => {
     )
   } 
 
+  const rawPercentCompleted = habit.totalCompletions / habit.potentialCompletions * 100;
+  const percentCompleted = parseFloat(rawPercentCompleted.toFixed(1));
+
   return (
     <div className="advanced-habit">
       <Navigation></Navigation>
       <div className = "advanced-habit-info">
-        <h1> { habit.name } </h1>
-        <h3 style = {{color:"#afafafff", marginTop:"-15px"}}> { habit.description } </h3>
+        <h1> { habit.name } <p style = {{marginBottom:'-5px'}}> 
+          {habit.privacy === 0
+            ? "🔒 Private"
+            : habit.privacy === 1
+            ? "🔐 Friends-only"
+            : "🔓 Public"}
+        </p></h1>
+        { habit.description && habit.description != "" && (
+          <h3 style = {{color:"#afafafff", marginTop:"-5px"}}> { habit.description } </h3>
+        )}
+        
+        
+        
+        {/* <div className = "underline"></div> */}
+        <div className = "user-habits">
+          {/* <h3> Completion Stats</h3> */}
+          <p>
+            {habit.streak === habit.maxStreak
+              ? <>🔥 Current streak: {habit.streak} days <br/>  🏹 Currently on Longest streak!</>
+              : <>🔥 Current streak: {habit.streak} days <br/> 🏹 Longest streak: {habit.maxStreak} days</>}
+          </p>
+          <p> Completed { habit.totalCompletions } out of { habit.potentialCompletions} total days!
+            <br/>
+            Overall { percentCompleted }% completion!
+          </p>
+        </div>
         {/* <div className = "underline"></div> */}
 
       </div>
@@ -114,14 +142,24 @@ export const AdvancedHabit = () => {
             <LineWeekly habit = { habit }/>
           </div>
         </div>
-        {/* <div className = "synced-users">
-          <h3> Leaderboard </h3>
+        <div className = "synced-users">
+          <h3> Linked Users </h3>
+          { syncedHabits && syncedHabits.length == 1 ? (
+          <p>
+            <img style = {{width:'15px', marginRight:'5px'}}src = { sync } ></img> 
+            There is { syncedHabits.length } synced user</p>
+        ) : (
+          <p>
+            <img style = {{marginBottom:'-2px', width:'15px', marginRight:'5px'}}src = { sync } ></img>  
+            There are { syncedHabits.length } synced users</p>
+        )}
           <ol>
+            
           {syncedHabits?.map((h) => (
             <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
           ))}
           </ol>
-        </div> */}
+        </div>
         {/* <div className = "completion-graph">
           <h3> Habit Mastery.</h3>
 

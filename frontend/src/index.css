@@ -365,23 +365,46 @@ h1 {
 
 .advanced-habit-info {
   margin-top: 30px;
-  height: 10%;
+  /* height: 10%; */
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
+  /* border: 2px solid red; */
+}
+
+.advanced-habit-info p {
+  /* border: 1px solid orange; */
+  margin: 6px;
+  font-size: 15px;
+  text-align: center;
 }
 
 .synced-stats {
   display: flex;
   justify-content: center;
-  height: 80%;
+  flex-wrap: wrap;
+  gap: 25px;
+  /* border: 2px solid red; */
 }
+
+.calendar {
+  /* border: 2px solid red; */
+  height: 400px;
+  width: 325px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .completion-graph, .calendar-container, .synced-users {
-  width: 350px;
+  width: 390px;
   margin: 0px 15px 0px 15px;
-  height: 350px;
-  border: 2px solid #2d2d2d;
-  border-radius: 16px;
+  /* height: 350px; */
+  height: 100%;
+  border: 2px solid #202020;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -389,13 +412,13 @@ h1 {
 
 .advanced-habit {
   width: 100vw;
-  height: 100vh;
+  /* height: 100%; */
   background-color: #151515;
   color: rgb(218, 218, 218);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: absolute;
+  padding-bottom: 25px;
 }
 
 .habit-categories button {
@@ -718,15 +741,6 @@ circle {
   100% {
     stroke-dashoffset: 113;
   }
-}
-
-.calendar {
-  height: 100%;
-  width: 325px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .calendar header {

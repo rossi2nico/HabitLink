@@ -103,10 +103,10 @@ export const AdvancedHabit = () => {
       <div className = "advanced-habit-info">
         <h1 style = {{textAlign:'center'}}> { habit.name } <p style = {{textAlign:'center', marginBottom:'-5px'}}> 
           {habit.privacy === 0
-            ? "🔒 Private"
+            ? "Private Habit"
             : habit.privacy === 1
-            ? "🔐 Friends-only"
-            : "🔓 Public"}
+            ? "Friends-only Habit"
+            : "Public Habit"}
         </p></h1>
         { habit.description && habit.description != "" && (
           <h3 style = {{color:"#afafafff", marginTop:"-5px"}}> { habit.description } </h3>
@@ -115,7 +115,7 @@ export const AdvancedHabit = () => {
         
         
         {/* <div className = "underline"></div> */}
-        <div className = "user-habits">
+        {/* <div className = "user-habits"> */}
           {/* <h3> Completion Stats</h3> */}
           <p>
             {habit.streak === habit.maxStreak
@@ -126,7 +126,7 @@ export const AdvancedHabit = () => {
             <br/>
             🚀 Overall { percentCompleted }% completion!
           </p>
-        </div>
+        {/* </div> */}
         {/* <div className = "underline"></div> */}
 
       </div>
@@ -141,10 +141,10 @@ export const AdvancedHabit = () => {
         </div>
         
         <div className = "synced-users">
-          <h3 style = {{marginBottom:'-15px', fontWeight:'600'}}> Linked Users </h3>
+          <h3 style = {{marginBottom:'-10px', fontWeight:'600'}}> Linked Users </h3>
           { syncedHabits && syncedHabits.length == 1 ? (
           <p>
-            <img style = {{width:'15px', marginRight:'5px'}}src = { sync } ></img> 
+            <img style = {{marginBottom:'-2px', width:'15px', marginRight:'5px'}}src = { sync } ></img> 
             There is { syncedHabits.length } synced user</p>
         ) : (
           <p>

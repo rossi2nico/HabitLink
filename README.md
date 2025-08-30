@@ -1,4 +1,8 @@
 ﻿# HabitLink
+
+### 🚀 Live Deployement: https://habit-link-gbmv.vercel.app
+ 
+
 ### ❤️ A community based habit tracker designed to improve accountability between friends!  
 
 - Create habits and choose to keep them private, share with friends, or make them public for accountability
@@ -13,23 +17,8 @@
 - Data visualization with Recharts
 
 
-## 🚀 Installation & Setup
-   ### Clone the repository
-   ```bash
-   git clone https://github.com/rossi2nico/HabitLink.git
-   cd HabitLink
-   ```
-   ### Split the terminal, install dependencies and run
-   ```bash
-   cd backend
-   npm install
-   npm run dev
-   ```
-   ```bash
-   cd frontend
-   npm install
-   npm start
-   ```
+ 
+
 
 ## Demonstrations  
 <img width="362" height="365" alt="image" src="https://github.com/user-attachments/assets/662179b8-4fc2-4b55-a664-9d8ef5cf20b3" />

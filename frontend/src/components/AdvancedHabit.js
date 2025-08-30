@@ -1,5 +1,5 @@
 import { LineWeekly } from "./LineWeekly"
-import { BarGraphWeekly } from "./BarGraphWeekly"
+import { BarGraphDaily } from "./BarGraphDaily"
 import { useHabits } from "../hooks/useHabits"
 import { useState, useEffect } from 'react'
 import { Calendar } from "./Calendar"
@@ -126,6 +126,10 @@ export const AdvancedHabit = () => {
           <h3> Habit Mastery.</h3>
 
           <HabitMastery habit = { habit }/>
+        </div> */}
+        {/* <div className = "completion-graph">
+          <h3> Habit Completion</h3>
+          <BarGraphDaily habit = { habit }></BarGraphDaily>
         </div> */}
       </div>
     </div>

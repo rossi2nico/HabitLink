@@ -3,7 +3,7 @@ import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Legend
 import { useHabits } from '../hooks/useHabits';
 import { useState, useEffect } from 'react'
 
-export const BarGraphWeekly = ({ habit }) => {
+export const BarGraphDaily = ({ habit }) => {
   const MS_PER_DAY = 1000 * 60 * 60 * 24;
   
   const { getSyncedHabits } = useHabits()
@@ -40,44 +40,47 @@ export const BarGraphWeekly = ({ habit }) => {
     return <div>Loading chart...</div>
   }
 
-  const startDate = new Date(habit.createdAt);
-  startDate.setHours(0, 0, 0, 0);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   
-  const firstWeekStart = new Date(startDate);
-  firstWeekStart.setDate(startDate.getDate() - startDate.getDay()); // Go back to Sunday
+  // Get start of current week (Sunday)
+  const currentWeekStart = new Date(today);
+  currentWeekStart.setDate(today.getDate() - today.getDay());
+  currentWeekStart.setHours(0, 0, 0, 0);
   
-  const totalDays = Math.floor((today - firstWeekStart) / MS_PER_DAY);
-  const totalWeeks = Math.ceil(totalDays / 7);
-  
-  const weeklyStats = [];
+  const dailyStats = [];
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex++) {
-    const weekStart = new Date(firstWeekStart);
-    weekStart.setDate(firstWeekStart.getDate() + (weekIndex * 7));
+  // Generate data for each day of the current week
+  for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+    const currentDay = new Date(currentWeekStart);
+    currentDay.setDate(currentWeekStart.getDate() + dayIndex);
     
-    const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 6);
+    // Skip future days
+    if (currentDay > today) {
+      break;
+    }
     
-    const weekLabel = `wk${weekIndex + 1}`;
-    const weekData = { date: weekLabel };
+    const dayLabel = daysOfWeek[dayIndex];
+    const dayData = { date: dayLabel, fullDate: currentDay.toISOString() };
     
+    // Check if user completed habit on this day
     const selfCompletions = habit.completions || [];
-    let selfCompletedDaysInWeek = 0;
-    let totalDaysInWeek = 0;
+    const selfCompletedOnDate = selfCompletions.some(date => {
+      const completionDate = new Date(date);
+      return (
+        completionDate.getFullYear() === currentDay.getFullYear() &&
+        completionDate.getMonth() === currentDay.getMonth() &&
+        completionDate.getDate() === currentDay.getDate()
+      );
+    });
     
-    for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
-      const currentDay = new Date(weekStart);
-      currentDay.setDate(weekStart.getDate() + dayOffset);
-      
-      if (currentDay > today || currentDay < startDate) {
-        continue;
-      }
-      
-      totalDaysInWeek++;
-      
-      const selfCompletedOnDate = selfCompletions.some(date => {
+    dayData[habit.username] = selfCompletedOnDate ? 100 : 0;
+    
+    // Check synced habits for this day
+    for (const syncedHabit of syncedHabits) {
+      const completions = syncedHabit?.habitId?.completions || [];
+      const completedOnDate = completions.some(date => {
         const completionDate = new Date(date);
         return (
           completionDate.getFullYear() === currentDay.getFullYear() &&
@@ -86,57 +89,18 @@ export const BarGraphWeekly = ({ habit }) => {
         );
       });
       
-      if (selfCompletedOnDate) {
-        selfCompletedDaysInWeek++;
-      }
+      dayData[syncedHabit.habitId.username] = completedOnDate ? 100 : 0;
     }
     
-    const selfWeeklyPercentage = totalDaysInWeek > 0 ? 
-      Math.round((selfCompletedDaysInWeek / totalDaysInWeek) * 100) : 0;
-    
-    weekData[habit.username] = selfWeeklyPercentage;
-    
-    for (const syncedHabit of syncedHabits) {
-      const completions = syncedHabit?.habitId?.completions || [];
-      let completedDaysInWeek = 0;
-      
-      for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
-        const currentDay = new Date(weekStart);
-        currentDay.setDate(weekStart.getDate() + dayOffset);
-        
-        if (currentDay > today || currentDay < startDate) {
-          continue;
-        }
-        
-        const completedOnDate = completions.some(date => {
-          const completionDate = new Date(date);
-          return (
-            completionDate.getFullYear() === currentDay.getFullYear() &&
-            completionDate.getMonth() === currentDay.getMonth() &&
-            completionDate.getDate() === currentDay.getDate()
-          );
-        });
-        
-        if (completedOnDate) {
-          completedDaysInWeek++;
-        }
-      }
-      
-      const weeklyPercentage = totalDaysInWeek > 0 ? 
-        Math.round((completedDaysInWeek / totalDaysInWeek) * 100) : 0;
-      
-      weekData[syncedHabit.username] = weeklyPercentage;
-    }
-    
-    weeklyStats.push(weekData);
+    dailyStats.push(dayData);
   }
 
   // Generate colors for different users
   const colors = ['#ff1e00ff', '#00b4d8ff', '#90e0efff', '#0077b6ff', '#03045eff'];
 
   return (
-    <ResponsiveContainer width="100%" height="65%">
-      <BarChart data={weeklyStats} barCategoryGap="10%">
+    <ResponsiveContainer width="100%" height="50%">
+      <BarChart data={dailyStats} barCategoryGap="10%">
         <defs>
           <linearGradient id="GradientColor2" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#ff1e00ff" stopOpacity={1} />
@@ -150,9 +114,11 @@ export const BarGraphWeekly = ({ habit }) => {
           tick={{ fill: "#666", fontSize: 13, dy: 10 }}
         />
         <YAxis
-          tickFormatter={(v) => `${v}%`}
+          domain={[0, 100]}
+          tickFormatter={(v) => v === 100 ? "100%" : "0%"}
           stroke="transparent"
           tick={{ fill: "#666", fontSize: 12, dx: -20 }}
+          ticks={[0, 100]}
         />
 
         {syncedHabits.map((syncedHabit, index) => (
@@ -179,7 +145,8 @@ export const BarGraphWeekly = ({ habit }) => {
             borderRadius: '8px',
             color: '#fff'
           }}
-          formatter={(value) => [`${value}%`, '']}
+          formatter={(value, name) => [value === 100 ? "Completed" : "Not completed", name]}
+          labelFormatter={(label) => `Date: ${label}`}
         />
         
         <Legend 

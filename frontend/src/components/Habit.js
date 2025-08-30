@@ -3,7 +3,7 @@ import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { EditHabitForm } from './EditHabitForm'
 import { Link } from 'react-router-dom';
-import link from '../assets/sync2.png'
+import link from '../assets/sync4.png'
 
 import del from '../assets/delete-red.png'
 

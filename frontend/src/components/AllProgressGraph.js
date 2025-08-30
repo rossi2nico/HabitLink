@@ -13,7 +13,6 @@ export const AllProgressGraph = ({ habits }) => {
   if (!habits || isLoading) {
     return <div>Loading chart...</div>
   }
-
   const startDate = new Date(habit.createdAt);
   startDate.setHours(0, 0, 0, 0);
   const today = new Date();

@@ -44,13 +44,21 @@ export const LineWeekly = ({ habit }) => {
   startDate.setHours(0, 0, 0, 0);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  
+
   const firstWeekStart = new Date(startDate);
   firstWeekStart.setDate(startDate.getDate() - startDate.getDay()); // Go back to Sunday
   
   const totalDays = Math.floor((today - firstWeekStart) / MS_PER_DAY);
   const totalWeeks = Math.ceil(totalDays / 7);
   
+  if (totalWeeks < 2) {
+    return (
+      <div style = {{display:'flex', alignItems:'center', justifyContent:'center', height: '60%'}}>
+        <p style = {{textAlign:'center'}}>Graph visualization will display after 2 weeks of data are available</p>
+      </div>
+    )
+  }
+
   const weeklyStats = [];
 
   for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex++) {

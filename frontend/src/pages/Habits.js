@@ -119,7 +119,10 @@ const Habits = () => {
           {activeView === 1 && (
             <div className="friend-habits">
               {friends && friends.length === 0 && (
-                <p>No friends found</p>
+                <div className = "user-habits">
+                  <h3>No friends found</h3>
+                  <p style = {{marginTop:'-5px'}}>Add friends to access friend habits</p>
+                </div>
               )}
               {friendHabits && friendHabits.length > 0 ? (
                 friendHabits.map(friendHabit => (
@@ -128,9 +131,9 @@ const Habits = () => {
                     habit={friendHabit} 
                   />
                 ))
-              ) : (
+              ) : friends && friends.length > 0 ?(
                 <p>No Friend Habits found</p>
-              )}
+              ) : null }
             </div>
           )}
 

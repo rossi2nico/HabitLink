@@ -974,7 +974,7 @@ circle {
   width: 250px;
   border-radius: 12px;
   text-align: center;
-  height: 50px;
+  height: 49px;
   display: flex;
   margin-bottom: 12px;
   background-color: #1f1f1f;
@@ -983,6 +983,8 @@ circle {
   justify-content: center;
   padding-left: 10px;
   margin-left: 10px;
+  padding-bottom: 4px;
+  padding-top: 2px;
 }
 
 .synced-user img:hover {
@@ -1003,6 +1005,7 @@ circle {
   /* border: 1px dashed #1ddab1; */
   width: 70%;
   height: 90%;
+  margin-top: -3px;
 }
 
 .synced-user-right {

@@ -30,7 +30,7 @@ export const CreateHabit = () => {
   return (
     <div style = {{display:'flex', flexDirection:'column', alignItems:'center'}}>
       <Navigation></Navigation>
-    <div style = {{marginTop:'50px'}}className = "user-habits">
+    <div style = {{marginTop:'50px'}}className = "create-habit">
       <div className="create-habit-form-container">
         <h4 style={{fontWeight: 500, color: '#eeeeeeff'}}> The best time to plant a tree was 20 years ago. The next best time is now.</h4>
 

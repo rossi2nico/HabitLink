@@ -54,6 +54,7 @@ p, h4, h3, span {
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
+  background-color: #141414;
 }
 
 .login h3 {
@@ -125,7 +126,7 @@ p, h4, h3, span {
 
 .error {
   font-family: 'Manrope';
-  color: rgb(226, 0, 94);
+  color: rgb(255, 85, 107);
   font-size: 0.8125rem;
   font-weight: 700;
 }
@@ -500,7 +501,7 @@ h1 {
   height: 3rem;
   color: rgb(240, 240, 240);
   /* border: 1px dashed #262626; */
-  background: #1f1f1f;
+  background: #191919;
   /* box-shadow: 0 0.25rem 0.5rem rgba(83, 83, 83, 0.1); */
   margin: 0.375rem;
   display: flex;

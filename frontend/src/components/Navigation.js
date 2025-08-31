@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
+import userIcon from '../assets/icon2.png'
 
 export const Navigation = () => {
   const { user } = useAuthContext();
@@ -25,7 +26,7 @@ export const Navigation = () => {
           <>
             <h3 className="nav-user">{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</h3>
             {/* <button className="logout" onClick={logout}>Log out</button> */}
-            <img onClick = {logout} style = {{cursor:'pointer', marginBottom: '-1px', marginRight: '10px', marginLeft: '-10px', background: 'transparent', height:'20px'}}src = "https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"></img>
+            <img className = "user-icon" onClick = {logout} style = {{cursor:'pointer', marginBottom: '-1px', marginRight: '10px', marginLeft: '-10px', background: 'transparent', height:'20px'}}src = { userIcon }></img>
           </>
         )}
       </div>

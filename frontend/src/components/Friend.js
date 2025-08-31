@@ -10,12 +10,13 @@ export const Friend = ({ friend }) => {
 
   return (
     <div className="friend-card">
-      <span>{friend.username.charAt(0).toUpperCase() + friend.username.slice(1)}</span>
-      <button 
+      <p>@{friend.username.charAt(0).toUpperCase() + friend.username.slice(1)}</p>
+      {/* <button 
         onClick={handleRemove} 
         className="remove-friend-button"
         disabled={isLoading}
-      > Remove </button>
+      > Remove </button> */}
+      <p>2 shared habits</p>
     </div>
   );
 };

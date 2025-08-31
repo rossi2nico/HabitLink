@@ -75,6 +75,7 @@ const Habits = () => {
 
         <div className="habits">
           {activeView === 0 && 
+            <div style = {{display:'flex', flexDirection:'column'}}>
                 <div className="user-habits">
                   {habits && habits.length > 0 ? (
                     habits.map(habit => (
@@ -97,8 +98,13 @@ const Habits = () => {
                     </p>
                   )} */}
 
-                  <div style = {{ marginTop:'30px', width: '80px'}}className = "underline"></div>
+                  {/* <div style = {{ marginTop:'30px', width: '80px'}}className = "underline"></div> */}
 
+                  
+                  
+                  
+                </div>     
+                <div style = {{ marginTop:"20px"}} className = "user-habits">
                   <button 
                     style = {{ marginTop: '10px' }}
                     onClick={() => navigate('/habits/create')}
@@ -111,9 +117,8 @@ const Habits = () => {
                       Click on any habit to view advanced statistics!
                     </p>
                   )}
-                  
-                  
-                </div>              
+                </div>
+              </div>         
           }
 
           {activeView === 1 && (

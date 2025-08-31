@@ -47,12 +47,13 @@ const Friends = () => {
 
       <div className = 'friends-page'>
         <div className = 'friends-search'>
-          <label ><h3> Search Users </h3> </label>
+          <label><h3> Search All Users </h3></label>
   
           <input 
             type = "search"
             className = "search-users"
             value = {searchTerm}
+            placeholder = "Enter username"
             onChange = {(e) => setSearchTerm(e.target.value)}
           />
           
@@ -68,29 +69,26 @@ const Friends = () => {
             </>
           )}  
         </div>
-
-        <div className = 'friends-left'>
+        <div style = {{ padding:'0', paddingBottom: '30px', marginTop:'40px'}}className = "user-habits">
+          <h3>Friends</h3>
 
           {friends && friends.length > 0 ? (
-            <div className="friends">
-              <h3>Friends List</h3>
-              <div className = "underline"></div>
+            
+            <div className = "friends">
+              
               {friends.map(friend => (
                 <Friend key = {friend._id} friend = {friend}></Friend>
-
               ))}
             </div>
-          ) : (
-            <div className="friends">
-              <h3> Your Friends</h3>
-              <p> Friend List is Empty </p>
-            </div>
-          )}
 
+          ) : (
+            <p style = {{fontSize:'15px', color: '#ff4775ff', fontWeight:'500'}}>Friend list is empty!</p>
+          )}
+        </div>
+        <div style = {{ padding:'0', paddingBottom: '30px', marginTop:'40px'}}className = "user-habits">
           {pendingUsers && pendingUsers.length > 0 ? (
             <div className="pending-users">
-              <h3>Pending Friend Requests</h3>
-              <div className = "underline"></div>
+              <h3>Pending Requests</h3>
               {pendingUsers.map(pendingUser => (
                 <PendingUser key = {pendingUser._id} incomingUser = {pendingUser}></PendingUser>
   
@@ -99,12 +97,10 @@ const Friends = () => {
           ) : (
             <div className="pending-users">
               <h3> Friend Requests </h3>
-                <div className = "underline"></div>
-              <p>No Pending Friend Requests</p>
+              <p style = {{fontSize:'15px', color: '#ff4775ff', fontWeight:'500'}}>No Pending Friend Requests</p>
             </div>
-          )}
+          )}        
         </div>
-        
       </div>
     </>
   )

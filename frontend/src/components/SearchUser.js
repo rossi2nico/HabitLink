@@ -1,5 +1,7 @@
 import React from 'react';
 import { useFriends } from '../hooks/useFriends';
+import addUser from '../assets/add.png'
+
 
 export const SearchUser = ({ user }) => {
   const { sendFriendRequest, isLoading } = useFriends();
@@ -10,14 +12,12 @@ export const SearchUser = ({ user }) => {
 
   return (
     <div className="search-user-card">
-      <span>{user.username}</span>
-      <button 
-        onClick = {handleAdd} 
-        className = "add-friend-button"
-        disabled = {isLoading}
-      >
-        Add Friend
-      </button>
+      <div className = "search-user-card-left">
+        <span>@{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</span> 
+      </div>
+      <div className = "search-user-card-right">
+        <img className = "add-user" style = {{ width:'25px'}} src = { addUser }></img>
+      </div>
     </div>
   );
 };

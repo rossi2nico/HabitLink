@@ -101,7 +101,7 @@ export const AdvancedHabit = () => {
     <div className="advanced-habit">
       <Navigation></Navigation>
       <div className = "advanced-habit-info">
-        <h1 style = {{textAlign:'center'}}> { habit.name } <p style = {{textAlign:'center', marginBottom:'-5px'}}> 
+        <h1 style = {{textAlign:'center', fontWeight: '700', marginTop: '-5px'}}> { habit.name } <p style = {{textAlign:'center', marginBottom:'-5px'}}> 
           {habit.privacy === 0
             ? "Private Habit"
             : habit.privacy === 1

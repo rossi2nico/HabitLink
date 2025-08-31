@@ -97,7 +97,7 @@ const Habits = () => {
                     </p>
                   )} */}
 
-                  <div style = {{ marginTop:'30px', width: '250px'}}className = "underline"></div>
+                  <div style = {{ marginTop:'30px', width: '80px'}}className = "underline"></div>
 
                   <button 
                     style = {{ marginTop: '10px' }}

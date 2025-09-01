@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
 import userIcon from '../assets/icon2.png'
+import habitlink from '../assets/habitlink.png'
+import female from '../assets/female.png'
 
 export const Navigation = () => {
   const { user } = useAuthContext();
@@ -10,23 +12,24 @@ export const Navigation = () => {
   return (
     <div className="navigation">
       <div className="nav-left">
-        <h3 className="habitlink"> HabitLink </h3>
+        <img className = "icon" src = { habitlink }></img>
+        <h3 className = "habitlink"> HabitLink </h3>
       </div>
       <div className="nav-mid">
         <h3><Link to="/habits">Habits</Link></h3>
         <h3><Link to="/friends">Friends</Link></h3>
       </div>
-      <div className="nav-right" style={{marginLeft: 'auto', marginRight: '-25px', display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'flex-end', minWidth: '160px' }}>
+      <div className="nav-right">
         {!user ? (
           <>
-            <h3 className="login-nav" style={{ marginLeft: 'auto' }}><Link to="/login">Login</Link></h3>
+            <h3 className="login-nav"><Link to="/login">Login</Link></h3>
             <h3 className="register-nav"><Link to="/signup">Register</Link></h3>
           </>
         ) : (
           <>
+            <img className = "profile-picture" src = { female } ></img>
             <h3 className="nav-user">{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</h3>
-            {/* <button className="logout" onClick={logout}>Log out</button> */}
-            <img className = "user-icon" onClick = {logout} style = {{cursor:'pointer', marginBottom: '-1px', marginRight: '10px', marginLeft: '-10px', background: 'transparent', height:'20px'}}src = { userIcon }></img>
+            <button className="logout" onClick={logout}>Log out</button>
           </>
         )}
       </div>

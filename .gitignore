@@ -5,6 +5,9 @@ frontend.env.*.local
 backend/.env
 backend/.env.local
 backend.env.*.local
+.env.local
+.env.*.local
+.env
 
 # Node Modules
 frontend/node_modules/

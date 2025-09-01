@@ -1,0 +1,23 @@
+config:
+  target: "http://localhost:4000"
+  phases:
+    - duration: 30       # 30 seconds
+      arrivalRate: 5     # start with 5 new users/sec
+    - duration: 30
+      arrivalRate: 10    # increase to 10 new users/sec
+    - duration: 30
+      arrivalRate: 20    # increase to 20 new users/sec
+scenarios:
+  - flow:
+      - post:
+          url: "/api/users/login"
+          json:
+            username: "Nico"
+            password: "Next123!"
+          capture:
+            json: "$.token"
+            as: "authToken"
+      - get:
+          url: "/api/habits"
+          headers:
+            Authorization: "Bearer {{ authToken }}"

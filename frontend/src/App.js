@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AdvancedHabit } from './components/AdvancedHabit';
 import { CreateHabit } from './components/CreateHabit';
+import { Home } from './pages/Home';
 
 function App() {
   const { user, loading } = useAuthContext();
@@ -23,6 +24,10 @@ function App() {
           <Route
             path="/"
             element={user ? <Habits /> : <Navigate to="/login" replace />}
+          />
+          <Route
+          path = "secret"
+          element = {<Home></Home>}
           />
           <Route
             path="/habits"

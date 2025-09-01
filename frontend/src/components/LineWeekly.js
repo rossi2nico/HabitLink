@@ -139,6 +139,8 @@ export const LineWeekly = ({ habit }) => {
     weeklyStats.push(weekData);
   }
 
+  console.log("lw:", weeklyStats)
+
   return (
     <ResponsiveContainer width="100%" height="85%">
       <LineChart data={weeklyStats}>

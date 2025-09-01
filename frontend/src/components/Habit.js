@@ -102,7 +102,8 @@ export const Habit = ({ habit }) => {
         </div>
         <div className = "habit-right">
           {usersHabit ? (
-            <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}} src = {del}></img>
+            null
+            // <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}} src = {del}></img>
           ) : (
             <>
               {!synced ? (

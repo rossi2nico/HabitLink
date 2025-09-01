@@ -7,6 +7,7 @@ import Signup from './pages/Signup';
 import { AdvancedHabit } from './components/AdvancedHabit';
 import { CreateHabit } from './components/CreateHabit';
 import { Home } from './pages/Habits';
+import { Analytics } from "@vercel/analytics/next"
 
 function App() {
   const { user, loading } = useAuthContext();
@@ -55,6 +56,7 @@ function App() {
           />
         </Routes>
       </div>
+      <Analytics />
     </BrowserRouter>
   );
 }

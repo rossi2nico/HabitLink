@@ -72,11 +72,11 @@ export const Habit = ({ habit }) => {
         </svg>
       </div>
       <div className = "habit-mid">
-        <h4 className="habit-name">
-          <strong>
+        {/* <h4 className="habit-name">
+          <strong> */}
             <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>
-          </strong>
-        </h4>
+          {/* </strong>
+        </h4> */}
         {!usersHabit && (
           <p className = "habit-username"> from <strong>{ habit.username }</strong> 
             {syncedUsers.length > 0 &&
@@ -101,6 +101,12 @@ export const Habit = ({ habit }) => {
         )}
         </div>
         <div className = "habit-right">
+
+          <div className = "habit-buttons">
+            {/* <button className = "share-habit" >Share</button> */}
+            <Link to={`/habits/${habit._id}`} className = "view-analytics">View Analytics</Link>
+          </div>
+
           {usersHabit ? (
             null
             // <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}} src = {del}></img>

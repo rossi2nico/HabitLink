@@ -4,6 +4,7 @@ import { useLogout } from '../hooks/useLogout';
 import userIcon from '../assets/icon2.png'
 import habitlink from '../assets/habitlink.png'
 import female from '../assets/female.png'
+import batman from '../assets/batman.png'
 
 export const Navigation = () => {
   const { user } = useAuthContext();
@@ -27,7 +28,7 @@ export const Navigation = () => {
           </>
         ) : (
           <>
-            <img className = "profile-picture" src = { female } ></img>
+            <img className = "profile-picture" src = { batman } ></img>
             <h3 className="nav-user">{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</h3>
             <button className="logout" onClick={logout}>Log out</button>
           </>

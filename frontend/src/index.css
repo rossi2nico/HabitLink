@@ -144,19 +144,19 @@ h1, h2, h3, h4, p, span {
   /* border: 2px dashed lightsalmon; */
   margin-top: 15px;
   height: 100%;
-  display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
   width: 100%;
 }
 
 .home-habits {
   display: flex; flex-direction: column; align-items: center; text-align: center;
   /* border: 2px dashed lightblue; */
-  border-radius: 12px;
+  border-radius: 6px;
   background-color: #161616;
   /* border: 3px solid #1f1f1f; */
-  width: 650px;
-  padding: 25px;
-  margin: 25px;
+  width: 700px;
+  padding-top: 20px;
+  margin-top: 10px;
 }
 
 .home-habits h2 {
@@ -195,7 +195,7 @@ h1, h2, h3, h4, p, span {
   margin-top: 25px;
 }
 
-.intro:hover, .habits-graph-div:hover, .home-habits:hover {
+.intro:hover, .habits-graph-div:hover {
   transition: 0.3s ease;
   transform: scale(1.02);
 }
@@ -236,6 +236,25 @@ h1, h2, h3, h4, p, span {
   background-color: #161616;
   border-radius: 12px;
   /* align-self: center; */
+}
+
+.habit-buttons {
+  /* width: 70%; height: 100%; */
+  /* border: 2px dashed lightblue; */
+  display: flex; justify-content: flex-end; align-items: center;
+}
+
+
+.view-analytics, .share-habit {
+  border: none;
+  background-color: #282828;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 10px 5px 10px;
+  border-radius: 6px;
+  margin: 15px;
 }
 
 .login {
@@ -608,7 +627,6 @@ h1 {
   align-items: center;
   padding: 0.625rem;
   color: #ffffff;
-  /* border: 3px solid #252525; */
   background-color: #141414;
   padding: 10px 10px 15px 10px;
   border-radius: 16px;
@@ -621,7 +639,7 @@ h1 {
 
 .habit {
   border-radius: 12px;
-  width: 300px;
+  width: 400px;
   height: 2.7rem;
   color: rgb(240, 240, 240);
   background: #202020;
@@ -640,7 +658,7 @@ h1 {
   font-weight: 350;
 }
 
-.habit h4:hover, .habit a:hover {
+.habit h4:hover, .habit a:hover, .habit button:hover  {
   transition: 0.4s ease;
   color: rgb(4, 216, 181);
   cursor: pointer;
@@ -684,7 +702,7 @@ h1 {
 
 .habit-name,
 .habit-username {
-  text-align: center;
+  /* border: 2px solid yellow; */
   padding: 0;
   margin: 0;
   gap: 0;
@@ -692,10 +710,11 @@ h1 {
   text-decoration: none;
   font-size: 16px;
   font-weight: 700;
+  margin-left: 15px;
+  text-align: left;
 }
 
 .habit-username {
-  margin-top: 0.1875rem;
   font-size: 0.75rem;
   font-weight: 600;
   color: #c2c2c2;
@@ -710,22 +729,20 @@ h1 {
 }
 
 .habit-mid {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* border: 2px dashed lightyellow; */
+  width: 50%;
+  display: flex; flex-direction: column;
   height: 100%;
 }
 
 .habit-right {
-  width: 15%;
+  /* border: 2px dashed lightyellow; */
+  width: 40%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
+  justify-content: flex-end;
   height: 100%;
   gap: 0.375rem;
+  /* margin-right: auto; */
 }
 
 .habit-right p {

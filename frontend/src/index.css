@@ -737,7 +737,7 @@ h1 {
 }
 
 .habit-right {
-  border: 2px dashed lightyellow;
+  /* border: 2px dashed lightyellow; */
   /* width: 40%; */
   display: flex;
   justify-content: flex-end;

@@ -35,6 +35,7 @@ export const Habit = ({ habit }) => {
 
   const isComplete = () => {
     const today = new Date();
+    today.setHours(0, 0, 0, 0)
     const len = habit.completions.length;
     if (len === 0) {
       return false;
@@ -71,58 +72,60 @@ export const Habit = ({ habit }) => {
          <circle cx="20" cy="20" r="18" strokeLinecap="round" />
         </svg>
       </div>
-      <div className = "habit-mid">
-        {/* <h4 className="habit-name">
-          <strong> */}
-            <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>
-          {/* </strong>
-        </h4> */}
-        {!usersHabit && (
-          <p className = "habit-username"> from <strong>{ habit.username }</strong> 
-            {syncedUsers.length > 0 &&
-              (syncedUsers.length === 1
-                ? ' • 1 user'
-                : ` • ${syncedUsers.length} users`)}
-          </p>
-        )}
-        {usersHabit && (
-          <p className="habit-username">
-            {habit.privacy === 2
-              ? ' Public'
-              : habit.privacy === 1
-              ? ' Friends-only'
-              : ' Private'}
-
-            {syncedUsers.length > 0 &&
-              (syncedUsers.length === 1
-                ? ' • 1 user'
-                : ` • ${syncedUsers.length} users`)}
-          </p>
-        )}
-        </div>
-        <div className = "habit-right">
-
-          <div className = "habit-buttons">
-            {/* <button className = "share-habit" >Share</button> */}
-            <Link to={`/habits/${habit._id}`} className = "view-analytics">View Analytics</Link>
-          </div>
-
-          {usersHabit ? (
-            null
-            // <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}} src = {del}></img>
-          ) : (
-            <>
-              {!synced ? (
-                <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
-                // <h3 style = {{marginRight:"10px"}}onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)} >⇄</h3>
-                // <></>
-              ) : (
-                <img src = "https://www.citypng.com/public/uploads/preview/hd-white-tick-mark-icon-symbol-sign-transparent-png-701751695044638vkmy5iy1kv.png"
-                style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}}></img>
-                // <p style = {{fontWeight:'600',marginRight:"15px", fontSize:'12px'}}>Linked</p>
-              )}
-            </>
+      <div className = "habit-div">
+        <div className = "habit-mid">
+          {/* <h4 className="habit-name">
+            <strong> */}
+              <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>
+            {/* </strong>
+          </h4> */}
+          {!usersHabit && (
+            <p className = "habit-username"> from <strong>{ habit.username }</strong> 
+              {syncedUsers.length > 0 &&
+                (syncedUsers.length === 1
+                  ? ' • 1 user'
+                  : ` • ${syncedUsers.length} users`)}
+            </p>
           )}
+          {usersHabit && (
+            <p className="habit-username">
+              {habit.privacy === 2
+                ? ' Public'
+                : habit.privacy === 1
+                ? ' Friends-only'
+                : ' Private'}
+
+              {syncedUsers.length > 0 &&
+                (syncedUsers.length === 1
+                  ? ' • 1 user'
+                  : ` • ${syncedUsers.length} users`)}
+            </p>
+          )}
+          </div>
+          <div className = "habit-right">
+
+            <div className = "habit-buttons">
+              {/* <button className = "share-habit" >Share</button> */}
+              <Link to={`/habits/${habit._id}`} className = "view-analytics">View Stats</Link>
+            </div>
+
+            {usersHabit ? (
+              null
+              // <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}} src = {del}></img>
+            ) : (
+              <>
+                {!synced ? (
+                  <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
+                  // <h3 style = {{marginRight:"10px"}}onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)} >⇄</h3>
+                  // <></>
+                ) : (
+                  <img src = "https://www.citypng.com/public/uploads/preview/hd-white-tick-mark-icon-symbol-sign-transparent-png-701751695044638vkmy5iy1kv.png"
+                  style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}}></img>
+                  // <p style = {{fontWeight:'600',marginRight:"15px", fontSize:'12px'}}>Linked</p>
+                )}
+              </>
+            )}
+          </div>
         </div>
     </div>
   )

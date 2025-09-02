@@ -46,7 +46,7 @@ const Friends = () => {
       <Navigation></Navigation>
 
       <div className = 'friends-page'>
-        <div className = 'friends-search'>
+        {/* <div className = 'friends-search'>
           <label><h3> Search All Users </h3></label>
   
           <input 
@@ -68,8 +68,8 @@ const Friends = () => {
               ))}
             </>
           )}  
-        </div>
-        <div style = {{ padding:'0', paddingBottom: '30px', marginTop:'40px'}}className = "user-habits">
+        </div> */}
+        <div style = {{ width: '700px', padding:'5px 25px 25px 25px', paddingBottom: '30px', marginTop:'40px'}}className = "user-habits">
           <h3>Friends</h3>
 
           {friends && friends.length > 0 ? (

@@ -4,6 +4,8 @@ import Friends from './pages/Friends';
 import Habits from './pages/Habits';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import NewFriends from './pages/NewFriends';
+
 import { AdvancedHabit } from './components/AdvancedHabit';
 import { CreateHabit } from './components/CreateHabit';
 import { Home } from './pages/Habits';
@@ -26,10 +28,10 @@ function App() {
             path="/"
             element={user ? <Habits /> : <Navigate to="/login" replace />}
           />
-          {/* <Route
+          <Route
           path = "secret"
-          element = {<Home></Home>}
-          /> */}
+          element = {<NewFriends/>}
+          />
           <Route
             path="/habits"
             element={user ? <Habits /> : <Navigate to="/login" replace />}

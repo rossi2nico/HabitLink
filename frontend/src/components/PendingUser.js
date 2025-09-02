@@ -14,7 +14,6 @@ export const PendingUser = ({ incomingUser }) => {
 
   return (
     <div className="pending-user-card">
-      {/* <span>{incomingUser.username.charAt(0).toUpperCase() + incomingUser.username.slice(1)}</span>
       <button 
         onClick={handleAccept} 
         className="accept-button"
@@ -28,7 +27,7 @@ export const PendingUser = ({ incomingUser }) => {
         disabled={isLoading}
       >
         Decline
-      </button> */}
+      </button>
       <div className = "pending-user-card-left">
         <span>{incomingUser.username.charAt(0).toUpperCase() + incomingUser.username.slice(1)}</span>
       </div>

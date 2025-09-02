@@ -154,7 +154,7 @@ h1, h2, h3, h4, p, span {
   border-radius: 6px;
   background-color: #161616;
   /* border: 3px solid #1f1f1f; */
-  width: 700px;
+  width: 1000px;
   padding-top: 20px;
   padding-bottom: 40px;
   margin-top: 10px;
@@ -641,7 +641,7 @@ h1 {
 
 .habit {
   border-radius: 12px;
-  width: clamp(280px, 80%, 400px);
+  width: clamp(280px, 80%, 600px);
   height: 2.7rem;
   color: rgb(240, 240, 240);
   background: #202020;

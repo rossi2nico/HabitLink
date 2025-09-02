@@ -254,7 +254,8 @@ h1, h2, h3, h4, p, span {
   font-weight: 600;
   padding: 5px 10px 5px 10px;
   border-radius: 6px;
-  margin: 15px;
+  /* margin: 15px; */
+  height: 15px;
 }
 
 .login {
@@ -639,7 +640,7 @@ h1 {
 
 .habit {
   border-radius: 12px;
-  width: 400px;
+  width: clamp(280px, 80%, 400px);
   height: 2.7rem;
   color: rgb(240, 240, 240);
   background: #202020;
@@ -736,8 +737,8 @@ h1 {
 }
 
 .habit-right {
-  /* border: 2px dashed lightyellow; */
-  width: 40%;
+  border: 2px dashed lightyellow;
+  /* width: 40%; */
   display: flex;
   justify-content: flex-end;
   height: 100%;

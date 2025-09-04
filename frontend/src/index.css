@@ -832,7 +832,7 @@ h1 {
   background-color: #282828;
 }
 
-.search-user-card, . card, .pending-user-card {
+.search-user-card, .pending-user-card {
   background-color: #1f1f1f;
   padding: 5px;
   margin: 6px;
@@ -1291,7 +1291,7 @@ circle {
 .friend-card {
   /* border: 1px solid #272727; */
   padding: 6px;
-  background-color: #222222;
+  background-color: #212121;
   border-radius: 5px;
   /* width: 600px; */
   margin-bottom: 0px;

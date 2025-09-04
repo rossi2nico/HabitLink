@@ -61,7 +61,6 @@ export const Habit = ({ habit }) => {
               <p className = "habit-streak"> <strong>{ habit.streak } </strong></p>
             </div>
           </div>
-
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
          <defs>
             <linearGradient id="GradientColor">
@@ -74,11 +73,7 @@ export const Habit = ({ habit }) => {
       </div>
       <div className = "habit-div">
         <div className = "habit-mid">
-          {/* <h4 className="habit-name">
-            <strong> */}
               <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>
-            {/* </strong>
-          </h4> */}
           {!usersHabit && (
             <p className = "habit-username"> from <strong>{ habit.username }</strong> 
               {syncedUsers.length > 0 &&
@@ -105,23 +100,19 @@ export const Habit = ({ habit }) => {
           <div className = "habit-right">
 
             <div className = "habit-buttons">
-              {/* <button className = "share-habit" >Share</button> */}
               <Link to={`/habits/${habit._id}`} className = "view-analytics">View Stats</Link>
             </div>
 
             {usersHabit ? (
               null
-              // <img className = "habit-delete" onClick = {() => deleteHabit(habit._id)} style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}} src = {del}></img>
             ) : (
               <>
                 {!synced ? (
                   <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
-                  // <h3 style = {{marginRight:"10px"}}onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)} >⇄</h3>
-                  // <></>
+
                 ) : (
                   <img src = "https://www.citypng.com/public/uploads/preview/hd-white-tick-mark-icon-symbol-sign-transparent-png-701751695044638vkmy5iy1kv.png"
                   style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}}></img>
-                  // <p style = {{fontWeight:'600',marginRight:"15px", fontSize:'12px'}}>Linked</p>
                 )}
               </>
             )}

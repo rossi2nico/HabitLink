@@ -24,7 +24,7 @@ const calculateStreak = async (habit) => {
 
     const completions = habit.completions;
     const today = new Date()
-    today.setHours(0, 0, 0, 0)
+    today.setHours(4, 0, 0, 0)
     habit.streakLastUpdated = today;
 
     if (completions.length === 0) {
@@ -35,7 +35,7 @@ const calculateStreak = async (habit) => {
     }
 
     const lastCompleted = completions[completions.length - 1];
-    lastCompleted.setHours(0, 0, 0, 0)
+    lastCompleted.setHours(4, 0, 0, 0)
     
     const daysMissed = (today - lastCompleted) / MS_PER_DAY;
 
@@ -47,7 +47,7 @@ const calculateStreak = async (habit) => {
 
     let streak = 0;
     let day = new Date(today);
-    day.setHours(0, 0, 0, 0);
+    day.setHours(4, 0, 0, 0);
     
     if (!sameDate(today, lastCompleted)) {
         day.setDate(day.getDate() - 1);
@@ -87,13 +87,13 @@ const calculateStreak = async (habit) => {
     habit.maxStreak = maxStreak;
 
     day = new Date(today);
-    day.setHours(0, 0, 0, 0)
+    day.setHours(4, 0, 0, 0)
     if (!sameDate(today, lastCompleted)) {
         day.setDate(day.getDate() - 1);
     }
 
     let dateCreated = habit.createdAt;
-    dateCreated.setHours(0, 0, 0, 0)
+    dateCreated.setHours(4, 0, 0, 0)
     const potentialCompletions = Math.floor((day - dateCreated) / MS_PER_DAY + 1);
 
     if (!habit.timesCompleted || typeof habit.timesCompleted !== 'object') {

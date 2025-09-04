@@ -273,6 +273,7 @@ const syncHabit = async (req, res) => {
         if (!newHabit) {
             return res.status(500).json({error: 'Error creating synced habit'})
         }
+        newHabit.createdAt.setHours(4, 0, 0 , 0)
         // Add habits to corresponding syncedHabits list
         habit.syncedHabits.push({
             habitId: newHabit._id,
@@ -311,7 +312,9 @@ const createHabit = async (req, res) => {
         console.log(`username${username}`)
         if (!userId) return res.status(400);
         const habit = await Habit.create({name, description, privacy, frequency, userId, username});
+        habit.createdAt.setHours(4, 0, 0, 0)
         habit.ownerId = userId;
+        await habit.save()
         res.status(200).json(habit);
     }
     catch (error) {

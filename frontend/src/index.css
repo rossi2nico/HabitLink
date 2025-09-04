@@ -1283,7 +1283,7 @@ circle {
 
 .friend-shared-habits {
   display: flex; flex-wrap: wrap; justify-content: flex-start;
-  margin-top: 5px;
+  margin-top: 2px;
   width: 100%;
   /* border: 1px dashed yellow; */
 }
@@ -1293,8 +1293,9 @@ circle {
   padding: 6px;
   background-color: #212121;
   border-radius: 5px;
-  /* width: 600px; */
+  /* width: 300px; */
   margin-bottom: 0px;
+  /* height: 62px; */
 }
 
 .friend-card:hover {

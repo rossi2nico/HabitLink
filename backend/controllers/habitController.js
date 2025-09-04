@@ -2,31 +2,29 @@ const Habit = require('../models/habitModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
-const getLocalMidnight = (date = new Date()) => {
-    const localDate = new Date(date);
-    localDate.setHours(0, 0, 0, 0);
-    return localDate;
-};
-
-const getTodayLocal = () => {
-    return getLocalMidnight(new Date());
-};
-
 const sameDate = (d1, d2) => {
-    if (d1 === null || d2 === null) return false;
-    
-    const date1 = getLocalMidnight(d1);
-    const date2 = getLocalMidnight(d2);
-    
-    return date1.getTime() === date2.getTime();
+    if (!d1 || !d2) return false;
+    return (
+        d1.getUTCFullYear() === d2.getUTCFullYear() &&
+        d1.getUTCMonth() === d2.getUTCMonth() &&
+        d1.getUTCDate() === d2.getUTCDate()
+    );
+};
+
+const isBeforeDay = (d1, d2) => {
+  return (
+    d1.getUTCFullYear() < d2.getUTCFullYear() ||
+    (d1.getUTCFullYear() === d2.getUTCFullYear() && d1.getUTCMonth() < d2.getUTCMonth()) ||
+    (d1.getUTCFullYear() === d2.getUTCFullYear() && d1.getUTCMonth() === d2.getUTCMonth() && d1.getUTCDate() < d2.getUTCDate())
+  );
 };
 
 const calculateStreak = async (habit) => {
     const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
-    const completions = habit.completions.map((d) => getLocalMidnight(d));
-
-    const today = getTodayLocal();
+    const completions = habit.completions;
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
     habit.streakLastUpdated = today;
 
     if (completions.length === 0) {
@@ -37,6 +35,8 @@ const calculateStreak = async (habit) => {
     }
 
     const lastCompleted = completions[completions.length - 1];
+    lastCompleted.setHours(0, 0, 0, 0)
+    
     const daysMissed = (today - lastCompleted) / MS_PER_DAY;
 
     if (daysMissed >= 2) {
@@ -47,6 +47,7 @@ const calculateStreak = async (habit) => {
 
     let streak = 0;
     let day = new Date(today);
+    day.setHours(0, 0, 0, 0);
     
     if (!sameDate(today, lastCompleted)) {
         day.setDate(day.getDate() - 1);
@@ -86,11 +87,13 @@ const calculateStreak = async (habit) => {
     habit.maxStreak = maxStreak;
 
     day = new Date(today);
+    day.setHours(0, 0, 0, 0)
     if (!sameDate(today, lastCompleted)) {
         day.setDate(day.getDate() - 1);
     }
 
-    let dateCreated = getLocalMidnight(habit.createdAt);
+    let dateCreated = habit.createdAt;
+    dateCreated.setHours(0, 0, 0, 0)
     const potentialCompletions = Math.floor((day - dateCreated) / MS_PER_DAY + 1);
 
     if (!habit.timesCompleted || typeof habit.timesCompleted !== 'object') {
@@ -187,66 +190,47 @@ const toggleComplete = async (req, res) => {
         }      
         
         const len = habit.completions.length;
-        const todayMidnight = getTodayLocal();
+        const today = new Date();
         
-        if (!dateCompleted) {
-            
-            if (len === 0) {
-                habit.completions.push(todayMidnight);
-                await calculateStreak(habit);
-                await habit.save()
-                return res.status(200).json({ habit })
-            }
+        if (len === 0) {
+            habit.completions.push(dateCompleted);
+            habit.totalCompletions += 1;
+            await calculateStreak(habit);
+            await habit.save()
+            return res.status(200).json({ habit })
+        }
 
-            const lastItem = new Date(habit.completions[len - 1]);
-            if (sameDate(lastItem, todayMidnight)) {
-                habit.completions.pop();
-                habit.totalCompletions -= 1;
+        let left = 0;
+        let right = habit.completions.length - 1;
+
+        while (left <= right) {
+            const mid = Math.floor((left + right) / 2);
+            const currentDate = new Date(habit.completions[mid]);
+
+            if (sameDate(currentDate, new Date(dateCompleted))) {
+                habit.totalCompletions -= 1
+                if (sameDate(currentDate, today)) {
+                    habit.potentialCompletions -= 1;
+                }
+                habit.completions.splice(mid, 1);
                 await calculateStreak(habit);
                 await habit.save();
-                return res.status(200).json({ habit })
-            }
-            habit.completions.push(todayMidnight);
-        }
-        else {
-
-            const targetMidnight = getLocalMidnight(new Date(dateCompleted));
-            
-            if (len === 0) {
-                habit.completions.push(targetMidnight);
-                await calculateStreak(habit);
-                await habit.save()
-                return res.status(200).json({ habit })
+                return res.status(200).json({ habit });
             }
 
-            let left = 0;
-            let right = habit.completions.length - 1;
-
-            while (left <= right) {
-                const mid = Math.floor((left + right) / 2);
-                const currentDate = getLocalMidnight(habit.completions[mid]);
-
-                if (currentDate.getTime() === targetMidnight.getTime()) {
-                    habit.totalCompletions -= 1
-                    if (currentDate.getTime() === todayMidnight.getTime()) {
-                        habit.potentialCompletions -= 1;
-                    }
-                    habit.completions.splice(mid, 1);
-                    await calculateStreak(habit);
-                    await habit.save();
-                    return res.status(200).json({ habit });
-                }
-                else if (currentDate < targetMidnight) {
-                    left = mid + 1;
-                }
-                else {
-                    right = mid - 1;
-                }
+            if (isBeforeDay(currentDate, new Date(dateCompleted))) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
-            
-            habit.completions.splice(left, 0, targetMidnight);
         }
         
+        habit.completions.splice(left, 0, dateCompleted);
+        habit.totalCompletions += 1;
+        if (sameDate(new Date(dateCompleted), today)) {
+            habit.potentialCompletions += 1;
+        }
+
         await calculateStreak(habit);
         await habit.save();
         res.status(200).json({ habit })
@@ -366,10 +350,10 @@ const getHabits = async (req, res) => {
     const userId = req.user._id;
     const habits = await Habit.find({ userId }).sort({ createdAt: -1 });
 
-    const today = getTodayLocal();
+    const today = new Date()
     
     for (const habit of habits) {
-        const lastUpdated = habit.streakLastUpdated ? getLocalMidnight(habit.streakLastUpdated) : null;
+        const lastUpdated = habit.streakLastUpdated ? habit.streakLastUpdated : null;
         if (!lastUpdated || !sameDate(lastUpdated, today)) {
             console.log('Calculating streak');
             await calculateStreak(habit);

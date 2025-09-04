@@ -225,6 +225,10 @@ export const useHabits = () => {
       return { success: false, error: 'You must be logged in' }
     }
 
+    if (!dateCompleted) {
+      dateCompleted = new Date();
+    }
+
     const res = await fetch(`${BACKEND_URL}/api/habits/complete`, {
       method: 'POST',
       body: JSON.stringify({

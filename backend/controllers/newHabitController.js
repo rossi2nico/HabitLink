@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const Habit2 = require('../models/newHabitModel')
 const User = require('../models/userModel')
 
-const createHabit2 = async (req, res) => {
+const createHabit = async (req, res) => {
   try {
     const userId = req.user._id;
     const { name, privacy, startDate } = req.body;
@@ -21,7 +21,8 @@ const createHabit2 = async (req, res) => {
   }
 }
 
-const deleteHabit2 = async (req, res) => {  
+// Modify this to delete synced habits after implementing synced habits
+const deleteHabit = async (req, res) => {  
     try {
         const userId = req.user._id;
         const { habitId } = req.params;
@@ -39,7 +40,7 @@ const deleteHabit2 = async (req, res) => {
 }
 
 /* currentDate */
-const getHabits2 = async (req, res) => {
+const getHabits = async (req, res) => {
     try {
         const userId = req.user._id;
         const { currentDate } = req.body
@@ -113,7 +114,7 @@ const calculateStreak = async (habit, currentDate) => {
     await habit.save()
 }
 
-const toggleComplete2 = async (req, res) => {
+const toggleComplete = async (req, res) => {
   try {
     const { completionDate, currentDate, valueCompleted } = req.body;
     const { habitId } = req.params;
@@ -143,11 +144,36 @@ const toggleComplete2 = async (req, res) => {
   }
 }
 
+const syncHabit = async (req, res) => {
+    try {
+        const { originalHabitId, currentDate } = req.body
+        const userId = req.user._id
+
+        const originalHabit = await Habit2.findById(originalHabitId)
+        if (!originalHabit) throw new Error('Invalid habit ID')
+        
+        let { name, privacy, parentHabitId } = originalHabit
+        if (!parentHabitId) parentHabitId = originalHabitId
+
+        const habit = await Habit2.create({ userId, name, privacy, parentHabitId, startDate: currentDate })
+        if (!habit) throw new Error("Create habit failed")
+
+        originalHabit.linkedHabits.push({ habitId: habit._id })
+        habit.linkedHabits.push({ habitId: originalHabitId })
+
+        await originalHabit.save()
+        await habit.save()
+        return res.status(200).json({ originalHabit: originalHabit, newHabit: habit })
+    }
+    catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+}
+
 module.exports = {
-    createHabit2, deleteHabit2,
-    getHabits2,
-    // deleteHabit, updateHabit, 
-    // getHabit, getHabits, getPublicHabits, getTargetHabits, getFriendHabits, getSyncedHabits,
-    // syncHabit,
-    toggleComplete2
+    createHabit, deleteHabit,
+    getHabits,
+    syncHabit, 
+    // getHabit, getPublicHabits, getTargetHabits, getFriendHabits, getSyncedHabits,
+    toggleComplete
 }

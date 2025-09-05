@@ -3,9 +3,6 @@ const mongoose = require("mongoose")
 const Habit2 = require('../models/newHabitModel')
 const User = require('../models/userModel')
 
-const { format, parse } = require('date-fns')
-
-
 const createHabit2 = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -41,6 +38,80 @@ const deleteHabit2 = async (req, res) => {
     }
 }
 
+/* currentDate */
+const getHabits2 = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { currentDate } = req.body
+        console.log("current date:", currentDate)
+        const habits = await Habit2.find({ userId }).sort({ createdAt: -1 });
+
+        for (const habit of habits) {
+            const lastUpdated = habit.streakLastUpdated ? habit.streakLastUpdated : null;
+            if (!lastUpdated || !(currentDate === lastUpdated)) {
+                await calculateStreak(habit, currentDate) // Current implementation is n * nlogn (optimize later)
+            }
+        }
+        return res.status(200).json(habits)
+    }
+    catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+}
+
+const isSameDate = (date1, date2) => {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    return d1.getUTCFullYear() === d2.getUTCFullYear() &&
+        d1.getUTCMonth() === d2.getUTCMonth() &&
+        d1.getUTCDate() === d2.getUTCDate();
+};
+
+const calculateStreak = async (habit, currentDate) => {
+    const MS_PER_DAY = 1000 * 60 * 60 * 24;
+    habit.streakLastUpdated = currentDate;
+
+    if (!habit.completions || habit.completions.size === 0) {
+        habit.streak = 0;
+        await habit.save();
+        return
+    }
+    // Converted Map to Object(date, completionValue)
+    const completionDates = Array.from(habit.completions.entries())
+        .filter(([date]) => date <= currentDate)
+        .sort(([a], [b]) => b.localeCompare(a))
+        .map(([date, completionValue]) => ({ date, completionValue })); 
+
+    let streak = 0
+    const lastCompleted = new Date(completionDates[0].date)
+    const today = new Date(currentDate)
+
+    const daysMissed = (today - lastCompleted) / MS_PER_DAY;
+    if (daysMissed > 1) {
+        habit.streak = 0;
+        await habit.save(); 
+        return;
+    }
+
+    const date = new Date(today)
+    if (!isSameDate(date, lastCompleted)) {
+        date.setDate(date.getDate() - 1);
+    }
+
+    for (let i = 0; i < completionDates.length; i++) {
+        const completionDate = new Date(completionDates[i].date);
+        const completionValue = completionDates[i].completionValue
+        if (isSameDate(completionDate, date) && completionValue > 0) {
+            streak++;
+            date.setDate(date.getDate() - 1);
+        } else break;
+    }
+
+    if (streak > habit.maxStreak) habit.maxStreak = streak
+    habit.streak = streak
+    await habit.save()
+}
+
 const toggleComplete2 = async (req, res) => {
   try {
     const { completionDate, currentDate, valueCompleted } = req.body;
@@ -71,6 +142,7 @@ const toggleComplete2 = async (req, res) => {
 
 module.exports = {
     createHabit2, deleteHabit2,
+    getHabits2,
     // deleteHabit, updateHabit, 
     // getHabit, getHabits, getPublicHabits, getTargetHabits, getFriendHabits, getSyncedHabits,
     // syncHabit,

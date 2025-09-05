@@ -73,6 +73,7 @@ const calculateStreak = async (habit, currentDate) => {
 
     if (!habit.completions || habit.completions.size === 0) {
         habit.streak = 0;
+        habit.maxStreak = 0;
         await habit.save();
         return
     }
@@ -82,7 +83,6 @@ const calculateStreak = async (habit, currentDate) => {
         .sort(([a], [b]) => b.localeCompare(a))
         .map(([date, completionValue]) => ({ date, completionValue })); 
 
-    let streak = 0
     const lastCompleted = new Date(completionDates[0].date)
     const today = new Date(currentDate)
 
@@ -98,17 +98,18 @@ const calculateStreak = async (habit, currentDate) => {
         date.setDate(date.getDate() - 1);
     }
 
+    let streak = 0
     for (let i = 0; i < completionDates.length; i++) {
         const completionDate = new Date(completionDates[i].date);
         const completionValue = completionDates[i].completionValue
         if (isSameDate(completionDate, date) && completionValue > 0) {
             streak++;
             date.setDate(date.getDate() - 1);
-        } else break;
+        } else break
     }
 
-    if (streak > habit.maxStreak) habit.maxStreak = streak
-    habit.streak = streak
+    habit.maxStreak = Math.max(streak, habit.maxStreak);
+    habit.streak = streak;
     await habit.save()
 }
 
@@ -127,10 +128,12 @@ const toggleComplete2 = async (req, res) => {
 
     if (habit.completions.has(completionDate)) {
         habit.completions.delete(completionDate)
+        await calculateStreak(habit, currentDate)
         await habit.save()
         return res.status(200).json(habit)
     } else {
         habit.completions.set(completionDate, valueCompleted)
+        await calculateStreak(habit, currentDate)
         await habit.save()
         return res.status(200).json(habit)
     }

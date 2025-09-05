@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { format } from "date-fns"
+import { Habit } from "../components/Habit";
+import { LineGraphHabits2 } from "../components/LineGraphHabits2";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const currentDate = format(new Date(), "yyyy-MM-dd") 
@@ -82,13 +84,20 @@ const Secret = () => {
   return (
     <div>
       <p>{currentDate}</p>
-      <pre>{JSON.stringify(habits, null, 2)}</pre>
+      {habits && habits.map(habit => (
+        <Habit 
+          key = {habit._id} 
+          habit = { habit } 
+        />
+      ))}
       <button className='create-habit-button' onClick={handleCreateHabit}>
         Create Habit
       </button>
       <button className='create-habit-button' onClick={handleDeleteLastHabit}>
         Delete Last Habit
       </button>
+      <LineGraphHabits2 habits = {habits}></LineGraphHabits2>
+
     </div>
   )
 }

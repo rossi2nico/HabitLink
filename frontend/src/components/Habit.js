@@ -1,29 +1,23 @@
 import { useState, useEffect } from 'react'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
-import { EditHabitForm } from './EditHabitForm'
 import { Link } from 'react-router-dom';
 import link from '../assets/sync4.png'
-
-import del from '../assets/delete-red.png'
+import { format } from 'date-fns';
 
 export const Habit = ({ habit }) => {
 
   const { getHabit, toggleComplete, syncHabit, deleteHabit } = useHabits();
   const { user } = useAuthContext();
-  const syncedUsers = habit.syncedHabits.map((syncedHabit) => syncedHabit.userId); 
+  const syncedUsers = habit.linkedHabits.map((syncedHabit) => syncedHabit.userId); 
 
   const isUsersHabit = () => {
     return user?._id?.toString() === habit?.userId?.toString();
   }
 
-  const sameDate = (d1, d2) => {
-        return (
-            d1.getFullYear() === d2.getFullYear() &&
-            d1.getMonth() === d2.getMonth() &&
-            d1.getDate() === d2.getDate()
-        )
-    }
+  let today = new Date()
+  today = format(today, 'yyyy-MM-dd')
+  const isComplete = habit.completions[today] > 0
 
   const isSynced = () => {
     if (!user || !user._id) return false;
@@ -33,18 +27,6 @@ export const Habit = ({ habit }) => {
     )
   }
 
-  const isComplete = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0)
-    const len = habit.completions.length;
-    if (len === 0) {
-      return false;
-    }
-    const lastDate = new Date(habit.completions[len - 1]);
-    return sameDate(today, lastDate);
-  }
-
-  const complete = isComplete();
   const usersHabit = isUsersHabit();
   const synced = isSynced();
 
@@ -55,7 +37,7 @@ export const Habit = ({ habit }) => {
   return (
     <div className = "habit">
 
-      <div className = {`completion-circle ${ complete  ? 'completed' : '' }`} onClick = {() => toggleComplete(habit)} >
+      <div className = {`completion-circle ${ isComplete  ? 'completed' : '' }`} onClick = {() => toggleComplete(habit)} >
           <div className = "circle-ring">
             <div className = "inner-circle">
               <p className = "habit-streak"> <strong>{ habit.streak } </strong></p>
@@ -98,7 +80,7 @@ export const Habit = ({ habit }) => {
           )}
           </div>
           <div className = "habit-right">
-
+            <p>{habit.startDate}</p>
             <div className = "habit-buttons">
               <Link to={`/habits/${habit._id}`} className = "view-analytics">View Stats</Link>
             </div>

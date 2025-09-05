@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { format } from "date-fns"
-import { Habit } from "../components/Habit";
+import { Habit } from "../components/Habit2";
 import { LineGraphHabits2 } from "../components/LineGraphHabits2";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -85,7 +85,7 @@ const Secret = () => {
     <div>
       <p>{currentDate}</p>
       {habits && habits.map(habit => (
-        <Habit 
+        <Habit
           key = {habit._id} 
           habit = { habit } 
         />

@@ -17,12 +17,14 @@ const {
   toggleComplete,
 } = require('../controllers/habitController');
 
-const { createHabit2, toggleComplete2 } = require('../controllers/newHabitController')
+const { createHabit2, toggleComplete2, deleteHabit2 } = require('../controllers/newHabitController')
 
 // Route Handlers: handle requests with habitController
 
 router.use(requireAuth);
-router.post('/gmi', createHabit2);
+router.post('/2/', createHabit2);
+router.delete('/2/:habitId', deleteHabit2);
+router.post('/2/complete/:habitId', toggleComplete2)
 
 router.get('/', getHabits);
 router.get('/public', getPublicHabits);

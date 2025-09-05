@@ -43,8 +43,8 @@ const deleteHabit = async (req, res) => {
 const getHabits = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { currentDate } = req.body
-        console.log("current date:", currentDate)
+        const { currentDate } = req.query
+        if (!currentDate) throw new Error('currentDate not included')
         const habits = await Habit2.find({ userId }).sort({ createdAt: -1 });
 
         for (const habit of habits) {
@@ -53,6 +53,7 @@ const getHabits = async (req, res) => {
                 await calculateStreak(habit, currentDate) // Current implementation is n * nlogn (optimize later)
             }
         }
+
         return res.status(200).json(habits)
     }
     catch (error) {
@@ -152,14 +153,25 @@ const syncHabit = async (req, res) => {
         const originalHabit = await Habit2.findById(originalHabitId)
         if (!originalHabit) throw new Error('Invalid habit ID')
         
+        if (userId.toString() === originalHabit.userId.toString()) throw new Error("Can't sync with own habit!")
+
+        const alreadySynced = originalHabit.linkedHabits.some(h => h.userId.toString() === userId.toString());
+        if (alreadySynced) throw new Error("Habit already synced");
+
         let { name, privacy, parentHabitId } = originalHabit
         if (!parentHabitId) parentHabitId = originalHabitId
+
+        const originalUserId = originalHabit.userId
+        const originalUser = await User.findById(originalUserId)
+        const originalOwnerUsername = originalUser.username
+        const user = await User.findById(userId)
+        const ownerUsername = user.username
 
         const habit = await Habit2.create({ userId, name, privacy, parentHabitId, startDate: currentDate })
         if (!habit) throw new Error("Create habit failed")
 
-        originalHabit.linkedHabits.push({ habitId: habit._id })
-        habit.linkedHabits.push({ habitId: originalHabitId })
+        originalHabit.linkedHabits.push({ habitId: habit._id, userId, ownerUsername })
+        habit.linkedHabits.push({ habitId: originalHabitId, userId: originalUserId, ownerUsername: originalOwnerUsername })
 
         await originalHabit.save()
         await habit.save()

@@ -4,11 +4,10 @@ import Friends from './pages/Friends';
 import Habits from './pages/Habits';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import NewFriends from './pages/NewFriends';
-
 import { AdvancedHabit } from './components/AdvancedHabit';
 import { CreateHabit } from './components/CreateHabit';
 import { Home } from './pages/Habits';
+import Secret from './pages/Secret';
 // import { Analytics } from '@vercel/analytics/react';
 
 function App() {
@@ -30,7 +29,7 @@ function App() {
           />
           <Route
           path = "secret"
-          element = {<NewFriends/>}
+          element = {<Secret/>}
           />
           <Route
             path="/habits"

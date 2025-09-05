@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useHabitsContext } from './useHabitsContext'
 import { useAuthContext } from './useAuthContext'
-
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const useHabits = () => {

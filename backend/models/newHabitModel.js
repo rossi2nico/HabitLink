@@ -9,7 +9,11 @@ const newHabitSchema = new Schema({
   privacy: { type: Number, enum: [0, 1, 2], default: 0 },
   /* Habit linking features */
   parentHabitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit2', default: null },
-  linkedHabits: [{ habitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit2', required: true } }],
+  linkedHabits: [{ 
+    habitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit2', required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    ownerUsername: { type: String, required: true }
+  }],
   /* Calculation features */
   streak: { type: Number, default: 0 },
   maxStreak: { type: Number, default: 0 },

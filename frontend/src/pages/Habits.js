@@ -63,13 +63,6 @@ const Habits = () => {
                 />
               ))}
             </div>
-            {/* <div className = "home-calendar">
-              {habits && habits.length > 0 && (
-                <>
-                  <Calendar habit = { habits[0] }></Calendar>
-                </>
-            )}
-            </div> */}
           </div>
         </div>
       </>

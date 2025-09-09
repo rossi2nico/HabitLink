@@ -238,11 +238,31 @@ const syncHabit = async (req, res) => {
     }
 }
 
+const getLinkedHabits = async (req, res) => {
+    
+    const { habitId } = req.params;
+
+    try {
+        const habit = await Habit2.findById(habitId).populate(
+            'linkedHabits.habitId', 
+            'streak maxStreak completions username' // Add potentialCompletions and totalCompletions later
+        );
+
+        if (!habit) return res.status(404).json({ error: 'Habit not found' })
+
+        const linkedHabits = habit.linkedHabits;
+        return res.status(200).json({ linkedHabits }); // Returns json.syncedHabits -> { "syncedHabits": [], otherVariables needed etc }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
 module.exports = {
     createHabit, deleteHabit,
     getHabits,
     syncHabit, 
     getHabit,
+    getLinkedHabits,
     // getHabit, getPublicHabits, getTargetHabits, getFriendHabits, getSyncedHabits,
     toggleComplete
 }

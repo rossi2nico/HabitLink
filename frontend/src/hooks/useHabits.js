@@ -151,6 +151,22 @@ export const useHabits = () => {
     return { success: true, habits: json }
   }
 
+  const getLinkedHabits = async (habitId) => {
+    if (!user) return { success: false, error: 'You must be logged in' }
+
+    const res = await fetch(`${BACKEND_URL}/api/habits/2/linkedHabits/${habitId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${user.token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    
+    const json = await res.json() 
+    if (!res.ok) return { success: false, error: json.error }
+    return { success: true, linkedHabits: json.linkedHabits }
+  }
+
   const getSyncedHabits = async (habitId) => {
     if (!user) {
       return { success: false, error: 'You must be logged in' }
@@ -196,20 +212,10 @@ export const useHabits = () => {
   }
   const createHabit2 = async (name, privacy, startDate) => {
 
-    //const userId = req.user._id;
-    // const { name, privacy, startDate } = req.body;
-    if (!user) {
-      return { success: false, error: "You must be logged in" }
-    }
-    if (!privacy) {
-      privacy = 0;
-    }
-    if (!startDate) {
-      startDate = format(new Date(), 'yyyy-MM-dd');
-    }
-    if (!name) {
-      return { success: false, error: "Habit name is required" }
-    }
+    if (!user) return { success: false, error: "You must be logged in" }
+    if (!privacy) privacy = 0;
+    if (!startDate) startDate = format(new Date(), 'yyyy-MM-dd');
+    if (!name) return { success: false, error: "Habit name is required" }
     
     const habit = { name, privacy, startDate }
 
@@ -452,6 +458,6 @@ export const useHabits = () => {
   }
 
   return { 
-    getSyncedHabits, syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, createHabit2, deleteHabit2, getHabit2,
+    getSyncedHabits, syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, createHabit2, deleteHabit2, getHabit2, getLinkedHabits,
     updateHabit, deleteHabit, toggleComplete, toggleComplete2 }
 }

@@ -17,7 +17,7 @@ const {
   toggleComplete,
 } = require('../controllers/habitController');
 
-const { syncHabit: syncHabit2, createHabit: createHabit2, toggleComplete: toggleComplete2, deleteHabit: deleteHabit2, getHabits: getHabits2 } = require('../controllers/newHabitController')
+const { getHabit: getHabit2, syncHabit: syncHabit2, createHabit: createHabit2, toggleComplete: toggleComplete2, deleteHabit: deleteHabit2, getHabits: getHabits2 } = require('../controllers/newHabitController')
 
 // Route Handlers: handle requests with habitController
 
@@ -25,7 +25,8 @@ router.use(requireAuth);
 router.post('/2/', createHabit2);
 router.delete('/2/:habitId', deleteHabit2);
 router.post('/2/complete/:habitId', toggleComplete2)
-router.get('/2/', getHabits2)
+router.get('/2/:habitId', getHabit2) //         const { currentDate } = req.query
+router.get('/2/', getHabits2) //         const { currentDate } = req.query
 router.post('/2/sync', syncHabit2);
 
 

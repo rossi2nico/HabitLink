@@ -55,6 +55,43 @@ const deleteHabit = async (req, res) => {
     }
 }
 
+const getHabit = async (req, res) => {
+   
+    const { habitId } = req.params
+    const { currentDate} = req.query
+    const { 'access-type': accessType } = req.headers
+
+    try {
+       
+       if(!mongoose.Types.ObjectId.isValid(habitId)) {
+           return res.status(400).json({error: 'Invalid habit ID'})
+       }
+
+       if (!currentDate) {
+           return res.status(400).json({error: 'currentDate not included'})
+       }
+
+       const habit = await Habit2.findById(habitId)       
+       if (!habit) {
+           return res.status(404).json({error: 'Habit does not exist'})
+       }
+
+        if (habit.userId.toString() !== req.user.id && accessType != 'sync') {
+            return res.status(403).json({error: 'Access denied'})
+       }
+
+       const lastUpdated = habit.streakLastUpdated ? habit.streakLastUpdated : null;
+        if (!lastUpdated || !(currentDate === lastUpdated)) {
+            await calculateStreak(habit, currentDate)
+        }
+
+       res.status(200).json(habit)
+       
+   } catch (error) {
+       res.status(500).json({error: 'Server error'})
+   }
+}
+
 /* currentDate */
 const getHabits = async (req, res) => {
     try {
@@ -66,7 +103,6 @@ const getHabits = async (req, res) => {
         for (const habit of habits) {
             const lastUpdated = habit.streakLastUpdated ? habit.streakLastUpdated : null;
             if (!lastUpdated || !(currentDate === lastUpdated)) {
-                console.log("currentDate:", currentDate, "lastUpdated:", lastUpdated)
                 await calculateStreak(habit, currentDate) // Current implementation is n * nlogn (optimize later)
             }
         }
@@ -206,6 +242,7 @@ module.exports = {
     createHabit, deleteHabit,
     getHabits,
     syncHabit, 
+    getHabit,
     // getHabit, getPublicHabits, getTargetHabits, getFriendHabits, getSyncedHabits,
     toggleComplete
 }

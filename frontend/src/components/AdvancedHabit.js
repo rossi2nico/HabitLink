@@ -2,7 +2,7 @@ import { LineWeekly } from "./LineWeekly"
 import { BarGraphDaily } from "./BarGraphDaily"
 import { useHabits } from "../hooks/useHabits"
 import { useState, useEffect } from 'react'
-import { Calendar } from "./Calendar"
+import { Calendar2 } from "./Calendar2"
 import { useParams } from 'react-router-dom'
 import { Navigation } from "./Navigation"
 import { useHabitsContext } from "../hooks/useHabitsContext"
@@ -10,17 +10,19 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import sync from '../assets/sync4.png'
 import { UserCard } from "./UserCard"
 import { HabitMastery } from "./HabitMastery"
+import { format } from "date-fns"
 
 export const AdvancedHabit = () => {
 
   const { habits } = useHabitsContext()
-  const { getSyncedHabits, getHabit } = useHabits()
+  const { getSyncedHabits, getHabit2 } = useHabits()
   const [syncedHabits, setSyncedHabits] = useState([])
   const [habit, setHabit] = useState(null)
   const [error, setError] = useState("")
   const [syncedError, setSyncedError] = useState("")
   const { user } = useAuthContext()
   const { habitId } = useParams()  
+  const currentDate = format(new Date(), 'yyyy-MM-dd');
 
   useEffect(() => {
     if (!user) {
@@ -35,14 +37,16 @@ export const AdvancedHabit = () => {
     else {
       const fetchHabit = async () => {
         try {
-          const res = await getHabit(habitId)
+          const res = await getHabit2(habitId, currentDate)
+          console.log("fetched advanced habit: ", res)
           if (res.success == true) {
+            console.log("works")
             setHabit(res.habit)
           } else {
             setError(res.error)
           }
         } catch (err) {
-          setError(err)
+          setError(err.message || String(err))
         }
       }
       fetchHabit()
@@ -160,7 +164,7 @@ export const AdvancedHabit = () => {
 
         <div className = "calendar-container">
           {/* <h3> Calendar </h3> */}
-          <Calendar habit = {habit}></Calendar>
+          <Calendar2 habit = {habit}></Calendar2>
 
         </div>
         

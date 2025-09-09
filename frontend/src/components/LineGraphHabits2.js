@@ -49,8 +49,8 @@ export const LineGraphHabits2 = ({ habits }) => {
   }
 
   return (
-    <ResponsiveContainer width="50%" height = { 250 }>
-      <LineChart data = { habitCompletions } margin = {{ top: 20, right: 30, left: 20, bottom: 20 }}>
+    <ResponsiveContainer width="90%" height="80%">
+      <LineChart data={habitCompletions}>
         <defs>
           <linearGradient id="GradientColor2" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#ff1e00ff" stopOpacity={1} />
@@ -60,10 +60,12 @@ export const LineGraphHabits2 = ({ habits }) => {
 
         <XAxis
           dataKey="date"
+          type="category"
           axisLine={false}
           tickLine={false}
-          tick={{ fill: "#666", fontSize: 12 }}
-          tickFormatter={(value) => format(parseISO(value), 'MMM dd')}
+          tick={{ fill: "#666", fontSize: 13, dy: 10 }}
+          tickFormatter={(value) => format(parseISO(value), 'MMM dd, yyyy')}
+          ticks={[habitCompletions[0].date, habitCompletions[habitCompletions.length - 1].date]}
           interval="preserveStartEnd"
         />
 
@@ -71,7 +73,7 @@ export const LineGraphHabits2 = ({ habits }) => {
           tickFormatter={(v) => `${Math.round(v)}%`}
           axisLine={false}
           tickLine={false}
-          tick={{ fill: "#666", fontSize: 12 }}
+          tick={{ fill: "#666", fontSize: 12, dx: -20 }}
           domain={[0, 100]}
         />
 

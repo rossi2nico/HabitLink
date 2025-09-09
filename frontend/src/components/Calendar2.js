@@ -83,14 +83,14 @@ export const Calendar2 = ({ habit }) => {
                     </time>
                   </div>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32px" height="32px">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="36px" height="36px">
                   <defs>
                     <linearGradient id="GradientColor">
                       <stop offset="0%" stopColor="#34a5b4ff" />
                       <stop offset="100%" stopColor="#00e284ff" />
                     </linearGradient>
                   </defs>
-                  <circle className = "circle-calendar" cx="16" cy="16" r="14" strokeLinecap="round" />
+                  <circle className = "circle-calendar" cx="18" cy="18" r="16" strokeLinecap="round" />
                 </svg>
 
               </div>

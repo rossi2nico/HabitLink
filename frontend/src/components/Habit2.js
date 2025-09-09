@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 
 export const Habit = ({ habit }) => {
 
-  const { getHabit, toggleComplete, syncHabit, deleteHabit } = useHabits();
+  const { getHabit, toggleComplete2, syncHabit, deleteHabit } = useHabits();
   const { user } = useAuthContext();
   const syncedUsers = habit.linkedHabits.map((syncedHabit) => syncedHabit.userId); 
 
@@ -18,6 +18,9 @@ export const Habit = ({ habit }) => {
   let today = new Date()
   today = format(today, 'yyyy-MM-dd')
   const isComplete = habit.completions[today] > 0
+  console.log("today: ", today)
+  console.log("isComplete: ", isComplete)
+  console.log("habit id", habit._id)
 
   const isSynced = () => {
     if (!user || !user._id) return false;
@@ -36,8 +39,7 @@ export const Habit = ({ habit }) => {
 
   return (
     <div className = "habit">
-
-      <div className = {`completion-circle ${ isComplete  ? 'completed' : '' }`} onClick = {() => toggleComplete(habit)} >
+      <div className = {`completion-circle ${ isComplete  ? 'completed' : '' }`} onClick = {() => toggleComplete2(habit._id)} >
           <div className = "circle-ring">
             <div className = "inner-circle">
               <p className = "habit-streak"> <strong>{ habit.streak } </strong></p>

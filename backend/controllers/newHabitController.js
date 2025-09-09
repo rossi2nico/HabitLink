@@ -30,9 +30,25 @@ const deleteHabit = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(habitId)) throw new Error('Invalid habit ID')
         const habit = await Habit2.findById(habitId)
         if (!habit) throw new Error('Invalid habit ID')
+
+        const modifiedHabits = [];
         
+        for (const linkedHabit of habit.linkedHabits) {
+            const otherHabit = await Habit2.findById(linkedHabit.habitId)
+            if (!otherHabit) continue;
+            
+            otherHabit.linkedHabits = otherHabit.linkedHabits.filter(
+                otherSyncedHabits => otherSyncedHabits.habitId.toString() !== habitId.toString()
+            )
+            await otherHabit.save();
+            modifiedHabits.push(otherHabit);
+        }
+
         await habit.deleteOne();
-        return res.status(200).json(habit)
+        return res.status(200).json({
+            deletedHabit: habit,
+            updatedSyncedHabits: modifiedHabits
+        })
     } 
     catch (error) {
         return res.status(400).json({ error: error.message })
@@ -50,6 +66,7 @@ const getHabits = async (req, res) => {
         for (const habit of habits) {
             const lastUpdated = habit.streakLastUpdated ? habit.streakLastUpdated : null;
             if (!lastUpdated || !(currentDate === lastUpdated)) {
+                console.log("currentDate:", currentDate, "lastUpdated:", lastUpdated)
                 await calculateStreak(habit, currentDate) // Current implementation is n * nlogn (optimize later)
             }
         }
@@ -70,6 +87,7 @@ const isSameDate = (date1, date2) => {
 };
 
 const calculateStreak = async (habit, currentDate) => {
+    console.log("Calculating streak for habit:", habit._id, "with currentDate:", currentDate)
     const MS_PER_DAY = 1000 * 60 * 60 * 24;
     habit.streakLastUpdated = currentDate;
 
@@ -132,11 +150,13 @@ const toggleComplete = async (req, res) => {
         habit.completions.delete(completionDate)
         await calculateStreak(habit, currentDate)
         await habit.save()
+        console.log("habit after toggleComplete: ", habit)
         return res.status(200).json(habit)
     } else {
         habit.completions.set(completionDate, valueCompleted)
         await calculateStreak(habit, currentDate)
         await habit.save()
+        console.log("habit after toggleComplete: ", habit)
         return res.status(200).json(habit)
     }
   }

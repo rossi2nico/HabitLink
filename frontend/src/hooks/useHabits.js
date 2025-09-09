@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useHabitsContext } from './useHabitsContext'
 import { useAuthContext } from './useAuthContext'
+import { format } from 'date-fns'
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const useHabits = () => {
@@ -29,6 +30,33 @@ export const useHabits = () => {
 
     dispatch({ type: 'GET_HABIT', payload: json })
     return { success: true, habit: json }
+  }
+
+  const getHabits2 = async (currentDate) => {
+    if (!user) {
+      return { success: false, error: 'You must be logged in' }
+    }
+    if (!currentDate) {
+      currentDate = format(new Date(), 'yyyy-MM-dd');
+    }
+
+    console.log("currentDate in getHabits2: ", currentDate)
+    const res = await fetch(`${BACKEND_URL}/api/habits/2?currentDate=${currentDate}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+    
+    const json = await res.json()
+    console.log("here", json)
+    if (!res.ok) {
+      return { success: false, error: json.error }
+    }
+    
+    dispatch({ type: 'SET_HABITS', payload: json})
+    return { success: true, habits: json }
   }
 
   const getHabits = async () => {
@@ -143,6 +171,43 @@ export const useHabits = () => {
     
     return { success: true, habits: json }
   }
+  const createHabit2 = async (name, privacy, startDate) => {
+
+    //const userId = req.user._id;
+    // const { name, privacy, startDate } = req.body;
+    if (!user) {
+      return { success: false, error: "You must be logged in" }
+    }
+    if (!privacy) {
+      privacy = 0;
+    }
+    if (!startDate) {
+      startDate = format(new Date(), 'yyyy-MM-dd');
+    }
+    if (!name) {
+      return { success: false, error: "Habit name is required" }
+    }
+    
+    const habit = { name, privacy, startDate }
+
+    const res = await fetch(`${BACKEND_URL}/api/habits/2`, {
+      method: 'POST',
+      body: JSON.stringify(habit),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+    
+    const json = await res.json()
+    
+    if (!res.ok) {
+      return { success: false, error: json.error }
+    }
+    
+    dispatch({ type: 'CREATE_HABIT', payload: json })
+    return { success: true, habit: json }
+  }
 
   const createHabit = async (name, description, frequency, privacy) => {
     if (!user) {
@@ -169,6 +234,29 @@ export const useHabits = () => {
     dispatch({ type: 'CREATE_HABIT', payload: json })
     return { success: true, habit: json }
   }
+
+    const deleteHabit2 = async (habitId) => {
+      if (!user) {
+        return { success: false, error: "You must be logged in" }
+      }
+  
+      const res = await fetch(`${BACKEND_URL}/api/habits/2/${habitId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+      
+      const json = await res.json()
+      
+      if (!res.ok) {
+        return { success: false, error: json.error }
+      }
+      
+      dispatch({ type: 'DELETE_HABIT', payload: json })
+      return { success: true, habit: json }
+    }
 
   const deleteHabit = async (habitId) => {
     if (!user) {
@@ -219,6 +307,48 @@ export const useHabits = () => {
     return { success: true, habit: json.habit }
   }
 
+  const toggleComplete2 = async(habitId, dateCompleted, currentDate, valueCompleted) => {
+    if (!user) {
+      return { success: false, error: 'You must be logged in' }
+    }
+  
+    if (!dateCompleted) {
+      dateCompleted = new Date();
+      dateCompleted = format(dateCompleted, 'yyyy-MM-dd');
+    }
+    if (!currentDate) {     
+      currentDate = new Date();
+      currentDate = format(currentDate, 'yyyy-MM-dd');
+    }
+    if (!valueCompleted) {
+      valueCompleted = 1;
+    }
+    const res = await fetch(`${BACKEND_URL}/api/habits/2/complete/${habitId}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        completionDate: dateCompleted,
+        currentDate,
+        valueCompleted
+      }),
+      headers: {
+        'Authorization': `Bearer ${user.token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    console.log("response from toggleComplete2: ", res)
+    const json = await res.json()
+    console.log("json from toggleComplete2: ", json)
+
+    if (!res.ok) {
+      return { success: false, error: json.error }
+    }
+    
+    dispatch({ type: 'TOGGLE_COMPLETE', payload: json})
+    console.log("toggle complete json habit 2: ", json.habit)
+
+    return { success: true, habit: json.habit }
+  }
+
   const toggleComplete = async (habitId, dateCompleted) => {
     if (!user) {
       return { success: false, error: 'You must be logged in' }
@@ -247,6 +377,7 @@ export const useHabits = () => {
     }
     
     dispatch({ type: 'TOGGLE_COMPLETE', payload: json.habit})
+    console.log("toggle complete json habit: ", json.habit)
     return { success: true, habit: json.habit }
   }
 
@@ -298,6 +429,6 @@ export const useHabits = () => {
   }
 
   return { 
-    getSyncedHabits, syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit,
-    updateHabit, deleteHabit, toggleComplete }
+    getSyncedHabits, syncHabit, getHabit, getHabits, getHabits2, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, createHabit2, deleteHabit2,
+    updateHabit, deleteHabit, toggleComplete, toggleComplete2 }
 }

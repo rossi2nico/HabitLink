@@ -469,7 +469,6 @@ const deleteHabit = async (req, res) => {
         })
     }
     catch (error) {
-        console.error("DELETE habit error:", error); 
         return res.status(400).json({ error: error.message })
     }
 }

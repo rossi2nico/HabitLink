@@ -943,6 +943,16 @@ circle {
   transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+.calendar circle {
+  fill: none;
+  stroke: url(#GradientColor);
+  stroke-dasharray: 107; /* Circumference for r=18: 2 * π * 18 ≈ 113 */
+  stroke-dashoffset: 107; /* Start invisible */
+  stroke-width: 4px;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
 .completion-circle:hover:not(.completed) circle {
   stroke-dashoffset: 0;
 }
@@ -1008,7 +1018,7 @@ circle {
 
 .completion-circle-calendar {
   height: 100%;
-  width: 35px;
+  width: 36px;
   position: relative;
   display: flex;
   align-items: center;
@@ -1023,9 +1033,9 @@ circle {
 }
 
 .circle-ring-calendar {
-  background-color: rgb(107, 107, 107);
-  height: 34px;
-  width: 34px;
+  background-color: rgb(44, 44, 44);
+  height: 36px;
+  width: 36px;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -1034,8 +1044,8 @@ circle {
 
 .inner-circle-calendar {
   background: #171717;
-  height: 30px;
-  width: 30px;
+  height: 28px;
+  width: 28px;
   border-radius: 100%;
   display: flex;
   justify-content: center;

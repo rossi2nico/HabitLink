@@ -1,11 +1,11 @@
 import { Navigation } from "../components/Navigation"
-import { LineGraphHabits } from "../components/LineGraphHabits"
+import { LineGraphHabits2 } from "../components/LineGraphHabits2"
 import { useHabits } from "../hooks/useHabits"
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useEffect } from "react"
 import { useFriends } from "../hooks/useFriends"
-import { Habit } from "../components/Habit"
+import { Habit } from "../components/Habit2"
 import github from '../assets/github.png'
 import { Calendar } from "../components/Calendar"
 import create from '../assets/create.png'
@@ -44,7 +44,7 @@ const Habits = () => {
             </div>
             <div className = "habits-graph-div">
               <h3>Habit Completions (%)</h3>
-              <LineGraphHabits habits = { habits }></LineGraphHabits>
+              <LineGraphHabits2 habits = { habits }></LineGraphHabits2>
             </div>
           </div>
           <div className = "home-mid">
@@ -63,13 +63,6 @@ const Habits = () => {
                 />
               ))}
             </div>
-            {/* <div className = "home-calendar">
-              {habits && habits.length > 0 && (
-                <>
-                  <Calendar habit = { habits[0] }></Calendar>
-                </>
-            )}
-            </div> */}
           </div>
         </div>
       </>

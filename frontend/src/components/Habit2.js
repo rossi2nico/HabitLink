@@ -18,9 +18,6 @@ export const Habit = ({ habit }) => {
   let today = new Date()
   today = format(today, 'yyyy-MM-dd')
   const isComplete = habit.completions[today] > 0
-  console.log("today: ", today)
-  console.log("isComplete: ", isComplete)
-  console.log("habit id", habit._id)
 
   const isSynced = () => {
     if (!user || !user._id) return false;

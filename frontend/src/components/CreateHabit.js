@@ -9,13 +9,13 @@ export const CreateHabit = () => {
   const [description, setDescription] = useState('')
   const [privacy, setPrivacy] = useState(0)
   const [localError, setLocalError] = useState('')
-  const { createHabit, isLoading, error } = useHabits()
+  const { createHabit, isLoading, error, createHabit2 } = useHabits()
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    const res = await createHabit(name, description, 7, privacy)
+
+    const res = await createHabit2(name, privacy)
     if (!res.success) {
       setLocalError(res.error)
       return

@@ -2,25 +2,27 @@ import { LineWeekly } from "./LineWeekly"
 import { BarGraphDaily } from "./BarGraphDaily"
 import { useHabits } from "../hooks/useHabits"
 import { useState, useEffect } from 'react'
-import { Calendar } from "./Calendar"
+import { Calendar2 } from "./Calendar2"
 import { useParams } from 'react-router-dom'
 import { Navigation } from "./Navigation"
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 import sync from '../assets/sync4.png'
 import { UserCard } from "./UserCard"
-import { HabitMastery } from "./HabitMastery"
+import { format } from "date-fns"
+import { MasteryGraph } from "./MasteryGraph"
 
 export const AdvancedHabit = () => {
 
   const { habits } = useHabitsContext()
-  const { getSyncedHabits, getHabit } = useHabits()
+  const { getLinkedHabits, getHabit2 } = useHabits()
   const [syncedHabits, setSyncedHabits] = useState([])
   const [habit, setHabit] = useState(null)
   const [error, setError] = useState("")
   const [syncedError, setSyncedError] = useState("")
   const { user } = useAuthContext()
   const { habitId } = useParams()  
+  const currentDate = format(new Date(), 'yyyy-MM-dd');
 
   useEffect(() => {
     if (!user) {
@@ -35,14 +37,15 @@ export const AdvancedHabit = () => {
     else {
       const fetchHabit = async () => {
         try {
-          const res = await getHabit(habitId)
+          const res = await getHabit2(habitId, currentDate)
+          console.log("fetched advanced habit: ", res)
           if (res.success == true) {
             setHabit(res.habit)
           } else {
             setError(res.error)
           }
         } catch (err) {
-          setError(err)
+          setError(err.message || String(err))
         }
       }
       fetchHabit()
@@ -55,7 +58,7 @@ export const AdvancedHabit = () => {
 
     const fetchSynced = async () => {
       try {
-        const res = await getSyncedHabits(habit._id)
+        const res = await getLinkedHabits(habit._id)
         if (res.success == false) {
           setSyncedError(res.error)
         }
@@ -72,7 +75,6 @@ export const AdvancedHabit = () => {
         console.error(error.message)
       }
     }
-
     fetchSynced()
   }, [habit])
 
@@ -111,12 +113,6 @@ export const AdvancedHabit = () => {
         { habit.description && habit.description != "" && (
           <h3 style = {{color:"#afafafff", marginTop:"-5px"}}> { habit.description } </h3>
         )}
-        
-        
-        
-        {/* <div className = "underline"></div> */}
-        {/* <div className = "user-habits"> */}
-          {/* <h3> Completion Stats</h3> */}
           <p>
             {habit.streak === habit.maxStreak
               ? <>🔥 Current streak: {habit.streak} days <br/>  🏹 Currently on Longest streak!</>
@@ -134,9 +130,8 @@ export const AdvancedHabit = () => {
 
         <div className = "completion-graph">
           <h3> Habit Mastery</h3>
-
           <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
-            <LineWeekly habit = { habit }/>
+            <MasteryGraph habit = { habit }/>
           </div>
         </div>
         
@@ -160,7 +155,7 @@ export const AdvancedHabit = () => {
 
         <div className = "calendar-container">
           {/* <h3> Calendar </h3> */}
-          <Calendar habit = {habit}></Calendar>
+          <Calendar2 habit = {habit}></Calendar2>
 
         </div>
         

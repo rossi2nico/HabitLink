@@ -238,6 +238,32 @@ const syncHabit = async (req, res) => {
     }
 }
 
+const getFriendHabits = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { currentDate } = req.query;
+        const user = await User.findById(userId)
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        const friendIds = user.friends
+        const friendHabits = await Habit2.find({
+            userId: {$in: friendIds },
+            privacy: { $gt: 0 }
+        }).sort( { createdAt: -1 })
+
+        for (const habit of friendHabits) {
+            if (habit.streakLastUpdated != currentDate) {
+                await calculateStreak(habit);
+            }
+        }
+        
+        return res.status(200).json(friendHabits);
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 const getLinkedHabits = async (req, res) => {
     
     const { habitId } = req.params;
@@ -263,6 +289,7 @@ module.exports = {
     syncHabit, 
     getHabit,
     getLinkedHabits,
+    getFriendHabits,
     // getHabit, getPublicHabits, getTargetHabits, getFriendHabits, getSyncedHabits,
     toggleComplete
 }

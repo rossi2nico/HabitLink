@@ -105,12 +105,11 @@ export const useHabits = () => {
   //   return { success: true, habits: json }
   // }
 
-  const getFriendHabits = async () => {
-    if (!user) {
-      return { success: false, error: 'You must be logged in' }
-    }
+  const getFriendHabits = async (currentDate) => {
+    if (!user) return { success: false, error: 'You must be logged in' }
+    if (!currentDate) currentDate = format(new Date(), 'yyyy-MM-dd')
 
-    const res = await fetch(`${BACKEND_URL}/api/habits/friends/`, {
+    const res = await fetch(`${BACKEND_URL}/api/habits/friends?currentDate=${currentDate}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

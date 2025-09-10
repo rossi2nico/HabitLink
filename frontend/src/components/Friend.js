@@ -21,14 +21,13 @@ export const Friend = ({ friend }) => {
   }, [user])
 
   const sharedHabits = friendHabits.filter(habit => {
-    return habit.username === friend.username;
+    return habit.userId === friend._id;
   });
 
   const handleRemove = () => {
     removeFriend(friend._id);
   };
 
-  console.log("fh", friendHabits)
   return (
     <div className="friend-card">
       <div className = 'friend-info'>

@@ -17,7 +17,7 @@ const {
   toggleComplete,
 } = require('../controllers/habitController');
 
-const { getHabit: getHabit2, syncHabit: syncHabit2, createHabit: createHabit2, toggleComplete: toggleComplete2, deleteHabit: deleteHabit2, getHabits: getHabits2, getLinkedHabits } = require('../controllers/newHabitController')
+const { getHabit: getHabit2, syncHabit: syncHabit2, createHabit: createHabit2, toggleComplete: toggleComplete2, deleteHabit: deleteHabit2, getHabits: getHabits2, getLinkedHabits, getFriendHabits: getFriendHabits2 } = require('../controllers/newHabitController')
 
 // Route Handlers: handle requests with habitController
 
@@ -29,11 +29,12 @@ router.get('/2/:habitId', getHabit2) //         const { currentDate } = req.quer
 router.get('/2/', getHabits2) //         const { currentDate } = req.query
 router.post('/2/sync', syncHabit2);
 router.get('/2/linkedHabits/:habitId', getLinkedHabits);
+// router.get('/2/friends', getFriendHabits2)
 
 
 router.get('/', getHabits);
 router.get('/public', getPublicHabits);
-router.get('/friends', getFriendHabits);
+router.get('/friends', getFriendHabits2);
 router.get('/public/:targetUserId', getTargetHabits);
 router.get('/:habitId', getHabit);
 router.get('/syncedHabits/:habitId', getSyncedHabits);

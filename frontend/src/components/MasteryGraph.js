@@ -28,15 +28,14 @@ export const MasteryGraph = ({ habit }) => {
       }
     }
     fetchData()
-    console.log("linkedHabits", linkedHabits)
   }, [user])
 
   const currentDate = new Date()
-  // const today = format(currentDate, 'yyyy-MM-dd')
+  currentDate.setHours(0, 0, 0 , 0)
     
   const masteryData = []
   const startDate = habit.startDate
-  let checkDate = new Date(startDate)
+  let checkDate = new Date(startDate + "T00:00:00") // Forces local timezone
   let mastery = 0, gain = 0, decay = 0
 
 

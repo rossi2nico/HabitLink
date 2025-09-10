@@ -9,8 +9,8 @@ import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 import sync from '../assets/sync4.png'
 import { UserCard } from "./UserCard"
-import { HabitMastery } from "./HabitMastery"
 import { format } from "date-fns"
+import { MasteryGraph } from "./MasteryGraph"
 
 export const AdvancedHabit = () => {
 
@@ -130,9 +130,8 @@ export const AdvancedHabit = () => {
 
         <div className = "completion-graph">
           <h3> Habit Mastery</h3>
-
           <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
-            {/* <LineWeekly habit = { habit }/> */}
+            <MasteryGraph habit = { habit }/>
           </div>
         </div>
         

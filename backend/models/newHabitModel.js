@@ -15,6 +15,7 @@ const newHabitSchema = new Schema({
     ownerUsername: { type: String, required: true }
   }],
   /* Calculation features */
+  mastery: { type: Number, default: 0 },
   streak: { type: Number, default: 0 },
   maxStreak: { type: Number, default: 0 },
   streakLastUpdated: { type: String, default: null }, // "Storing local date string 2025-09-02"

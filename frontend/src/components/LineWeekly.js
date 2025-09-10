@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react'
 export const LineWeekly = ({ habit }) => {
   const MS_PER_DAY = 1000 * 60 * 60 * 24;
   
-  const { getSyncedHabits } = useHabits()
-  const [syncedHabits, setSyncedHabits] = useState([])
+  const { getLinkedHabits } = useHabits()
+  const [linkedHabits, setlinkedHabits] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -17,16 +17,12 @@ export const LineWeekly = ({ habit }) => {
     const fetchData = async () => {
       try {
         setIsLoading(true)
-        const res = await getSyncedHabits(habit._id)
+        const res = await getLinkedHabits(habit._id)
 
-        if (res.success == false) {
-          setError(res.error)
-        }
-        else {
-          setSyncedHabits(res.syncedHabits)
-        }
-  
-      } catch (error) {
+        if (res.success == false) setError(res.error)
+        else setlinkedHabits(res.linkedHabits)
+      } 
+      catch (error) {
         console.error(error.message)
       } finally {
         setIsLoading(false)
@@ -40,15 +36,17 @@ export const LineWeekly = ({ habit }) => {
     return <div>Loading chart...</div>
   }
 
-  const startDate = new Date(habit.createdAt);
-  startDate.setHours(0, 0, 0, 0);
+  const startDate = habit.startDate
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   const firstWeekStart = new Date(startDate);
-  firstWeekStart.setDate(startDate.getDate() - startDate.getDay()); // Go back to Sunday
+  console.log("first week start:", firstWeekStart)
+  console.log("startDate", startDate)
   
   const totalDays = Math.floor((today - firstWeekStart) / MS_PER_DAY);
+  console.log("td:", totalDays)
   const totalWeeks = Math.ceil(totalDays / 7);
   
   if (totalWeeks < 2) {
@@ -104,8 +102,8 @@ export const LineWeekly = ({ habit }) => {
     
     weekData[habit.username] = selfWeeklyPercentage;
     
-    for (const syncedHabit of syncedHabits) {
-      const completions = syncedHabit?.habitId?.completions || [];
+    for (const linkedHabit of linkedHabits) {
+      const completions = linkedHabit?.habitId?.completions || [];
       let completedDaysInWeek = 0;
       
       for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
@@ -133,7 +131,7 @@ export const LineWeekly = ({ habit }) => {
       const weeklyPercentage = totalDaysInWeek > 0 ? 
         Math.round((completedDaysInWeek / totalDaysInWeek) * 100) : 0;
       
-      weekData[syncedHabit.username] = weeklyPercentage;
+      weekData[linkedHabit.username] = weeklyPercentage;
     }
     
     weeklyStats.push(weekData);
@@ -163,12 +161,12 @@ export const LineWeekly = ({ habit }) => {
           </linearGradient>
         </defs>
 
-        {syncedHabits.map((syncedHabit) => (
+        {linkedHabits.map((linkedHabit) => (
           <Line
-            key={syncedHabit.habitId.username}
+            key={linkedHabit.habitId.username}
             type="monotone"
-            dataKey={syncedHabit.habitId.username}
-            name={syncedHabit.habitId.username}
+            dataKey={linkedHabit.habitId.username}
+            name={linkedHabit.habitId.username}
             strokeWidth={2}
             stroke="#c4f6ff21"
             animationBegin={2000}

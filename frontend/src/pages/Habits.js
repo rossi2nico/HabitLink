@@ -7,7 +7,6 @@ import { useEffect } from "react"
 import { useFriends } from "../hooks/useFriends"
 import { Habit } from "../components/Habit2"
 import github from '../assets/github.png'
-import { Calendar } from "../components/Calendar"
 import create from '../assets/create.png'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,7 +15,7 @@ const Habits = () => {
 
   const { user } = useAuthContext()
   const { habits, friendHabits, publicHabits } = useHabitsContext()
-  const { getHabits, getPublicHabits, getFriendHabits } = useHabits()
+  const { getHabits } = useHabits()
   const { getFriends } = useFriends();
   const navigate = useNavigate();
 
@@ -26,8 +25,6 @@ const Habits = () => {
       }
       getFriends(user._id);
       getHabits()
-      getPublicHabits()
-      getFriendHabits()
     }, [user])
 
     return (

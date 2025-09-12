@@ -1,5 +1,3 @@
-import { LineWeekly } from "./LineWeekly"
-import { BarGraphDaily } from "./BarGraphDaily"
 import { useHabits } from "../hooks/useHabits"
 import { useState, useEffect } from 'react'
 import { Calendar2 } from "./Calendar2"

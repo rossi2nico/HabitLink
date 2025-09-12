@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const Habit2 = require('../models/newHabitModel')
-const User = require('../models/userModel')
+const User = require('../models/userModel');
 
 const createHabit = async (req, res) => {
   try {
@@ -88,7 +88,7 @@ const getHabit = async (req, res) => {
        res.status(200).json(habit)
        
    } catch (error) {
-       res.status(500).json({error: 'Server error'})
+       res.status(400).json({ error: error.message })
    }
 }
 
@@ -246,22 +246,41 @@ const getFriendHabits = async (req, res) => {
         if (!user) return res.status(404).json({ error: 'User not found' });
 
         const friendIds = user.friends
+
         const friendHabits = await Habit2.find({
             userId: {$in: friendIds },
             privacy: { $gt: 0 }
         }).sort( { createdAt: -1 })
 
-        for (const habit of friendHabits) {
-            if (habit.streakLastUpdated != currentDate) {
-                await calculateStreak(habit);
-            }
-        }
+        /* Save this for later if needed. Local times may conflict ensure later.*/
+
+        // for (const habit of friendHabits) {
+        //     if (habit.streakLastUpdated != currentDate) {
+        //         await calculateStreak(habit, currentDate);
+        //     }
+        // }
         
         return res.status(200).json(friendHabits);
     }
     catch (error) {
         res.status(400).json({ error: error.message })
     }
+}
+
+// not yet tested
+const getPublicHabits = async (req, res) => {
+    try {
+        const habits = await Habit2.find({ privacy: 2 }).sort({ createdAt: -1 })
+
+        // for (const habit of habits) {
+        //     await calculateStreak(habit) // not sure about this .. maybe don't show streak because local time wil take over and other issues
+        // }
+
+        return res.status(200).json(habits)
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+
 }
 
 const getLinkedHabits = async (req, res) => {
@@ -283,13 +302,27 @@ const getLinkedHabits = async (req, res) => {
     }
 }
 
-module.exports = {
-    createHabit, deleteHabit,
-    getHabits,
-    syncHabit, 
-    getHabit,
-    getLinkedHabits,
-    getFriendHabits,
-    // getHabit, getPublicHabits, getTargetHabits, getFriendHabits, getSyncedHabits,
-    toggleComplete
+// Not yet tested
+const getTargetHabits = async (req, res) => {
+    const userId = req.user._id
+    const targetUserId = req.params.targetUserId
+
+    try {
+        const targetUser = await User.findById(targetUserId)
+        const areFriends = targetUser.friends.some(
+            f => f.toString() === userId.toString()
+        )
+        if (areFriends) {
+            // Find habits that are either public or private
+            const habits = await Habit2.find({ userId: targetUserId, privacy: { $gt: 0 }}).sort( { createdAt: -1 })
+            return res.status(200).json(habits)
+        }
+        const habits = await LineGraphHabits2.find({ userId: targetUserId, privacy: 2 }).sort({ createdAt: -1 })
+        return res.status(200).json(habits)
+    }
+    catch (error) {
+        res.status(400).json({error: error.message })
+    }
 }
+
+module.exports = { createHabit, deleteHabit, getHabits, syncHabit, getHabit, getLinkedHabits, getFriendHabits, getPublicHabits, getTargetHabits, toggleComplete }

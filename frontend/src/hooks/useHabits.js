@@ -120,9 +120,11 @@ export const useHabits = () => {
     const json = await res.json()
     
     if (!res.ok) {
+          console.log("not through now")
+
       return { success: false, error: json.error }
     }
-    
+    console.log("went through now")
     dispatch({ type: 'SET_FRIEND_HABITS', payload: json })
     return { success: true, habits: json }
   }

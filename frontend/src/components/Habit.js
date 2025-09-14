@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
-import { EditHabitForm } from './EditHabitForm'
 import { Link } from 'react-router-dom';
 import link from '../assets/sync4.png'
 

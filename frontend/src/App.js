@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
-import Friends from './pages/Friends';
+import NewFriends from './pages/NewFriends';
 import Habits from './pages/Habits';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -53,7 +53,7 @@ function App() {
           />
           <Route
             path="/friends"
-            element={user ? <Friends /> : <Navigate to="/login" replace />}
+            element={user ? <NewFriends /> : <Navigate to="/login" replace />}
           />
         </Routes>
       </div>

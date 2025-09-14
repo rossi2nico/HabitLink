@@ -189,7 +189,7 @@ h1, h2, h3, h4, p, span {
 .intro {
   width: 280px;
   min-width: 280px;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #171717;
   height: 225px;
   padding: 15px;
@@ -216,7 +216,7 @@ h1, h2, h3, h4, p, span {
 .habits-graph-div {
   width: 700px;
   /* border: 2px dashed lightcoral; */
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #171717;
   height: 225px;
   padding-top: 15px;
@@ -501,7 +501,6 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.625rem;
   color: #ffffff;
 }
 
@@ -682,9 +681,13 @@ h1 {
   
 
 .habit-link {
-  width: 1.25rem;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
-  padding-right: 0.625rem;
+  margin-top: 8px;
+  margin-right: 3px;
+  margin-left: 5px;
+  /* border: 2px solid lightblue; */
 }
 
 .habit-delete {
@@ -777,7 +780,8 @@ h1 {
 }
 
 .friends-page {
-  display: flex; align-items: center; justify-content: center;
+  /* border: 1px solid lightcoral; */
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
   width: 100%;
 }
 
@@ -1277,8 +1281,16 @@ circle {
 }
 
 .friend-habits {
-    border: 2px dashed lightcyan;
+  width: 700px;
+  background: #161616;
+  border-radius: 8px;
+  padding-bottom: 25px;
+  align-self: flex-start;
+  margin: 65px 25px 0 25px;
+
+  /* border: 2px dashed lightcyan; */
 }
+
 
 .friends-left {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
@@ -1289,6 +1301,7 @@ circle {
 .friend-info {
   /* border: 1px dashed lightblue; */
   display: flex; flex-direction: column; align-items: flex-start;
+  margin-left: 5px;
 }
 
 .friend-shared-habits {
@@ -1298,14 +1311,8 @@ circle {
   /* border: 1px dashed yellow; */
 }
 
-.friend-card {
-  /* border: 1px solid #272727; */
-  padding: 6px;
-  background-color: #212121;
-  border-radius: 5px;
-  /* width: 300px; */
-  margin-bottom: 0px;
-  /* height: 62px; */
+.friend-card img {
+  border-radius: 50%;
 }
 
 .friend-card:hover {
@@ -1343,14 +1350,26 @@ circle {
   margin-left: 10px;
 }
 
+.friend-card {
+  /* border: 1px solid #757575; */
+  padding-top: 8px;
+  padding-left: 8px;
+  background-color: #111111;
+  border-radius: 8px;
+  width: 375px;
+  margin-bottom: 0px;
+  display: flex;
+}
+
 .friends-list {
   /* border: 2px dashed lightblue; */
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   border-radius: 14px;
-  /* background-color: #171717; */
+  background-color: #161616;
   margin-top: 25px;
-  padding: 25px;
-  width: 700px;
+  padding: 5px;
+  padding-bottom: 15px;
+  width: 400px;
 }
 
 .friends-list h2 {

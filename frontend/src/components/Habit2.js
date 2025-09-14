@@ -56,7 +56,7 @@ export const Habit = ({ habit }) => {
         <div className = "habit-mid">
               <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>
           {!usersHabit && (
-            <p className = "habit-username"> from <strong>{ habit.username }</strong> 
+            <p className = "habit-username"> from <strong>{ habit.userId }</strong> 
               {syncedUsers.length > 0 &&
                 (syncedUsers.length === 1
                   ? ' • 1 user'
@@ -79,7 +79,6 @@ export const Habit = ({ habit }) => {
           )}
           </div>
           <div className = "habit-right">
-            <p>{habit.startDate}</p>
             <div className = "habit-buttons">
               <Link to={`/habits/${habit._id}`} className = "view-analytics">View Stats</Link>
             </div>

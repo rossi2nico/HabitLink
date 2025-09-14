@@ -5,7 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useEffect, useState } from "react";
 import { useFriendsContext } from "../hooks/useFriendsContext";
 import { useHabitsContext } from "../hooks/useHabitsContext";
-import { Habit } from "../components/Habit";
+import { Habit } from "../components/Habit2";
 import { Friend } from "../components/Friend";
 import { SearchUser } from "../components/SearchUser";
 
@@ -36,7 +36,38 @@ const NewFriends = () => {
             <h3>Community & Friends</h3>
             <p>Sync with friend habits to stay accountable and grow together!</p>
           </div>
-          {/* <div className = 'friends-search'>
+        </div>
+        <div className="friend-habits">
+          <h2>Friend Habits </h2>
+          {!friendHabits || friendHabits.length === 0 && (
+            <p>No friend habits!</p>
+          )}
+          {friendHabits && friendHabits.length > 0 && 
+            friendHabits.map(friendHabit => (
+              <Habit key = {friendHabit._id} habit = { friendHabit } />
+            ))
+          }
+        </div>
+        {/* <div className = "friends-list"> 
+          <h2>Your Friends:</h2>
+          {friends && friends.length > 0 ? (
+            <div className = "friends">
+              {friends.map(friend => (
+                <Friend key = { friend._id } friend = { friend }></Friend>
+              ))}
+            </div>
+          ) : (
+            <p style = {{fontSize:'15px', color: '#ff4775ff', fontWeight:'500'}}>Friend list is empty!</p>
+          )}
+        </div> */}
+      </div>
+    </>
+  )
+}
+
+export default NewFriends
+
+{/* <div className = 'friends-search'>
             <label><h3> Search All Users </h3></label>
     
             <input 
@@ -65,24 +96,3 @@ const NewFriends = () => {
               return <p key = { habit.id }> { habit.name } </p>
             })}
           </div> */}
-
-        </div>
-        <div className = "friends-list"> {/* change this later */}
-            <h2>Your Friends:</h2>
-  
-            {friends && friends.length > 0 ? (
-              <div className = "friends">
-                {friends.map(friend => (
-                  <Friend key = { friend._id } friend = { friend }></Friend>
-                ))}
-              </div>
-            ) : (
-              <p style = {{fontSize:'15px', color: '#ff4775ff', fontWeight:'500'}}>Friend list is empty!</p>
-            )}
-          </div>
-      </div>
-    </>
-  )
-}
-
-export default NewFriends

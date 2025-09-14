@@ -426,7 +426,7 @@ const getPublicHabits = async (req, res) => {
         const habits = await Habit.find({ privacy: 2 }).sort({ createdAt: -1 })
 
         for (const habit of habits) {
-            await calculateStreak(habit)
+            await calculateStreak(habit) // not sure about this ..
         }
 
         return res.status(200).json(habits)

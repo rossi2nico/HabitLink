@@ -40,7 +40,7 @@ export const Calendar2 = ({ habit }) => {
       <header>
         {/* <p> &lt; user &gt;</p> */} 
         <button className="calendar-btn prev" onClick={() => prevMonth()}>&lt;</button>
-        <h3 className="calendar-title">{format(firstDayCurrentMonth, 'MMMM yyyy')}</h3>
+        <h1 className="calendar-title">{format(firstDayCurrentMonth, 'MMMM yyyy')}</h1>
         <button className="calendar-btn next" onClick={() => nextMonth()}>&gt;</button>
 
       </header>

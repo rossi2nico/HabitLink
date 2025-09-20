@@ -187,7 +187,7 @@ h1, h2, h3, h4, p, span {
 }
 
 .intro {
-  width: 280px;
+  width: 400px;
   min-width: 280px;
   border-radius: 8px;
   background-color: #171717;
@@ -510,6 +510,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 25px;
+  width: 100%;
   /* flex-direction: column; */
   justify-content: center;
   /* align-items: center; */
@@ -518,10 +519,9 @@ h1 {
 
 .synced-stats {
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
   flex-wrap: wrap;
   gap: 0px;
-  margin-left: 95px;
   /* border: 2px solid red; */
 }
 
@@ -531,6 +531,7 @@ h1 {
 
 .calendar {
   /* border: 2px solid red; */
+  padding-bottom: 20px;
   height: 400px;
   width: 325px;
   display: flex;
@@ -558,7 +559,7 @@ h1 {
 }
 
 .advanced-habit {
-  width: 100vw;
+  width: 100%;
   /* height: 100%; */
   background-color: #0f0f0f;
   color: rgb(218, 218, 218);
@@ -1375,9 +1376,9 @@ circle {
 }
 
 .habit-info {
-  /* background-color: #161616;  */
-  border: 2px solid #181818;
-  padding: 15px; border-radius: 10px; display: flex; flex-direction: column; width: 320px; 
+  background-color: #161616; 
+  /* border: 2px solid #181818; */
+  padding: 15px; border-radius: 6px; display: flex; flex-direction: column; width: 320px; 
   height: 250px;
 }
 
@@ -1394,19 +1395,21 @@ circle {
 }
 
 .habit-mastery {
-  border: 2px solid #181818;
+  /* border: 2px solid #181818; */
   padding-bottom: 10px; text-align: center; height: 270px; width: 700px;
-  /* background-color: #161616; */
-  border-radius: 10px;
+  background-color: #161616;
+  border-radius: 6px;
 }
 
 .idk {
-  width: 90vw;
-  height: 50px;
+  width: 100vw;
+  height: 100%;
+  padding-bottom: 50px;
   border-radius: 6px;
-  background-color: rgb(26, 26, 26); align-self: center; margin-top: 50px;
-  display: flex; align-items: center;
-  justify-content: space-between;
+  /* background-color: rgb(36, 36, 36); */
+  align-self: center; margin-top: 50px;
+  display: flex; align-items: center; flex-wrap: wrap;
+  justify-content: center;
 }
 
 .idk button {
@@ -1419,4 +1422,39 @@ circle {
   font-family: 'Manrope';
   transition: 0.3s ease;
   margin: 0px 7px 0px 7px;
+}
+
+.advanced-stats {
+  /* border: 3px solid lightseagreen; */
+  /* border: 4px solid #181818; border-radius: 6px; */
+  /* height: 150%; */
+  width: 250px;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.advanced-stats p {
+  font-size: 45px;
+  margin: 0;
+  margin-bottom: -10px;
+  margin-top: 10px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: white;
+}
+
+.advanced-stats h4 {
+  color: #cacaca;
+}
+
+.calendar header h1{
+  font-size: 20px;
+  color: whitesmoke;
+  font-weight: 700;
+}
+
+.login-page {
+  border: 2px solid rgba(0, 0, 0, 0);
+  /* width: 100%; */
+  margin: 0;
+  padding: 0;
 }

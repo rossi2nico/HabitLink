@@ -15,12 +15,10 @@ const Signup = () => {
   }
 
   return (
-    <>
+    <div className = "login-page">
       <Navigation></Navigation>
       <form className = "login" onSubmit = {handleSubmit}>
         <h3>Sign up for HabitLink</h3>
-
-        {/* <label>Username:</label> */}
         <input
             type = "username"
             name="username"
@@ -28,23 +26,20 @@ const Signup = () => {
             onChange={(e) => setUsername(e.target.value)}
             value = { username }
         />
-        
-        {/* <label>Password:</label> */}
-        <input
+                <input
             type = "password"
             name="password"
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
             value = { password }
         />
-
         <button style = {{fontSize:"14px", fontWeight:"700", fontFamily:"Manrope"}}type="submit" disabled ={ isLoading }>Sign up</button>
         {error && <div className='error'>{error}</div>}
         <p style = {{marginTop:"5px", fontSize:"15px", color:"#575757ff"}}>Already have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/login"><strong>Sign in</strong></Link></p>
 
       </form>
         
-    </>
+    </div>
   )
 }
 export default Signup

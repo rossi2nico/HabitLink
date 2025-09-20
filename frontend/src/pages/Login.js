@@ -18,12 +18,10 @@ const Login = () => {
     }
 
     return (
-        <>
+        <div className = "login-page">
             <Navigation></Navigation>
             <form className = "login" onSubmit = {handleSubmit}>
                 <h3>Log in to HabitLink</h3>
-
-                {/* <label>Username:</label> */}
                 <input
                     type = "username"
                     name="username"
@@ -31,7 +29,6 @@ const Login = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     value = {username}
                 />
-                {/* <label>Password:</label> */}
                 <input
                     type = "password"
                     name="password"
@@ -45,9 +42,7 @@ const Login = () => {
                 <p style = {{fontSize:"15px", color:"#575757ff"}}>Don't have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/signup"><strong>Sign up</strong></Link></p>
 
             </form>
-            {/* <p style = {{fontSize:"15px", color:"#575757ff"}}>Don't have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/signup"><strong>Sign up</strong></Link></p> */}
-
-        </>
+        </div>
     )
 }
 

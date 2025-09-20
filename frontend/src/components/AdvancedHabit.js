@@ -101,14 +101,36 @@ export const AdvancedHabit = () => {
     <div className="advanced-habit">
       <Navigation></Navigation>
       <div className = "advanced-habit-info">
-        <h1 style = {{textAlign:'center', fontWeight: '700', marginTop: '-5px'}}> { habit.name } <p style = {{textAlign:'center', marginBottom:'-5px'}}> 
+        <div className = "habit-info">
+          <h1 style = {{ fontWeight: '700', marginTop: '-5px'}}> { habit.name } </h1>
+          <p className= "habit-privacy" > { habit.privacy === 0
+            ? "Private"
+            : habit.privacy === 1
+            ? "Friends-only"
+            : "Public" }
+          </p>
+          <p style = {{margin: 0}}> This is where the description will be. Need to succeed.</p>
+          {/* <p>
+            {habit.streak === habit.maxStreak
+              ? <>🔥 Current streak: {habit.streak} days <br/>  🏹 Currently on Longest streak!</>
+              : <>🔥 Current streak: {habit.streak} days <br/> 🏹 Longest streak: {habit.maxStreak} days</>}
+          </p>
+          <p>Completed: 356/412 days</p> */}
+        </div>
+        <div className = "habit-mastery">
+          <h3> Habit Mastery</h3>
+          <div style = {{marginTop:"30px", height:"220px", width:"650px", backgroundColor:"transparent"}}>
+            <MasteryGraph habit = { habit }/>
+          </div>
+        </div>
+        {/* <h1 style = {{textAlign:'center', fontWeight: '700', marginTop: '-5px'}}> { habit.name } <p style = {{textAlign:'center', marginBottom:'-5px'}}> 
           {habit.privacy === 0
             ? "Private Habit"
             : habit.privacy === 1
             ? "Friends-only Habit"
             : "Public Habit"}
-        </p></h1>
-        { habit.description && habit.description != "" && (
+        </p></h1> */}
+        {/* { habit.description && habit.description != "" && (
           <h3 style = {{color:"#afafafff", marginTop:"-5px"}}> { habit.description } </h3>
         )}
           <p>
@@ -119,20 +141,30 @@ export const AdvancedHabit = () => {
           <p> Completed { habit.totalCompletions } out of { habit.potentialCompletions} total days!
             <br/>
             🚀 Overall { percentCompleted }% completion!
-          </p>
+          </p> */}
         {/* </div> */}
-        {/* <div className = "underline"></div> */}
-
       </div>
+
+      {/* <div className = "idk">
+        <button>View Previous Habit</button>
+        <h1>Linked Statistics</h1>
+        <button>View Next Habit</button>
+      </div> */}
+      
       <div className = "synced-stats" style = {{marginTop: "50px"}}>
 
-        <div className = "completion-graph">
+        {/* <div className = "completion-graph">
           <h3> Habit Mastery</h3>
           <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
             <MasteryGraph habit = { habit }/>
           </div>
+        </div> */}
+
+        <div className = "calendar-container">
+          {/* <h3> Calendar </h3> */}
+          <Calendar2 habit = {habit}></Calendar2>
         </div>
-        
+
         <div className = "synced-users">
           <h3 style = {{marginBottom:'-10px', fontWeight:'600'}}> Linked Users </h3>
           { syncedHabits && syncedHabits.length == 1 ? (
@@ -149,12 +181,6 @@ export const AdvancedHabit = () => {
             // <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
             <UserCard habit = { h }></UserCard>
           ))}
-        </div>
-
-        <div className = "calendar-container">
-          {/* <h3> Calendar </h3> */}
-          <Calendar2 habit = {habit}></Calendar2>
-
         </div>
         
         {/* <div className = "completion-graph">

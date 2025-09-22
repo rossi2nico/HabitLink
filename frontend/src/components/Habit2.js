@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 
 export const Habit = ({ habit }) => {
 
-  const { getHabit, toggleComplete2, syncHabit, deleteHabit } = useHabits();
+  const { getHabit, toggleComplete2, syncHabit2, deleteHabit } = useHabits();
   const { user } = useAuthContext();
   const syncedUsers = habit.linkedHabits.map((syncedHabit) => syncedHabit.userId); 
 
@@ -31,8 +31,6 @@ export const Habit = ({ habit }) => {
   const synced = isSynced();
 
   const originalHabitId = habit._id;
-  const originalUserId = habit.userId;
-  const newPrivacy = 0;
 
   return (
     <div className = "habit">
@@ -88,11 +86,10 @@ export const Habit = ({ habit }) => {
             ) : (
               <>
                 {!synced ? (
-                  <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId, originalUserId, newPrivacy)}></img>
+                  <img className = "habit-link" src = {link} onClick = {() => syncHabit2(originalHabitId)}></img>
 
                 ) : (
-                  <img src = "https://www.citypng.com/public/uploads/preview/hd-white-tick-mark-icon-symbol-sign-transparent-png-701751695044638vkmy5iy1kv.png"
-                  style = {{ width:"15px", paddingRight:"12px", cursor:"Pointer"}}></img>
+                  <p style = {{ alignSelf:'center', justifySelf:'center', padding:'5px' }}>Linked</p>
                 )}
               </>
             )}

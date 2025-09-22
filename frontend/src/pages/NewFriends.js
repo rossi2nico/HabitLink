@@ -37,7 +37,7 @@ const NewFriends = () => {
         <div className = "friends-left">
           <div className = "intro">
             <h3>Community & Friends</h3>
-            <img style = {{ position:'absolute',zIndex:'5',width:'125px', margin: '-100px 0px 0px 290px'}} src = { emptyFriends }></img>   
+            {/* <img style = {{ position:'absolute',zIndex:'5',width:'125px', margin: '-100px 0px 0px 290px'}} src = { emptyFriends }></img>    */}
             <p>Sync with friend habits to stay accountable and grow together!</p>
           </div>
         </div>

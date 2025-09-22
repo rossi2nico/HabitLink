@@ -411,6 +411,47 @@ export const useHabits = () => {
     return { success: true, habit: json.habit }
   }
 
+  const syncHabit2 = async (originalHabitId, currentDate) => {
+    if (!user) return { success: false, error: 'You must be logged in' }
+    if (!currentDate) currentDate = format(new Date(), 'yyyy-MM-dd')
+    const res = await fetch (`${ BACKEND_URL }/api/habits/2/sync`, {
+      method: 'POST',
+      body: JSON.stringify({
+        originalHabitId,
+        currentDate
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
+      }
+    })
+
+    const json = await res.json()
+    if (!res.ok) return { success: false, error: json.error }
+    
+    const originalHabit = await fetch(`${BACKEND_URL}/api/habits/2/${ originalHabitId }?currentDate=${currentDate}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`,
+        'Access-Type': 'sync'
+      }
+    })
+    
+    const jsonOriginal = await originalHabit.json()
+    
+    if (!originalHabit.ok) {
+      return { success: false, error: jsonOriginal.error || "Failed to fetch original habit" }
+    }
+
+    dispatch({ type: 'SYNC_HABIT', payload: {
+      newHabit: json,
+      originalHabit: jsonOriginal
+    }})
+    
+    return { success: true, newHabit: json, originalHabit: jsonOriginal }
+  }
+
   const syncHabit = async (originalHabitId, originalUserId, newPrivacy) => {
     if (!user) {
       return { success: false, error: 'You must be logged in' }
@@ -459,6 +500,6 @@ export const useHabits = () => {
   }
 
   return { 
-    getSyncedHabits, syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, createHabit2, deleteHabit2, getHabit2, getLinkedHabits,
+    getSyncedHabits, syncHabit, getHabit, getHabits, getFriendHabits, getPublicHabits, getTargetHabits, createHabit, createHabit2, deleteHabit2, getHabit2, getLinkedHabits, syncHabit2,
     updateHabit, deleteHabit, toggleComplete, toggleComplete2 }
 }

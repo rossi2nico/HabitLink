@@ -8,6 +8,9 @@ import { useHabitsContext } from "../hooks/useHabitsContext";
 import { Habit } from "../components/Habit2";
 import { Friend } from "../components/Friend";
 import { SearchUser } from "../components/SearchUser";
+import emptyFriends from "../assets/charmander sit.png"
+import charmander from "../assets/charmander.png"
+
 
 const NewFriends = () => {
 
@@ -34,13 +37,15 @@ const NewFriends = () => {
         <div className = "friends-left">
           <div className = "intro">
             <h3>Community & Friends</h3>
+            <img style = {{ position:'absolute',zIndex:'5',width:'125px', margin: '-100px 0px 0px 290px'}} src = { emptyFriends }></img>   
             <p>Sync with friend habits to stay accountable and grow together!</p>
           </div>
         </div>
         <div className="friend-habits">
           <h2>Friend Habits </h2>
           {!friendHabits || friendHabits.length === 0 && (
-            <p>No friend habits!</p>
+            // <img style = {{ zIndex:'5',width:'250px', margin: '-15px 0px -80px 650px'}}src = { emptyFriends }></img>          )}
+            <p>The night feels a little empty.</p>
           )}
           {friendHabits && friendHabits.length > 0 && 
             friendHabits.map(friendHabit => (
@@ -48,6 +53,7 @@ const NewFriends = () => {
             ))
           }
         </div>
+
         {/* <div className = "friends-list"> 
           <h2>Your Friends:</h2>
           {friends && friends.length > 0 ? (

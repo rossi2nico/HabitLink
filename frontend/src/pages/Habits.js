@@ -27,6 +27,13 @@ const Habits = () => {
       getHabits()
     }, [user])
 
+  let linkedUsers = 0, totalCompletions = 0, maxStreak = 0;
+  for (const habit of habits) {
+    if (habit.maxStreak > maxStreak) maxStreak = habit.maxStreak;
+    linkedUsers += habit.linkedHabits.length;
+    totalCompletions += 2
+  }
+
     return (
       <>
         <Navigation></Navigation>
@@ -42,6 +49,28 @@ const Habits = () => {
             <div className = "habits-graph-div">
               <h3>Habit Completions (%)</h3>
               <LineGraphHabits2 habits = { habits }></LineGraphHabits2>
+            </div>
+          </div>
+          <div className = "idk">
+            <div className = "advanced-stats">
+              <p> { habits.length }</p>
+              <h4>HABITS</h4>
+            </div>
+            <div className = "advanced-stats">
+              <p> { maxStreak }</p>
+              <h4>MAX STREAK</h4>
+            </div>
+            <div className = "advanced-stats">
+              <p> { linkedUsers } </p>
+              <h4> LINKED USERS</h4>
+            </div>
+            <div className = "advanced-stats">
+              <p> 79%</p>
+              <h4> AVERAGE COMPLETION (%)</h4>
+            </div>
+            <div className = "advanced-stats">
+              <p> 193 </p>
+              <h4>TOTAL COMPLETIONS</h4>
             </div>
           </div>
           <div className = "home-mid">

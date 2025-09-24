@@ -9,6 +9,7 @@ import sync from '../assets/sync4.png'
 import { UserCard } from "./UserCard"
 import { format } from "date-fns"
 import { MasteryGraph } from "./MasteryGraph"
+import key from "../assets/key.png"
 
 export const AdvancedHabit = () => {
 
@@ -101,6 +102,27 @@ export const AdvancedHabit = () => {
     <div className="advanced-habit">
       <Navigation></Navigation>
       <div className = "advanced-habit-info">
+        <div className = "advanced-view">
+          <div className = "advanced-view-left">
+            <p>Prev</p>
+          </div>
+          <div className = "advanced-view-mid">
+            <div className = "advanced-view-title">
+              <h1> { habit.name }</h1>
+              <p className = "habit-privacy"> <img style = {{marginBottom:"-6px"}}src = { key }></img> { habit.privacy === 0
+              ? "Private"
+              : habit.privacy === 1
+              ? "Friends-only"
+              : "Public" }
+            </p>
+            </div>
+            <p> { habit.description } This is where the habit description will go.</p>
+          </div>
+          <div className = "advanced-view-right">
+            <p>right</p>
+          </div>
+          
+        </div>
         {/* <div className = "habit-info">
           <h1 style = {{ fontWeight: '700', marginTop: '-5px'}}> { habit.name } </h1>
           <p className= "habit-privacy" > { habit.privacy === 0

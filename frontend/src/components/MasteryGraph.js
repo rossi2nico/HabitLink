@@ -38,8 +38,6 @@ export const MasteryGraph = ({ habit }) => {
   let checkDate = new Date(startDate + "T00:00:00") // Forces local timezone
   let mastery = 0, gain = 0, decay = 0
 
-
-
   while (checkDate <= currentDate) {
     // add half of maxStreak at the end or something.
     const dateString = format(checkDate, 'yyyy-MM-dd')
@@ -57,8 +55,6 @@ export const MasteryGraph = ({ habit }) => {
     // Need to convert to UTC, add one day, then convert back to string
     checkDate = addDays(checkDate, 1)
   }
-
-  console.log("Mastery:", masteryData)
 
   return (
     <ResponsiveContainer width = "100%" height = "85%">

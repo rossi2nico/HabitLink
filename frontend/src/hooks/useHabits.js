@@ -154,15 +154,13 @@ export const useHabits = () => {
 
   const getLinkedHabits = async (habitId) => {
     if (!user) return { success: false, error: 'You must be logged in' }
-
     const res = await fetch(`${BACKEND_URL}/api/habits/2/linkedHabits/${habitId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${user.token}`,
         'Content-Type': 'application/json'
       }
-    })
-    
+    })    
     const json = await res.json() 
     if (!res.ok) return { success: false, error: json.error }
     return { success: true, linkedHabits: json.linkedHabits }

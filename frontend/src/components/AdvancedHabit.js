@@ -27,7 +27,7 @@ export const AdvancedHabit = () => {
     if (!user) {
       return
     }
-    /* We will only find the habit in context if we previously clicked from the habits page with the context. */
+    /* This will only find the habit in context if we previously clicked from the habits page with the context. */
     const habitFromContext = habits.find(h => h._id === habitId)
     if (habitFromContext) {
       setHabit(habitFromContext)
@@ -37,7 +37,6 @@ export const AdvancedHabit = () => {
       const fetchHabit = async () => {
         try {
           const res = await getHabit2(habitId, currentDate)
-          console.log("fetched advanced habit: ", res)
           if (res.success == true) {
             setHabit(res.habit)
           } else {
@@ -62,19 +61,19 @@ export const AdvancedHabit = () => {
           setSyncedError(res.error)
         }
         else {
-          const sortedResult = [...(res.syncedHabits || [])].sort((a, b) => {
+          const sortedResult = [...(res.linkedHabits || [])].sort((a, b) => {
           const streakA = a.habitId?.streak ?? a.streak ?? 0
           const streakB = b.habitId?.streak ?? b.streak ?? 0
           return streakB - streakA
           })
-        setSyncedHabits(sortedResult)
+        setSyncedHabits(sortedResult)        
         }
-        
       } catch (error) {
         console.error(error.message)
       }
     }
     fetchSynced()
+    console.log("synced habits: ", syncedHabits)
   }, [habit])
 
   if (error) {
@@ -121,54 +120,7 @@ export const AdvancedHabit = () => {
           <div className = "advanced-view-right">
             <p>right</p>
           </div>
-          
         </div>
-        {/* <div className = "habit-info">
-          <h1 style = {{ fontWeight: '700', marginTop: '-5px'}}> { habit.name } </h1>
-          <p className= "habit-privacy" > { habit.privacy === 0
-            ? "Private"
-            : habit.privacy === 1
-            ? "Friends-only"
-            : "Public" }
-          </p>
-          <p style = {{margin: 0}}> This is where the description will be. Need to succeed.</p>
-          <p>Completed: 356/412 days</p>
-        </div> */}
-        {/* <h1 style = {{ backgroundColor: "#161616", fontSize: "40px" }}>
-          { habit.name } 
-          { habit.privacy === 0  
-            ? " -- Private Habit"
-            : habit.privacy === 1
-            ? " friends-only"
-            : " public"
-          }
-        </h1> */}
-        {/* <div className = "habit-mastery">
-          <h3> Habit Mastery</h3>
-          <div style = {{marginTop:"30px", height:"220px", width:"650px", backgroundColor:"transparent"}}>
-            <MasteryGraph habit = { habit }/>
-          </div>
-        </div> */}
-        {/* <h1 style = {{textAlign:'center', fontWeight: '700', marginTop: '-5px'}}> { habit.name } <p style = {{textAlign:'center', marginBottom:'-5px'}}> 
-          {habit.privacy === 0
-            ? "Private Habit"
-            : habit.privacy === 1
-            ? "Friends-only Habit"
-            : "Public Habit"}
-        </p></h1> */}
-        {/* { habit.description && habit.description != "" && (
-          <h3 style = {{color:"#afafafff", marginTop:"-5px"}}> { habit.description } </h3>
-        )}
-          <p>
-            {habit.streak === habit.maxStreak
-              ? <>🔥 Current streak: {habit.streak} days <br/>  🏹 Currently on Longest streak!</>
-              : <>🔥 Current streak: {habit.streak} days <br/> 🏹 Longest streak: {habit.maxStreak} days</>}
-          </p>
-          <p> Completed { habit.totalCompletions } out of { habit.potentialCompletions} total days!
-            <br/>
-            🚀 Overall { percentCompleted }% completion!
-          </p> */}
-        {/* </div> */}
       </div>
 
       <div className = "idk">
@@ -181,7 +133,7 @@ export const AdvancedHabit = () => {
           <h4>MAX STREAK</h4>
         </div>
         <div className = "advanced-stats">
-          <p>{ habit.streak }</p>
+          <p>{ syncedHabits.length }</p>
           <h4>LINKED USERS</h4>
         </div>
         <div className = "advanced-stats">
@@ -222,19 +174,9 @@ export const AdvancedHabit = () => {
             
           {syncedHabits?.map((h) => (
             // <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
-            <UserCard habit = { h }></UserCard>
+            <UserCard key = { h._id } habit = { h }></UserCard>
           ))}
         </div>
-        
-        {/* <div className = "completion-graph">
-          <h3> Habit Mastery.</h3>
-
-          <HabitMastery habit = { habit }/>
-        </div> */}
-        {/* <div className = "completion-graph">
-          <h3> Habit Completion</h3>
-          <BarGraphDaily habit = { habit }></BarGraphDaily>
-        </div> */}
       </div>
     </div>
   )

@@ -8,7 +8,8 @@ export const UserCard = ( { habit } ) => {
   return (
     <div className = "synced-user">
       <div className = "synced-user-left">
-        <h4>{ habit.username.charAt(0).toUpperCase() + habit.username.slice(1) }</h4>
+        {/* <h4>{ habit.username.charAt(0).toUpperCase() + habit.username.slice(1) }</h4> */}
+        <h4>Username</h4>
         <p> 🔥 { habit.habitId.streak } 🏹 { habit.habitId.maxStreak } 🚀 { percentCompleted }%</p>
       </div>
       <div className = "synced-user-right">

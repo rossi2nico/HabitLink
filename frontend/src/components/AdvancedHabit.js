@@ -73,7 +73,6 @@ export const AdvancedHabit = () => {
       }
     }
     fetchSynced()
-    console.log("synced habits: ", syncedHabits)
   }, [habit])
 
   if (error) {
@@ -100,7 +99,7 @@ export const AdvancedHabit = () => {
   return (
     <div className="advanced-habit">
       <Navigation></Navigation>
-      <div className = "advanced-habit-info">
+      {/* <div className = "advanced-habit-info">
         <div className = "advanced-view">
           <div className = "advanced-view-left">
             <p>Prev</p>
@@ -108,22 +107,17 @@ export const AdvancedHabit = () => {
           <div className = "advanced-view-mid">
             <div className = "advanced-view-title">
               <h1> { habit.name }</h1>
-              <p className = "habit-privacy"> <img style = {{marginBottom:"-6px"}}src = { key }></img> { habit.privacy === 0
-              ? "Private"
-              : habit.privacy === 1
-              ? "Friends-only"
-              : "Public" }
-            </p>
             </div>
-            <p> { habit.description } This is where the habit description will go.</p>
+            <p>
+            { habit.description && habit.description.length > 0 ? habit.description : "No Description Provided" } </p>
           </div>
           <div className = "advanced-view-right">
             <p>right</p>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className = "idk">
+      <div className = "idk" >
         <div className = "advanced-stats">
           <p>{ habit.streak }</p>
           <h4>STREAK</h4>
@@ -147,7 +141,6 @@ export const AdvancedHabit = () => {
       </div>
       
       <div className = "synced-stats" style = {{marginTop: "50px"}}>
-
         <div className = "completion-graph">
           <h3> Habit Mastery</h3>
           <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>

@@ -38,19 +38,6 @@ const Habits = () => {
       <>
         <Navigation></Navigation>
         <div className = "home">
-          <div className = "hero">
-            <div className = "intro">
-              <h3>HabitLink 
-                <img className = "github-logo" src = { github } />
-              </h3>
-              <p> Community based habit tracker designed to promote accountability and consistency between users.</p>
-              <p>Connect with friends, track your progress, and stay motivated as you develop positive habits together :)</p>
-            </div>
-            <div className = "habits-graph-div">
-              <h3>Habit Completions (%)</h3>
-              <LineGraphHabits2 habits = { habits }></LineGraphHabits2>
-            </div>
-          </div>
           <div className = "idk">
             <div className = "advanced-stats">
               <p> { habits.length }</p>
@@ -88,8 +75,25 @@ const Habits = () => {
                   habit = {habit} 
                 />
               ))}
+              <div className = "habits-graph-div">
+              <h3>Habit Completions (%)</h3>
+              <LineGraphHabits2 habits = { habits }></LineGraphHabits2>
+            </div>
             </div>
           </div>
+          
+          <div className = "hero">
+            {/* <div className = "intro">
+              <h3>HabitLink 
+                <img className = "github-logo" src = { github } />
+              </h3>
+              <p> Community based habit tracker designed to promote accountability and consistency between users.</p>
+              <p>Connect with friends, track your progress, and stay motivated as you develop positive habits together :)</p>
+            </div> */}
+            
+          </div>
+          
+          
         </div>
       </>
     )

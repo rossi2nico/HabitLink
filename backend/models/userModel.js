@@ -48,7 +48,7 @@ userSchema.statics.signup = async function (rawUsername, password) {
     }
     
     if (!validator.isStrongPassword(password)) {
-        throw Error('Password not strong enough')
+        throw Error('Password must include a special character, an uppercase letter, and 8 characters.')
     }
 
     const username = rawUsername.trim().toLowerCase();

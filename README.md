@@ -21,7 +21,7 @@
 
 
 ## Demonstrations  
-<img width="1280" height="932" alt="image" src="https://github.com/user-attachments/assets/fd1a4b93-4ca7-4fa8-b9ba-95a46cd4e264" />
+<img width="1247" height="685" alt="image" src="https://github.com/user-attachments/assets/b25aea4f-94d8-4a5b-8345-d03de2699b48" />
 
 
 ---  

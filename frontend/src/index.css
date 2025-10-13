@@ -31,7 +31,7 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  background: #151515;
+  background: #131313;
   background-size: 100%;
   background-repeat: no-repeat;
   color: rgb(240, 240, 240);
@@ -146,7 +146,7 @@ h1, h2, h3, h4, p, span {
   height: 100%;
   display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
   width: 100%;
-  background-color: #151515;
+  /* background-color: #151515; */
 }
 
 .home-habits {

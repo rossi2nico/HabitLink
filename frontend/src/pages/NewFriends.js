@@ -34,13 +34,13 @@ const NewFriends = () => {
     <>
       <Navigation></Navigation>
       <div className = "friends-page">
-        <div className = "friends-left">
+        {/* <div className = "friends-left">
           <div className = "intro">
             <h3>Community & Friends</h3>
-            {/* <img style = {{ position:'absolute',zIndex:'5',width:'125px', margin: '-100px 0px 0px 290px'}} src = { emptyFriends }></img>    */}
+            <img style = {{ position:'absolute',zIndex:'5',width:'125px', margin: '-100px 0px 0px 290px'}} src = { emptyFriends }></img>   
             <p>Sync with friend habits to stay accountable and grow together!</p>
           </div>
-        </div>
+        </div> */}
         <div className="friend-habits">
           <h2>Friend Habits </h2>
           {!friendHabits || friendHabits.length === 0 && (

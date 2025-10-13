@@ -75,11 +75,12 @@ const Habits = () => {
                   habit = {habit} 
                 />
               ))}
-              <div className = "habits-graph-div">
-              <h3>Habit Completions (%)</h3>
-              <LineGraphHabits2 habits = { habits }></LineGraphHabits2>
+              
             </div>
-            </div>
+            <div className = "habits-graph-div">
+                <h3 style = {{marginBottom:'30px'}}>Habit Completions Over Time (%)</h3>
+                <LineGraphHabits2 habits = { habits }></LineGraphHabits2>
+              </div>
           </div>
           
           <div className = "hero">

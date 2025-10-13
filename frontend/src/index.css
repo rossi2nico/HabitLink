@@ -31,7 +31,7 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  background: #0e0e0e;
+  background: #151515;
   background-size: 100%;
   background-repeat: no-repeat;
   color: rgb(240, 240, 240);
@@ -58,7 +58,7 @@ h1, h2, h3, h4, p, span {
 .navigation {
   display: flex;
   align-items: center;
-  /* background-color: #101010; */
+  background-color: #151515;
   height: 50px;
   position: sticky;
   width: 100%;
@@ -146,6 +146,7 @@ h1, h2, h3, h4, p, span {
   height: 100%;
   display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
   width: 100%;
+  background-color: #151515;
 }
 
 .home-habits {
@@ -154,9 +155,8 @@ h1, h2, h3, h4, p, span {
   border-radius: 6px;
   /* background-color: #161616; */
   /* border: 3px solid #1f1f1f; */
-  width: 50%;
-  padding-top: 25px;
-  /* padding-bottom: 40px; */
+  width: 450px;
+  padding: 25px 25px 40px 25px;
   margin-top: 10px;
   margin-bottom: 50px;
 }
@@ -216,16 +216,16 @@ h1, h2, h3, h4, p, span {
 }
 
 .habits-graph-div {
-  width: 90%;
+  width: clamp(280px, 50%, 700px);
   /* border: 2px dashed lightcoral; */
-  border-radius: 8px;
-  background-color: #171717;
-  height: 300px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-top: 50px;
+  border-radius: 6px;
+  /* background-color: #12117; */
+  height: 270px;
+  /* padding-top: 15px; */
+  padding-bottom: 35px;
+  margin-top: 75px;
   display: flex; flex-direction: column; align-items: center;
-  align-self: center;
+  /* align-self: center; */
 }
 
 .habits-graph-div h3 {
@@ -525,6 +525,7 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 0px;
+  /* background-color: transparent ; */
   /* border: 2px solid red; */
 }
 
@@ -557,7 +558,7 @@ h1 {
 }
 
 .calendar-container, .completion-graph {
-  background-color: #161616;
+  background-color: #1b1b1b;
 }
 
 .synced-users {
@@ -572,7 +573,7 @@ h1 {
 .advanced-habit {
   width: 100%;
   /* height: 100%; */
-  background-color: #0f0f0f;
+  /* background-color: #0f0f0f; */
   color: rgb(218, 218, 218);
   display: flex;
   flex-direction: column;
@@ -648,7 +649,7 @@ h1 {
 
 .habit {
   border-radius: 12px;
-  width: clamp(280px, 80%, 600px);
+  width: clamp(280px, 90%, 500px);
   height: 2.7rem;
   color: rgb(240, 240, 240);
   background: #202020;
@@ -1409,13 +1410,13 @@ circle {
 
 .idk {
   width: 100%;
-  height: 100%;
+  height: 100px;
   /* padding-bottom: 10px; padding-top: 10px; */
   align-self: center;
-  display: flex; align-items: center; flex-wrap: wrap;
+  display: flex; flex-wrap: wrap;
   justify-content: center;
   /* border: 2px solid lightblue; */
-  background-color: #181818;
+  background-color: #1e1e1e;
 }
 
 .idk button {

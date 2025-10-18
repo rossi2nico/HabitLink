@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
-import NewFriends from './pages/NewFriends';
+import Friends from './pages/Friends';
 import Habits from './pages/Habits';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import { AdvancedHabit } from './components/AdvancedHabit';
+import { HabitData } from './components/HabitData';
 import { CreateHabit } from './components/CreateHabit';
 import { Home } from './pages/Habits';
 import Secret from './pages/Secret';
@@ -37,7 +37,7 @@ function App() {
           />
           <Route
             path="/habits/:habitId"
-            element={user ? <AdvancedHabit /> : <Navigate to="/login" replace />}
+            element={user ? <HabitData /> : <Navigate to="/login" replace />}
           />
           <Route
             path="/habits/create"
@@ -53,7 +53,7 @@ function App() {
           />
           <Route
             path="/friends"
-            element={user ? <NewFriends /> : <Navigate to="/login" replace />}
+            element={user ? <Friends /> : <Navigate to="/login" replace />}
           />
         </Routes>
       </div>

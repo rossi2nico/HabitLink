@@ -1,24 +1,23 @@
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { format } from "date-fns"
-import { Habit } from "../components/Habit2";
-import { LineGraphHabits2 } from "../components/LineGraphHabits2";
+import { Habit } from "../components/Habit";
+import { HabitsGraph } from "../components/HabitsGraph";
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useHabits } from "../hooks/useHabits";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-
 const Secret = () => {
   const { user } = useAuthContext()
-  const { getHabits2, createHabit2, deleteHabit2 } = useHabits()
+  const { getHabits, createHabit, deleteHabit } = useHabits()
   const { habits } = useHabitsContext();
   const currentDate = format(new Date(), "yyyy-MM-dd") 
 
   useEffect(() => {
     if (!user) return
     console.log("fetching habits and current date is:", currentDate)
-    getHabits2(currentDate)
+    getHabits(currentDate)
   }, [user, currentDate])
 
   return (
@@ -31,13 +30,13 @@ const Secret = () => {
           habit = { habit } 
         />
       ))}
-      <button className='create-habit-button' onClick={() => createHabit2("New Habit")}>
+      <button className='create-habit-button' onClick={() => createHabit("New Habit")}>
         Create Habit
       </button>
-      <button className='create-habit-button' onClick={() => deleteHabit2(habits[habits.length - 1]._id)}>
+      <button className='create-habit-button' onClick={() => deleteHabit(habits[habits.length - 1]._id)}>
         Delete Last Habit
       </button>
-      <LineGraphHabits2 habits = {habits}></LineGraphHabits2>
+      <HabitsGraph habits = {habits}></HabitsGraph>
 
     </div>
   )

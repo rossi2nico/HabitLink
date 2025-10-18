@@ -2,47 +2,41 @@
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { format, parseISO, addDays, isAfter, startOfDay } from 'date-fns';
 
-export const LineGraphHabits = ({ habits }) => {
+export const HabitsGraph = ({ habits }) => {
 
   if (!habits || habits.length === 0) {
     return <div>No habits to display</div>;
   }
 
-  // Find earliest habit creation date
-  let firstHabitCreated = new Date();
+  let startDate = format(new Date(), 'yyyy-MM-dd')
+  const currentDate = format(new Date(), 'yyyy-MM-dd')
+
   for (const habit of habits) {
-    const habitCreated = startOfDay(new Date(habit.createdAt));
-    if (habitCreated < firstHabitCreated) firstHabitCreated = habitCreated;
+    if (habit.startDate < startDate) startDate = habit.startDate
   }
 
-  const today = startOfDay(new Date());
-  const totalHabits = habits.length;
+  let checkDate = startDate
   const habitCompletions = [];
 
-  for (let d = firstHabitCreated; d <= today; d = addDays(d, 1)) {
-    const dayStr = format(d, 'yyyy-MM-dd'); // local date string
-    let completedCount = 0;
+  while (checkDate <= currentDate) {
+    let completedHabits = 0
+    let totalHabits = 0
 
     for (const habit of habits) {
-      const habitCreatedDate = startOfDay(new Date(habit.createdAt));
-      if (isAfter(habitCreatedDate, d)) continue;
-
-      const completions = new Set(
-        (habit.completions || []).map(date => format(new Date(date), 'yyyy-MM-dd'))
-      );
-
-      if (completions.has(dayStr)) completedCount++;
+      if (habit.startDate <= checkDate) totalHabits += 1
+      if (habit.completions[checkDate] > 0) completedHabits += 1
     }
-
-    const dailyPercentage = totalHabits > 0 ? (completedCount / totalHabits) * 100 : 0;
-
+    const completionPercentage = totalHabits > 0 ? (completedHabits / totalHabits) * 100 : 0
     habitCompletions.push({
-      date: dayStr,
-      completion: dailyPercentage,
-      formattedDate: format(d, 'MMM dd yyyy')
+      date: checkDate,
+      completion: completionPercentage,
     });
-  }
 
+    checkDate = parseISO(checkDate)
+    checkDate = addDays(checkDate, 1)
+    checkDate = format(checkDate, 'yyyy-MM-dd')
+  }
+    
   // Fix for overlapping values for chart rendering
   if (habitCompletions.length > 1) {
     if (habitCompletions[0].completion === habitCompletions[1].completion) {

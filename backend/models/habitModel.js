@@ -1,28 +1,25 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
-const habitSchema = new Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },  
-    name: { type: String, maxlength: 25, required: true },
-    privacy: { type: Number, default: 0 }, // 0 = private, 1 = friends-only, 2 = public
+const newHabitSchema = new Schema({
+  /* Define the most important features first, then implement additional features over time*/
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  name: { type: String, maxLength: 25, required: true},
+  completions: { type: Map, of: Number, default: {} },
+  privacy: { type: Number, enum: [0, 1, 2], default: 0 },
+  /* Habit linking features */
+  parentHabitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit2', default: null },
+  linkedHabits: [{ 
+    habitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit2', required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    ownerUsername: { type: String, required: true }
+  }],
+  /* Calculation features */
+  mastery: { type: Number, default: 0 },
+  streak: { type: Number, default: 0 },
+  maxStreak: { type: Number, default: 0 },
+  streakLastUpdated: { type: String, default: null }, // "Storing local date string 2025-09-02"
+  startDate: { type: String, required: true } 
+})
 
-    completions: [{ type: Date }],
-    syncedHabits: [{
-        habitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit', required: true },
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-        username: { type: String }
-    }],
-
-    description: { type: String, maxlength: 140, default: function () { return this.name } },
-    frequency: { type: Number, default: 7 },
-
-    streak: { type: Number, default: 0 },
-    maxStreak: { type: Number, default: 0 },
-    streakLastUpdated: { type: Date },
-    totalCompletions: { type: Number },
-    potentialCompletions: { type: Number },
-
-    username: { type: String }
-}, { timestamps: true })
-
-module.exports = mongoose.model("Habit", habitSchema)
+module.exports = mongoose.model("Habit2", newHabitSchema)

@@ -3,7 +3,7 @@ import { useFriends } from '../hooks/useFriends';
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { useHabits } from '../hooks/useHabits';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { Habit } from './Habit2';
+import { Habit } from './Habit';
 import sync from '../assets/sync4.png'
 import batman from '../assets/batman.png'
 

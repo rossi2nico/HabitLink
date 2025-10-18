@@ -1,6 +1,6 @@
 import { useHabits } from "../hooks/useHabits"
 import { useState, useEffect } from 'react'
-import { Calendar2 } from "./Calendar2"
+import { Calendar } from "./Calendar"
 import { useParams } from 'react-router-dom'
 import { Navigation } from "./Navigation"
 import { useHabitsContext } from "../hooks/useHabitsContext"
@@ -11,10 +11,10 @@ import { format } from "date-fns"
 import { MasteryGraph } from "./MasteryGraph"
 import key from "../assets/key.png"
 
-export const AdvancedHabit = () => {
+export const HabitData = () => {
 
   const { habits } = useHabitsContext()
-  const { getLinkedHabits, getHabit2 } = useHabits()
+  const { getLinkedHabits, getHabit } = useHabits()
   const [syncedHabits, setSyncedHabits] = useState([])
   const [habit, setHabit] = useState(null)
   const [error, setError] = useState("")
@@ -36,7 +36,7 @@ export const AdvancedHabit = () => {
     else {
       const fetchHabit = async () => {
         try {
-          const res = await getHabit2(habitId, currentDate)
+          const res = await getHabit(habitId, currentDate)
           if (res.success == true) {
             setHabit(res.habit)
           } else {
@@ -150,7 +150,7 @@ export const AdvancedHabit = () => {
 
         <div className = "calendar-container">
           {/* <h1> Calendar </h1> */}
-          <Calendar2 habit = {habit}></Calendar2>
+          <Calendar habit = {habit}></Calendar>
         </div>
 
         <div className = "synced-users">

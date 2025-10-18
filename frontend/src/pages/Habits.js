@@ -1,11 +1,11 @@
 import { Navigation } from "../components/Navigation"
-import { LineGraphHabits2 } from "../components/LineGraphHabits2"
+import { HabitsGraph } from "../components/HabitsGraph"
 import { useHabits } from "../hooks/useHabits"
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useEffect } from "react"
 import { useFriends } from "../hooks/useFriends"
-import { Habit } from "../components/Habit2"
+import { Habit } from "../components/Habit"
 import github from '../assets/github.png'
 import create from '../assets/create.png'
 import { useNavigate } from 'react-router-dom'
@@ -79,7 +79,7 @@ const Habits = () => {
             </div>
             <div className = "habits-graph-div">
                 <h3 style = {{marginBottom:'30px'}}>Habit Completions Over Time (%)</h3>
-                <LineGraphHabits2 habits = { habits }></LineGraphHabits2>
+                <HabitsGraph habits = { habits }></HabitsGraph>
               </div>
           </div>
           

@@ -8,15 +8,29 @@ const createHabit = async (req, res) => {
     const userId = req.user._id;
     const { name, privacy, startDate } = req.body;
 
-    if (!name) throw new Error('Habit name is required');
+    if (!name) {
+        throw new Error('Habit name is required');
+    }
+
     const trimmedName = name.trim();
-    if (trimmedName.length === 0) throw new Error('Habit name cannot be empty');
-    if (trimmedName.length > 25) throw new Error('Habit name must be 25 characters or less');
+
+    if (trimmedName.length === 0) {
+        throw new Error('Habit name cannot be empty');
+    }
+
+    if (trimmedName.length > 25) {
+        throw new Error('Habit name must be 25 characters or less');
+    }
     
-    const habit = await Habit.create({ userId, name: trimmedName, privacy, startDate })
+    const habit = await Habit.create({ 
+        userId, 
+        name: trimmedName, 
+        privacy, 
+        startDate 
+    });
+
     res.status(200).json(habit);
-  } 
-  catch (error) {
+  } catch (error) {
     res.status(400).json({ error: error.message })
   }
 }
@@ -83,6 +97,8 @@ const getHabit = async (req, res) => {
        const lastUpdated = habit.streakLastUpdated ? habit.streakLastUpdated : null;
         if (!lastUpdated || !(currentDate === lastUpdated)) {
             await calculateStreak(habit, currentDate)
+            await calculateMaxStreak(habit)
+
         }
 
        res.status(200).json(habit)
@@ -104,6 +120,7 @@ const getHabits = async (req, res) => {
             const lastUpdated = habit.streakLastUpdated ? habit.streakLastUpdated : null;
             if (!lastUpdated || !(currentDate === lastUpdated)) {
                 await calculateStreak(habit, currentDate) // Current implementation is n * nlogn (optimize later)
+                await calculateMaxStreak(habit)
             }
         }
 
@@ -117,56 +134,84 @@ const getHabits = async (req, res) => {
 const isSameDate = (date1, date2) => {
     const d1 = new Date(date1);
     const d2 = new Date(date2);
+
     return d1.getUTCFullYear() === d2.getUTCFullYear() &&
         d1.getUTCMonth() === d2.getUTCMonth() &&
         d1.getUTCDate() === d2.getUTCDate();
 };
 
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+const getNextDateString = (dateString) => {
+    const utcDate = new Date(dateString + "T00:00:00Z"); // Avoids rounding errors using UTC midnight
+    const nextDate = new Date(utcDate.getTime() + MS_PER_DAY);
+
+    return nextDate.toISOString().slice(0, 10);
+}
+
+const getPrevDateString = (dateString) => {
+    const utcDate = new Date(dateString + "T00:00:00Z");
+    const prevDate = new Date(utcDate.getTime() - MS_PER_DAY);
+
+    return prevDate.toISOString().slice(0, 10);
+}
+
 const calculateStreak = async (habit, currentDate) => {
-    console.log("Calculating streak for habit:", habit._id, "with currentDate:", currentDate)
-    const MS_PER_DAY = 1000 * 60 * 60 * 24;
     habit.streakLastUpdated = currentDate;
 
     if (!habit.completions || habit.completions.size === 0) {
         habit.streak = 0;
-        habit.maxStreak = 0;
         await habit.save();
         return
     }
-    // Converted Map to Object(date, completionValue)
-    const completionDates = Array.from(habit.completions.entries())
-        .filter(([date]) => date <= currentDate)
-        .sort(([a], [b]) => b.localeCompare(a))
-        .map(([date, completionValue]) => ({ date, completionValue })); 
 
-    const lastCompleted = new Date(completionDates[0].date)
-    const today = new Date(currentDate)
-
-    const daysMissed = (today - lastCompleted) / MS_PER_DAY;
-    if (daysMissed > 1) {
-        habit.streak = 0;
-        await habit.save(); 
-        return;
+    let streak = 0;
+    let date = currentDate;
+    
+    if (!habit.completions.has(currentDate)) {
+        date = getPrevDateString(date);
     }
 
-    const date = new Date(today)
-    if (!isSameDate(date, lastCompleted)) {
-        date.setDate(date.getDate() - 1);
+    while (habit.completions.has(date)) {
+        streak += 1;
+        date = getPrevDateString(date);
     }
 
-    let streak = 0
-    for (let i = 0; i < completionDates.length; i++) {
-        const completionDate = new Date(completionDates[i].date);
-        const completionValue = completionDates[i].completionValue
-        if (isSameDate(completionDate, date) && completionValue > 0) {
-            streak++;
-            date.setDate(date.getDate() - 1);
-        } else break
-    }
-
-    habit.maxStreak = Math.max(streak, habit.maxStreak);
     habit.streak = streak;
-    await habit.save()
+    await habit.save();
+}
+
+const calculateMaxStreak = async (habit) => {
+    let maxStreak = 0;
+
+    if (!habit.completions || habit.completions.size === 0) {
+        habit.maxStreak = 0;
+        await habit.save();
+        return
+    } 
+
+    for (const key of habit.completions.keys()) {
+        const prevDate = getPrevDateString(key);
+        
+        if (habit.completions.has(prevDate)) {
+            continue;
+        }
+
+        let currentStreak = 0;
+        let date = key;
+
+        while (habit.completions.has(date) && habit.completions.get(date) > 0) {
+            currentStreak += 1;
+            date = getNextDateString(date);
+        }
+
+        if (currentStreak > maxStreak) {
+            maxStreak = currentStreak;
+        }
+    }
+
+    habit.maxStreak = maxStreak;
+    await habit.save();
 }
 
 const toggleComplete = async (req, res) => {
@@ -184,15 +229,17 @@ const toggleComplete = async (req, res) => {
 
     if (habit.completions.has(completionDate)) {
         habit.completions.delete(completionDate)
-        await calculateStreak(habit, currentDate)
+        await calculateStreak(habit, currentDate);
+        await calculateMaxStreak(habit);
+
         await habit.save()
-        console.log("habit after toggleComplete: ", habit)
         return res.status(200).json(habit)
     } else {
         habit.completions.set(completionDate, valueCompleted)
-        await calculateStreak(habit, currentDate)
+        await calculateStreak(habit, currentDate);
+        await calculateMaxStreak(habit);
+        
         await habit.save()
-        console.log("habit after toggleComplete: ", habit)
         return res.status(200).json(habit)
     }
   }
@@ -207,34 +254,66 @@ const syncHabit = async (req, res) => {
         const userId = req.user._id
 
         const originalHabit = await Habit.findById(originalHabitId)
-        if (!originalHabit) throw new Error('Invalid habit ID')
-        
-        if (userId.toString() === originalHabit.userId.toString()) throw new Error("Can't sync with own habit!")
+        if (!originalHabit) {
+            throw new Error('Invalid habit ID');
+        }
 
-        const alreadySynced = originalHabit.linkedHabits.some(h => h.userId.toString() === userId.toString());
-        if (alreadySynced) throw new Error("Habit already synced");
+        if (userId.toString() === originalHabit.userId.toString()) {
+            throw new Error("Can't sync with own habit!");
+        }
+        
+        const alreadySynced = originalHabit.linkedHabits.some(
+            h => h.userId.toString() === userId.toString()
+        );
+        if (alreadySynced) {
+            throw new Error("Habit already synced");
+        }
 
         let { name, privacy, parentHabitId } = originalHabit
-        if (!parentHabitId) parentHabitId = originalHabitId
+        if (!parentHabitId) {
+            parentHabitId = originalHabitId;
+        }
 
-        const originalUserId = originalHabit.userId
-        const originalUser = await User.findById(originalUserId)
-        const originalOwnerUsername = originalUser.username
-        const user = await User.findById(userId)
-        const ownerUsername = user.username
+        const originalUserId = originalHabit.userId;
+        const originalUser = await User.findById(originalUserId);
+        const originalOwnerUsername = originalUser.username;
 
-        const habit = await Habit.create({ userId, name, privacy, parentHabitId, startDate: currentDate })
-        if (!habit) throw new Error("Create habit failed")
+        const user = await User.findById(userId);
+        const ownerUsername = user.username;
 
-        originalHabit.linkedHabits.push({ habitId: habit._id, userId, ownerUsername })
-        habit.linkedHabits.push({ habitId: originalHabitId, userId: originalUserId, ownerUsername: originalOwnerUsername })
+        const habit = await Habit.create({ 
+            userId, 
+            name, 
+            privacy, 
+            parentHabitId, 
+            startDate: currentDate 
+        });
 
-        await originalHabit.save()
-        await habit.save()
-        return res.status(200).json({ originalHabit: originalHabit, newHabit: habit })
-    }
-    catch (error) {
-        return res.status(400).json({ error: error.message })
+        if (!habit) {
+            throw new Error("Create habit failed");
+        }
+
+        originalHabit.linkedHabits.push({ 
+            habitId: habit._id, 
+            userId, 
+            ownerUsername 
+        });
+
+        habit.linkedHabits.push({ 
+            habitId: originalHabitId,
+            userId: originalUserId, 
+            ownerUsername: originalOwnerUsername 
+        });
+
+        await originalHabit.save();
+        await habit.save();
+
+        return res.status(200).json({ 
+            originalHabit: originalHabit, 
+            newHabit: habit 
+        });
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
     }
 }
 
@@ -242,24 +321,19 @@ const getFriendHabits = async (req, res) => {
     try {
         const userId = req.user._id;
         const { currentDate } = req.query;
+
         const user = await User.findById(userId)
-        if (!user) return res.status(404).json({ error: 'User not found' });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
 
         const friendIds = user.friends
 
         const friendHabits = await Habit.find({
             userId: {$in: friendIds },
             privacy: { $gt: 0 }
-        }).sort( { createdAt: -1 })
+        }).sort({ createdAt: -1 })
 
-        /* Save this for later if needed. Local times may conflict ensure later.*/
-
-        // for (const habit of friendHabits) {
-        //     if (habit.streakLastUpdated != currentDate) {
-        //         await calculateStreak(habit, currentDate);
-        //     }
-        // }
-        
         return res.status(200).json(friendHabits);
     }
     catch (error) {
@@ -271,32 +345,30 @@ const getFriendHabits = async (req, res) => {
 const getPublicHabits = async (req, res) => {
     try {
         const habits = await Habit.find({ privacy: 2 }).sort({ createdAt: -1 })
-
-        // for (const habit of habits) {
-        //     await calculateStreak(habit) // not sure about this .. maybe don't show streak because local time wil take over and other issues
-        // }
-
         return res.status(200).json(habits)
-    } catch (error) {
+    } 
+    catch (error) {
         return res.status(400).json({ error: error.message })
     }
 
 }
 
 const getLinkedHabits = async (req, res) => {
-    
-    const { habitId } = req.params;
-
     try {
+        const { habitId } = req.params;
+
         const habit = await Habit.findById(habitId).populate(
             'linkedHabits.habitId', 
             'streak maxStreak completions username' // Add potentialCompletions and totalCompletions later
         );
 
-        if (!habit) return res.status(404).json({ error: 'Habit not found' })
+        if (!habit) {
+            return res.status(404).json({ error: 'Habit not found' });
+        }
 
         const linkedHabits = habit.linkedHabits;
-        return res.status(200).json({ linkedHabits }); // Returns json.syncedHabits -> { "syncedHabits": [], otherVariables needed etc }
+        return res.status(200).json({ linkedHabits }); 
+        // Returns json.syncedHabits -> { "syncedHabits": [], otherVariables needed etc }
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

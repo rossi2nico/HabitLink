@@ -219,29 +219,36 @@ const toggleComplete = async (req, res) => {
     const { completionDate, currentDate, valueCompleted } = req.body;
     const { habitId } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(habitId)) throw new Error('Invalid habit ID format');
-    const habit = await Habit.findById(habitId);
-    if (!habit) throw new Error('Habit not found');
-    if (!valueCompleted) throw new Error('No completion value provided')
-    if (habit.userId.toString() !== req.user._id.toString()) throw new Error('Not authorized to modify this habit');
-    
-    // Receive local date string from frontend YYYY-MM-DD
-
-    if (habit.completions.has(completionDate)) {
-        habit.completions.delete(completionDate)
-        await calculateStreak(habit, currentDate);
-        await calculateMaxStreak(habit);
-
-        await habit.save()
-        return res.status(200).json(habit)
-    } else {
-        habit.completions.set(completionDate, valueCompleted)
-        await calculateStreak(habit, currentDate);
-        await calculateMaxStreak(habit);
-        
-        await habit.save()
-        return res.status(200).json(habit)
+    if (!mongoose.Types.ObjectId.isValid(habitId)) {
+        throw new Error('Invalid habit ID format');
     }
+
+    const habit = await Habit.findById(habitId);
+
+    if (!habit) {
+        throw new Error('Habit not found');
+    }
+
+    if (!valueCompleted) {
+        throw new Error('Invalid completion value');
+    }
+
+    if (habit.userId.toString() !== req.user._id.toString()) {
+        throw new Error('Not authorized to modify this habit');
+    }
+    // Receive local date string from frontend YYYY-MM-DD
+    if (!habit.completions.has(completionDate)) {
+        habit.completions.set(completionDate, valueCompleted);
+    } 
+    else {
+        habit.completions.delete(completionDate);
+    }
+
+    await calculateStreak(habit, currentDate);
+    await calculateMaxStreak(habit);
+    
+    await habit.save()
+    return res.status(200).json(habit)
   }
   catch (error) {
     res.status(400).json({ error: error.message })

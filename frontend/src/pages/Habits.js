@@ -14,23 +14,24 @@ import { useNavigate } from 'react-router-dom'
 const Habits = () => {
 
   const { user } = useAuthContext()
-  const { habits, friendHabits, publicHabits } = useHabitsContext()
+  const { habits } = useHabitsContext()
   const { getHabits } = useHabits()
   const { getFriends } = useFriends();
   const navigate = useNavigate();
 
   useEffect(() => {
-      if (!user) {
-        return
-      }
-      getFriends(user._id);
-      getHabits()
-    }, [user])
+    if (!user) {
+      return
+    }
+    getFriends(user._id);
+    getHabits()
+  }, [user])
 
   let linkedUsers = 0, totalCompletions = 0, maxStreak = 0;
   for (const habit of habits) {
     if (habit.maxStreak > maxStreak) maxStreak = habit.maxStreak;
-    linkedUsers += habit.linkedHabits.length;
+    console.log("habit before fail:", habit)
+    linkedUsers += habit.linkedHabits?.length || 0;
     totalCompletions += 2
   }
 
@@ -81,19 +82,7 @@ const Habits = () => {
                 <h3 style = {{marginBottom:'30px'}}>Habit Completions Over Time (%)</h3>
                 <HabitsGraph habits = { habits }></HabitsGraph>
               </div>
-          </div>
-          
-          <div className = "hero">
-            {/* <div className = "intro">
-              <h3>HabitLink 
-                <img className = "github-logo" src = { github } />
-              </h3>
-              <p> Community based habit tracker designed to promote accountability and consistency between users.</p>
-              <p>Connect with friends, track your progress, and stay motivated as you develop positive habits together :)</p>
-            </div> */}
-            
-          </div>
-          
+          </div>          
           
         </div>
       </>

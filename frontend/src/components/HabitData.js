@@ -135,7 +135,7 @@ export const HabitData = () => {
           <h4>COMPLETION (%)</h4>
         </div>
         <div className = "advanced-stats">
-          <p style = {{ fontSize:"35px", fontFamily: "Manrope" }}> Novice </p>
+          <p style = {{fontSize: "16px", marginTop: '7px', fontWeight: "600", fontFamily: "Manrope" }}> Novice </p>
           <h4>HABIT MASTERY</h4>
         </div>
       </div>

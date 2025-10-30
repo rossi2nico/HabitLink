@@ -73,7 +73,7 @@ export const HabitsGraph = ({ habits }) => {
           tickFormatter={(v) => `${Math.round(v)}%`}
           axisLine={false}
           tickLine={false}
-          tick={{ fill: "#666", fontSize: 12, dx: -20 }}
+          tick={{ fill: "#949494ff", fontSize: 12, dx: -20 }}
           domain={[0, 100]}
         />
 
@@ -81,7 +81,7 @@ export const HabitsGraph = ({ habits }) => {
           type="monotone"
           dataKey="completion"
           stroke="url(#GradientColor2)"
-          strokeWidth={3}
+          strokeWidth={2}
           dot={{ fill: '#ff1e00', strokeWidth: 2, r: 4 }}
           activeDot={{ r: 6, stroke: '#ff1e00', strokeWidth: 2 }}
           connectNulls={false}

@@ -78,14 +78,17 @@ const Habits = () => {
               ))}
               
             </div>
-            <div className = "habits-graph-div">
-                <h3 style = {{marginBottom:'30px'}}>Habit Completions Over Time (%)</h3>
+            <div className = "graph-more">
+              <h2 style = {{fontSize: "22px", margin: 0}}>Habit Completions Over Time (%)</h2>
+              <div className = "habits-graph-div">
+                {/* <h3 style = {{marginBottom:'30px'}}>Habit Completions Over Time (%)</h3> */}
                 <HabitsGraph habits = { habits }></HabitsGraph>
               </div>
+            </div>
           </div>          
           
         </div>
-        <Footer></Footer>
+        {/* <Footer></Footer> */}
       </>
     )
   }

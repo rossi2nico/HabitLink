@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useFriendsContext } from "../hooks/useFriendsContext";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { Habit } from "../components/Habit";
-import { Friend } from "../components/Friend";
+import { Footer } from "../components/Footer";
 import { SearchUser } from "../components/SearchUser";
 import emptyFriends from "../assets/charmander sit.png"
 import charmander from "../assets/charmander.png"
@@ -67,6 +67,7 @@ const NewFriends = () => {
           )}
         </div> */}
       </div>
+      <Footer></Footer>
     </>
   )
 }

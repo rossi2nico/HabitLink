@@ -1,16 +1,16 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
-const newHabitSchema = new Schema({
+const HabitSchema = new Schema({
   /* Define the most important features first, then implement additional features over time*/
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   name: { type: String, maxLength: 25, required: true},
   completions: { type: Map, of: Number, default: {} },
   privacy: { type: Number, enum: [0, 1, 2], default: 0 },
   /* Habit linking features */
-  parentHabitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit2', default: null },
+  parentHabitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit', default: null },
   linkedHabits: [{ 
-    habitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit2', required: true },
+    habitId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habit', required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     ownerUsername: { type: String, required: true }
   }],
@@ -22,4 +22,4 @@ const newHabitSchema = new Schema({
   startDate: { type: String, required: true } 
 })
 
-module.exports = mongoose.model("Habit2", newHabitSchema)
+module.exports = mongoose.model("Habit", HabitSchema)

@@ -70,7 +70,6 @@ const deleteHabit = async (req, res) => {
 }
 
 const getHabit = async (req, res) => {
-   
     const { habitId } = req.params
     const { currentDate} = req.query
     const { 'access-type': accessType } = req.headers
@@ -117,9 +116,13 @@ const getHabits = async (req, res) => {
         const habits = await Habit.find({ userId }).sort({ createdAt: -1 });
 
         for (const habit of habits) {
+            console.log(habit.name);
+        }
+
+        for (const habit of habits) {
             const lastUpdated = habit.streakLastUpdated ? habit.streakLastUpdated : null;
             if (!lastUpdated || !(currentDate === lastUpdated)) {
-                await calculateStreak(habit, currentDate) // Current implementation is n * nlogn (optimize later)
+                await calculateStreak(habit, currentDate)
                 await calculateMaxStreak(habit)
             }
         }

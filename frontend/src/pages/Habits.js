@@ -6,7 +6,7 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import { useEffect } from "react"
 import { useFriends } from "../hooks/useFriends"
 import { Habit } from "../components/Habit"
-import github from '../assets/github.png'
+import { Footer } from '../components/Footer'
 import create from '../assets/create.png'
 import { useNavigate } from 'react-router-dom'
 
@@ -85,6 +85,7 @@ const Habits = () => {
           </div>          
           
         </div>
+        <Footer></Footer>
       </>
     )
   }

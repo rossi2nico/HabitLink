@@ -63,7 +63,7 @@ const Habits = () => {
           </div>
           <div className = "home-mid">
             <div className = "home-habits">
-              <h2>Your Habits
+              <h2>Active Habits
                 <img className = 'create-habit-icon' 
                 src = { create }
                 onClick={() => navigate('/habits/create')}
@@ -79,7 +79,8 @@ const Habits = () => {
               
             </div>
             <div className = "graph-more">
-              <h2 style = {{fontSize: "22px", margin: 0}}>Habit Completions Over Time (%)</h2>
+              <h2 style = {{fontSize: "30px", margin: 0}}>Progress</h2>
+              <h5>Habit completion over time (%)</h5>
               <div className = "habits-graph-div">
                 {/* <h3 style = {{marginBottom:'30px'}}>Habit Completions Over Time (%)</h3> */}
                 <HabitsGraph habits = { habits }></HabitsGraph>
@@ -88,7 +89,7 @@ const Habits = () => {
           </div>          
           
         </div>
-        {/* <Footer></Footer> */}
+        <Footer></Footer>
       </>
     )
   }

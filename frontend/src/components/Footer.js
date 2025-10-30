@@ -3,7 +3,7 @@ export const Footer = () => {
 
   return (
     <footer>
-      <p>wow</p>
+      <p>HabitLink</p>
     </footer>
   )
 }

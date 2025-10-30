@@ -146,10 +146,12 @@ h1, h2, h3, h4, p, span {
 }
 
 footer {
-  background-color: #0d0d0d;
-  /* background-image: url("https://productiveapp.io/assets/images/bg1_prod_land_desk_ny.jpg");
+  background-color: #181818;
+  /* border-top: 2px solid rgb(24, 24, 24); */
+  /* background-image: url("https://productiveapp.io/assets/images/bg2_prod_land_desk@2x.jpg");
   background-size: contain; */
-  height: 256px;
+  height: 100%;
+  opacity: 0%;
 }
 .home-mid {
   margin-top: 20px;
@@ -175,12 +177,20 @@ footer {
 }
 
 .home-habits h2 {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
 }
 .home-habits h5 {
+  font-size: 15px;
+  color: #c5c5c5;
+  margin: 5px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.graph-more h5 {
   font-size: 15px;
   color: #c5c5c5;
   margin: 5px;

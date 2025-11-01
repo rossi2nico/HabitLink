@@ -143,7 +143,7 @@ export const HabitData = () => {
       <div className = "synced-stats" style = {{marginTop: "50px"}}>
         <div className = "completion-graph">
           <h3> Habit Mastery</h3>
-          <div style = {{marginTop:"30px", height:"300px", width:"300px", backgroundColor:"transparent"}}>
+          <div style = {{marginTop:"30px", height:"320px", width:"320px", backgroundColor:"transparent"}}>
             <MasteryGraph habit = { habit }/>
           </div>
         </div>

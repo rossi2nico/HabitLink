@@ -57,18 +57,19 @@ export const MasteryGraph = ({ habit }) => {
   }
 
   return (
-    <ResponsiveContainer width = "100%" height = "85%">
+    <ResponsiveContainer width = "100%" height = "90%">
       <LineChart data = { masteryData }>
         <XAxis
           dataKey="date"
           stroke="transparent"
-          tick={{ fill: "#666", fontSize: 13, dy: 10 }}
+          tick={{ fill: "#666", fontSize: 13, dy: 17 }}
           ticks = {[startDate, format(currentDate, 'yyyy-MM-dd')]}
         />
         <YAxis
           domain = {[0, 50]}
           stroke="transparent"
-          tick={{ fill: "#666", fontSize: 12, dx: -20 }}
+          tick={{ fill: "#ffffffff", fontSize: 15, dx: -35, dy: -5 }}
+          
         />
 
         <defs>

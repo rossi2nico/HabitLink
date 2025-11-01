@@ -146,12 +146,20 @@ h1, h2, h3, h4, p, span {
 }
 
 footer {
-  background-color: #181818;
-  /* border-top: 2px solid rgb(24, 24, 24); */
-  /* background-image: url("https://productiveapp.io/assets/images/bg2_prod_land_desk@2x.jpg");
-  background-size: contain; */
-  height: 100%;
-  opacity: 0%;
+  /* border: 2px solid lightgoldenrodyellow; */
+  display: flex; justify-content: center; gap: 25px;
+  background-color: #222222; margin-top: 8px;
+  height: 120px;
+}
+
+footer p, footer a {
+  /* border: 2px solid red; */
+  align-self: center;
+}
+footer a {
+  color: white;
+  font-family: 'Manrope'; font-weight: 500;
+  text-decoration: none;
 }
 .home-mid {
   margin-top: 20px;
@@ -593,6 +601,7 @@ h1 {
 
 .calendar-container, .completion-graph {
   background-color: #1b1b1b;
+  background: linear-gradient(0deg, #1a1a1a 15%, #171717 100%);
 }
 
 .synced-users {
@@ -671,7 +680,7 @@ h1 {
   align-items: center;
   padding: 0.625rem;
   color: #ffffff;
-  background-color: #141414;
+  background-color: #161616;
   padding: 10px 10px 15px 10px;
   border-radius: 16px;
   width: 325px;
@@ -682,16 +691,16 @@ h1 {
 }
 
 .habit {
-  border-radius: 12px;
-  width: clamp(280px, 90%, 500px);
-  height: 2.7rem;
+  border-radius: 16px;
+  width: clamp(280px, 90%, 600px);
+  height: 2.2rem;
   color: rgb(255, 255, 255);
   background: #202020;
   /* background: linear-gradient(-135deg, #202020, #212121); */
   margin: 0.375rem;
   display: flex;
   -webkit-font-smoothing: subpixel-antialiased;
-  padding: 5px;
+  padding: 10px;
   padding-right: 10px;
 }
 
@@ -1437,7 +1446,6 @@ circle {
 }
 
 .habit-mastery {
-  /* border: 2px solid #181818; */
   padding-bottom: 10px; text-align: center; height: 270px; width: 700px;
   background-color: #161616;
   border-radius: 6px;
@@ -1451,10 +1459,10 @@ circle {
   display: flex; flex-wrap: wrap;
   justify-content: center;
   /* border: 2px solid lightblue; */
-  /* background-color: #1e1e1e; */
-  background-image: url("https://images.unsplash.com/photo-1603411951734-23ae414fe112?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687");
-  background: linear-gradient(-135deg, #161616, #242424);
-
+  /* background-color: #1c1c1c; */
+    background: linear-gradient(-50deg, #171717 0%, #1c1c1c 100%);
+  /* border-bottom: 2px solid rgba(51, 51, 51, 0.404); */
+  /* border-top: 2px solid rgba(51, 51, 51, 0.404); */
 }
 
 .idk button {

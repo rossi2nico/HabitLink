@@ -67,7 +67,7 @@ const NewFriends = () => {
           )}
         </div> */}
       </div>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   )
 }

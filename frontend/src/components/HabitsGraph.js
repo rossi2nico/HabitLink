@@ -49,7 +49,7 @@ export const HabitsGraph = ({ habits }) => {
   }
 
   return (
-    <ResponsiveContainer width="90%" height="80%">
+    <ResponsiveContainer width="92%" height="80%">
       <LineChart data={habitCompletions}>
         <defs>
           <linearGradient id="GradientColor2" x1="0" y1="0" x2="0" y2="1">
@@ -63,7 +63,7 @@ export const HabitsGraph = ({ habits }) => {
           type="category"
           axisLine={false}
           tickLine={false}
-          tick={{ fill: "#666", fontSize: 13, dy: 10 }}
+          tick={{ fill: "#757575ff", fontSize: 12, dy: 15, dx: -15 }}
           tickFormatter={(value) => format(parseISO(value), 'MMM dd, yyyy')}
           ticks={[habitCompletions[0].date, habitCompletions[habitCompletions.length - 1].date]}
           interval="preserveStartEnd"
@@ -73,7 +73,7 @@ export const HabitsGraph = ({ habits }) => {
           tickFormatter={(v) => `${Math.round(v)}%`}
           axisLine={false}
           tickLine={false}
-          tick={{ fill: "#949494ff", fontSize: 12, dx: -20 }}
+          tick={{ fill: "#ffffffff", fontSize: 13, dx: -20, dy: -3 }}
           domain={[0, 100]}
         />
 
@@ -81,7 +81,7 @@ export const HabitsGraph = ({ habits }) => {
           type="monotone"
           dataKey="completion"
           stroke="url(#GradientColor2)"
-          strokeWidth={2}
+          strokeWidth={4}
           dot={{ fill: '#ff1e00', strokeWidth: 2, r: 4 }}
           activeDot={{ r: 6, stroke: '#ff1e00', strokeWidth: 2 }}
           connectNulls={false}

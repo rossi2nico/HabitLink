@@ -10,9 +10,7 @@ import { Footer } from '../components/Footer'
 import create from '../assets/create.png'
 import { useNavigate } from 'react-router-dom'
 
-
 const Habits = () => {
-
   const { user } = useAuthContext()
   const { habits } = useHabitsContext()
   const { getHabits } = useHabits()
@@ -35,11 +33,53 @@ const Habits = () => {
     totalCompletions += 2
   }
 
-    return (
-      <>
-        <Navigation></Navigation>
-        <div className = "home">
-          <div className = "idk">
+  return (
+    <>
+      <Navigation />
+
+      <div className="home">
+        <div className="home-mid">
+          {/* Active Habits Section */}
+          <section className="home-habits">
+            <h2>
+              Active Habits
+              <img
+                className="create-habit-icon"
+                src={create}
+                alt="Create Habit"
+                onClick={() => navigate('/habits/create')}
+              />
+            </h2>
+            <h5>Click on any habit to view advanced statistics</h5>
+
+            {habits.map(habit => (
+              <Habit key={habit._id} habit={habit} />
+            ))}
+          </section>
+
+          {/* Graph Section */}
+          <section className="graph-more">
+            <h2 style={{fontSize: '30px', margin: 0, color: '#fff', fontWeight: 650}}>
+              Habit Progress
+            </h2>
+            <h5>Completion over time for all habits (%)</h5>
+
+            <div className="habits-graph-div">
+              <HabitsGraph habits={habits} />
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* <Footer /> */}
+    </>
+  )
+}
+
+export default Habits
+
+{/* <div className = "idk">
+            <p> turn this into a scrollable array</p>
             <div className = "advanced-stats">
               <p> { habits.length }</p>
               <h4>HABITS</h4>
@@ -60,38 +100,4 @@ const Habits = () => {
               <p> 193 </p>
               <h4>TOTAL COMPLETIONS</h4>
             </div>
-          </div>
-          <div className = "home-mid">
-            <div className = "home-habits">
-              <h2>Active Habits
-                <img className = 'create-habit-icon' 
-                src = { create }
-                onClick={() => navigate('/habits/create')}
-                ></img>
-              </h2>
-              <h5>Click on any habit to view advanced statistics</h5>
-              {habits.map(habit => (
-                <Habit 
-                  key = {habit._id} 
-                  habit = {habit} 
-                />
-              ))}
-              
-            </div>
-            <div className = "graph-more">
-              <h2 style = {{fontSize: "30px", margin: 0}}>Progress</h2>
-              <h5>Habit completion over time (%)</h5>
-              <div className = "habits-graph-div">
-                {/* <h3 style = {{marginBottom:'30px'}}>Habit Completions Over Time (%)</h3> */}
-                <HabitsGraph habits = { habits }></HabitsGraph>
-              </div>
-            </div>
-          </div>          
-          
-        </div>
-        <Footer></Footer>
-      </>
-    )
-  }
-
-export default Habits
+          </div> */}

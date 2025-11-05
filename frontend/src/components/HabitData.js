@@ -10,6 +10,7 @@ import { UserCard } from "./UserCard"
 import { format } from "date-fns"
 import { MasteryGraph } from "./MasteryGraph"
 import key from "../assets/key.png"
+import { Habit } from "./Habit"
 
 export const HabitData = () => {
 
@@ -97,80 +98,147 @@ export const HabitData = () => {
   const percentCompleted = parseFloat(rawPercentCompleted.toFixed(1));
 
   return (
-    <div className="advanced-habit">
+    <>
       <Navigation></Navigation>
-      {/* <div className = "advanced-habit-info">
-        <div className = "advanced-view">
-          <div className = "advanced-view-left">
-            <p>Prev</p>
-          </div>
-          <div className = "advanced-view-mid">
-            <div className = "advanced-view-title">
-              <h1> { habit.name }</h1>
-            </div>
-            <p>
-            { habit.description && habit.description.length > 0 ? habit.description : "No Description Provided" } </p>
-          </div>
-          <div className = "advanced-view-right">
-            <p>right</p>
-          </div>
+      <section className="details-section">
+        <div className="habit-details">
+          <h1>[icon] {habit.name} [del][edit]</h1>
+          <button>delete</button>
+          <button>edit</button>
+          <p>{habit.description} description goes herelol</p>
         </div>
-      </div> */}
+      </section>
+      <main className = "habit-data">
+        {/* <Habit key={habit._id} habit={habit}></Habit> */}
 
-      <div className = "idk" >
-        <div className = "advanced-stats">
-          <p>{ habit.streak }</p>
-          <h4>STREAK</h4>
-        </div>
-        <div className = "advanced-stats">
-          <p>{ habit.maxStreak }</p>
-          <h4>MAX STREAK</h4>
-        </div>
-        <div className = "advanced-stats">
-          <p>{ syncedHabits.length }</p>
-          <h4>LINKED USERS</h4>
-        </div>
-        <div className = "advanced-stats">
-          <p> 79%</p>
-          <h4>COMPLETION (%)</h4>
-        </div>
-        <div className = "advanced-stats">
-          <p style = {{fontSize: "16px", marginTop: '7px', fontWeight: "600", fontFamily: "Manrope" }}> Novice </p>
-          <h4>HABIT MASTERY</h4>
-        </div>
-      </div>
-      
-      <div className = "synced-stats" style = {{marginTop: "50px"}}>
-        <div className = "completion-graph">
-          <h3> Habit Mastery</h3>
-          <div style = {{marginTop:"30px", height:"320px", width:"320px", backgroundColor:"transparent"}}>
-            <MasteryGraph habit = { habit }/>
+        
+        
+        <section className = "mastery">
+          <h1> Habit Mastery</h1>
+          <h5>Blah blah Bllah blah Bllah blah Blah Blah</h5>
+          <div className="mastery-graph">
+            <MasteryGraph habit={habit} />
           </div>
-        </div>
+        </section>
 
-        <div className = "calendar-container">
-          {/* <h1> Calendar </h1> */}
-          <Calendar habit = {habit}></Calendar>
-        </div>
+        <section className = "calendar-section">
+          <h1> Completion Calendar </h1>
+          <h5>Blah blah Bllah blah Bllah blah Blah Blah</h5>
+          <div className="calendar-container">
+            <Calendar habit={habit}></Calendar>
+          </div>
+        </section>
 
-        <div className = "synced-users">
-          <h3 style = {{marginBottom:'-10px', fontWeight:'600'}}> Linked Users </h3>
-          { syncedHabits && syncedHabits.length == 1 ? (
-          <p>
-            <img style = {{marginBottom:'-2px', width:'15px', marginRight:'5px'}}src = { sync } ></img> 
-            There is { syncedHabits.length } synced user</p>
-        ) : (
-          <p>
-            <img style = {{marginBottom:'-2px', width:'15px', marginRight:'5px'}}src = { sync } ></img>  
-            There are { syncedHabits.length } synced users</p>
-        )}
-            
+        <section className = "mastery">
+          <h1 className="synced-users-title">Linked Users</h1>
+          <h5>Salam Alaikum</h5>
+          {syncedHabits && (
+            <p className="synced-users-count">
+              <img src={sync} alt="sync icon" style={{ marginBottom: '-1pt', width: '16px', marginRight: '5px' }} />
+              {syncedHabits.length === 1
+                ? `There is ${syncedHabits.length} synced user`
+                : `There are ${syncedHabits.length} synced users`}
+            </p>
+          )}
+
           {syncedHabits?.map((h) => (
-            // <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
-            <UserCard key = { h._id } habit = { h }></UserCard>
+            <UserCard key={h._id} habit={h} />
           ))}
+        </section>
+
+        <section className = "mastery">
+          <h1>Coming SOon</h1>
+          <h5>SUiiiiiiiiiii</h5>
+        </section>
+      
+        <div className="idk" >
+          <div className="advanced-stats">
+            <p>{habit.streak}</p>
+            <h4>STREAK</h4>
+          </div>
+          <div className="advanced-stats">
+            <p>{habit.maxStreak}</p>
+            <h4>MAX STREAK</h4>
+          </div>
+          <div className="advanced-stats">
+            <p>{syncedHabits.length}</p>
+            <h4>LINKED USERS</h4>
+          </div>
+          <div className="advanced-stats">
+            <p> 79%</p>
+            <h4>COMPLETION (%)</h4>
+          </div>
+          <div className="advanced-stats">
+            <p style={{ fontSize: "16px", marginTop: '7px', fontWeight: "600", fontFamily: "Manrope" }}> Novice </p>
+            <h4>HABIT MASTERY</h4>
+          </div>
         </div>
-      </div>
-    </div>
+
+        {/* <section className = "habit-details">
+          <h1>test</h1>
+        </section> */}
+      </main>
+    </>
   )
+
+  // return (
+  //   <div className="advanced-habit">
+  //     <Navigation></Navigation>
+      
+  //     <div className = "synced-stats" style = {{marginTop: "50px"}}>
+  //       <div className = "completion-graph">
+  //         <h3> Habit Mastery</h3>
+  //         <div style = {{marginTop:"30px", height:"320px", width:"320px", backgroundColor:"transparent"}}>
+  //           <MasteryGraph habit = { habit }/>
+  //         </div>
+  //       </div>
+
+  //       <div className = "calendar-container">
+  //         {/* <h1> Calendar </h1> */}
+  //         <Calendar habit = {habit}></Calendar>
+  //       </div>
+
+  //       <div className = "synced-users">
+  //         <h3 style = {{marginBottom:'-10px', fontWeight:'600'}}> Linked Users </h3>
+  //         { syncedHabits && syncedHabits.length == 1 ? (
+  //         <p>
+  //           <img style = {{marginBottom:'-2px', width:'15px', marginRight:'5px'}}src = { sync } ></img> 
+  //           There is { syncedHabits.length } synced user</p>
+  //       ) : (
+  //         <p>
+  //           <img style = {{marginBottom:'-2px', width:'15px', marginRight:'5px'}}src = { sync } ></img>  
+  //           There are { syncedHabits.length } synced users</p>
+  //       )}
+            
+  //         {syncedHabits?.map((h) => (
+  //           // <li key={h._id} style = {{padding:"5px", fontSize:"15px"}}>{ h.username } has a  { h.habitId.streak } day streak </li>
+  //           <UserCard key = { h._id } habit = { h }></UserCard>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   </div>
+  // )
 }
+
+{/* <div className="idk" >
+  <div className="advanced-stats">
+    <p>{habit.streak}</p>
+    <h4>STREAK</h4>
+  </div>
+  <div className="advanced-stats">
+    <p>{habit.maxStreak}</p>
+    <h4>MAX STREAK</h4>
+  </div>
+  <div className="advanced-stats">
+    <p>{syncedHabits.length}</p>
+    <h4>LINKED USERS</h4>
+  </div>
+  <div className="advanced-stats">
+    <p> 79%</p>
+    <h4>COMPLETION (%)</h4>
+  </div>
+  <div className="advanced-stats">
+    <p style={{ fontSize: "16px", marginTop: '7px', fontWeight: "600", fontFamily: "Manrope" }}> Novice </p>
+    <h4>HABIT MASTERY</h4>
+  </div>
+</div> */}

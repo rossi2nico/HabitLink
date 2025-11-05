@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { useHabits } from "../hooks/useHabits"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { format, addDays } from 'date-fns'
+import { parseISO } from 'date-fns';
 
 export const MasteryGraph = ({ habit }) => {
 
@@ -57,16 +58,19 @@ export const MasteryGraph = ({ habit }) => {
   }
 
   return (
-    <ResponsiveContainer width = "100%" height = "90%">
+    <ResponsiveContainer width = "90%" height = "75%">
       <LineChart data = { masteryData }>
+        
         <XAxis
           dataKey="date"
           stroke="transparent"
-          tick={{ fill: "#666", fontSize: 13, dy: 17 }}
+          tick={{ fill: "#757575ff", fontSize: 14, dy: 15, dx: -15 }}
+          tickFormatter={(value) => format(parseISO(value), 'MMM dd, yyyy')}
           ticks = {[startDate, format(currentDate, 'yyyy-MM-dd')]}
         />
+
         <YAxis
-          domain = {[0, 50]}
+          domain = {[0, 20]}
           stroke="transparent"
           tick={{ fill: "#ffffffff", fontSize: 15, dx: -35, dy: -5 }}
           

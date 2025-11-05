@@ -35,7 +35,7 @@ const Signup = () => {
         />
         <button style = {{fontSize:"14px", fontWeight:"700", fontFamily:"Manrope"}}type="submit" disabled ={ isLoading }>Sign up</button>
         {error && <div className ='error' style = {{textAlign:"center"}}>{error}</div>}
-        <p style = {{marginTop:"5px", fontSize:"15px", color:"#575757ff"}}>Already have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/login"><strong>Sign in</strong></Link></p>
+        <p style={{ marginTop: "5px", fontSize: "15px", color:"#bdbdbdff"}}>Already have an account? <Link style = {{color:"white", textDecoration:"none", fontSize: "15px"}} to="/login"><strong>Sign in</strong></Link></p>
 
       </form>
         

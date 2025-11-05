@@ -58,7 +58,7 @@ export const Calendar = ({ habit }) => {
                 color: isSameDay(today, day) 
                   ? '#53e7b6fb' 
                   : isAfter(day, today) || isBefore(day, createdAt)
-                    ? '#666' 
+                    ? '#b6b6b6ff' 
                     : 'white'
               }}
               className='calendar-day'

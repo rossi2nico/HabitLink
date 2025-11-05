@@ -32,7 +32,7 @@ export const CreateHabit = () => {
       <Navigation></Navigation>
     <div style = {{marginTop:'50px'}}className = "create-habit">
       <div className="create-habit-form-container">
-        <h4 style={{fontWeight: 500, color: '#eeeeeeff'}}> The best time to plant a tree was 20 years ago. The next best time is now.</h4>
+        <h4 style={{fontWeight: 500, color: '#eeeeeeff'}}> Show the icon, name, description, etc as how it would show up while they type!</h4>
 
         <form className="create-habit-form" onSubmit={handleSubmit}>
 

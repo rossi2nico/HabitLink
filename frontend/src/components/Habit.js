@@ -6,10 +6,9 @@ import link from '../assets/sync4.png'
 import { format } from 'date-fns';
 
 export const Habit = ({ habit }) => {
-
-  const { getHabit, toggleComplete, syncHabit, deleteHabit } = useHabits();
+  const { getHabit, toggleComplete, linkHabit, deleteHabit } = useHabits();
   const { user } = useAuthContext();
-  const syncedUsers = habit.linkedHabits.map((syncedHabit) => syncedHabit.userId); 
+  const linkedUsers = habit.linkedHabits.map((linkedHabit) => linkedHabit.userId); 
 
   const isUsersHabit = () => {
     return user?._id?.toString() === habit?.userId?.toString();
@@ -19,16 +18,16 @@ export const Habit = ({ habit }) => {
   today = format(today, 'yyyy-MM-dd')
   const isComplete = habit.completions[today] > 0
 
-  const isSynced = () => {
+  const isLinked = () => {
     if (!user || !user._id) return false;
     
-    return syncedUsers.some(
-      syncedUser => syncedUser === user._id.toString()
+    return linkedUsers.some(
+      linkedUser => linkedUser === user._id.toString()
     )
   }
 
   const usersHabit = isUsersHabit();
-  const synced = isSynced();
+  const linked = isLinked();
 
   const originalHabitId = habit._id;
 
@@ -55,10 +54,10 @@ export const Habit = ({ habit }) => {
               <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>
           {!usersHabit && (
             <p className = "habit-username"> from <strong>{ habit.userId }</strong> 
-              {syncedUsers.length > 0 &&
-                (syncedUsers.length === 1
+              {linkedUsers.length > 0 &&
+                (linkedUsers.length === 1
                   ? ' • 1 user'
-                  : ` • ${syncedUsers.length} users`)}
+                  : ` • ${linkedUsers.length} users`)}
             </p>
           )}
           {usersHabit && (
@@ -69,10 +68,10 @@ export const Habit = ({ habit }) => {
                 ? ' Friends-only'
                 : ' Private'}
 
-              {syncedUsers.length > 0 &&
-                (syncedUsers.length === 1
+              {linkedUsers.length > 0 &&
+                (linkedUsers.length === 1
                   ? ' • 1 user'
-                  : ` • ${syncedUsers.length} users`)}
+                  : ` • ${linkedUsers.length} users`)}
             </p>
           )}
           </div>
@@ -85,8 +84,8 @@ export const Habit = ({ habit }) => {
               null
             ) : (
               <>
-                {!synced ? (
-                  <img className = "habit-link" src = {link} onClick = {() => syncHabit(originalHabitId)}></img>
+                {!linked ? (
+                  <img className = "habit-link" src = {link} onClick = {() => linkHabit(originalHabitId)}></img>
 
                 ) : (
                   <p style = {{ alignSelf:'center', justifySelf:'center', padding:'5px' }}>Linked</p>

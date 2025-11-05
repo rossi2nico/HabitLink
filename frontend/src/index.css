@@ -11,6 +11,11 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
 
+:root {
+  --color-accent-light: rgb(0, 221, 166);
+  --color-secondary: #202020;
+}
+
 html {
   font-family: 'Manrope', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -259,8 +264,8 @@ footer a {
   /* border: 2px dashed lightcoral; */
   /* border-radius: 0 0 18px 18px; */
   border-radius: 16px;
-  background-color: #161616;
-  background: linear-gradient(135deg, #171717, #1a1a1a);
+  background-color: var(--color-secondary);
+  /* background: linear-gradient(135deg, #171717, #1a1a1a); */
   /* border-top: 2px solid #c5c5c5; */
   height: 200px;
   padding-top: 45px;
@@ -305,16 +310,16 @@ footer a {
 }
 
 .login {
-  max-width: 20rem;
+  max-width: 500px;
   margin: 5rem auto;
-  padding: 0 1.25rem 1.875rem;
+  padding: 15px 0px 25px 0px;
   color: rgb(240, 240, 240);
-  border-radius: 0.35rem;
+  border-radius: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
-  background-color: #171717;
+  background-color: var(--color-secondary);
 }
 
 .login h3 {
@@ -331,13 +336,13 @@ footer a {
 
 .login input {
   padding: 0.625rem 0.75rem;
-  /* border: 0.0625rem solid #202020; */
+  /* border: 0.0625rem solid var(--color-secondary); */
   border: none;
   border-radius: 0.5rem;
   font-size: 0.875rem;
   transition: border 0.2s ease;
   width: 250px;
-  background-color: #252525;
+  background-color: #303030;
   color: white;
 }
 
@@ -349,30 +354,25 @@ footer a {
 }
 
 .login button {
-  background-color: #00ffbf79;
-  background-color: transparent;
-  border: 1px solid #202020;
+  background-color: var(--color-accent-light);
+  /* background-color: transparent; */
+  border: 1px solid var(--color-secondary);
   color: white;
-  border-radius: 0.35rem;
+  border-radius: 26px;
   padding: 0.625rem 0;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-family: 'Segoe UI', sans-serif;
+  transition: background-color 0.2s ease; 
+  font-family: 'Manrope'; font-weight: 600;
   width: 275px;
-  height: 35px;
-  background-color: rgba(255, 255, 255, 0.815);
+  height: 40px;
+  /* background-color: rgba(255, 255, 255, 0.815); */
   color:#151515;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.login button:hover {
-  transition: 0.7s ease;
-  background-color: #ffffff;
 }
 
 .login button:disabled {
@@ -579,24 +579,12 @@ h1 {
   /* border: 2px solid red; */
   padding-bottom: 20px;
   height: 400px;
-  width: 325px;
+  width: 90%;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.completion-graph, .calendar-container, .synced-users {
-  width: 390px;
-  margin: 0px 15px 50px 15px;
-  /* height: 350px; */
-  height: 400px;
-  /* border: 2px solid #202020; */
-  /* background-color: #161616; */
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .calendar-container, .completion-graph {
@@ -658,7 +646,7 @@ h1 {
 }
 
 .user-habits {
-  /* border: 3px solid #202020; */
+  /* border: 3px solid var(--color-secondary); */
   background: #161616;
   padding: 25px 20px 35px 20px;
   border-radius: 10px;
@@ -692,11 +680,11 @@ h1 {
 
 .habit {
   border-radius: 16px;
-  width: clamp(280px, 90%, 600px);
+  width: clamp(280px, 95%, 600px);
   height: 2.2rem;
   color: rgb(255, 255, 255);
-  background: #202020;
-  /* background: linear-gradient(-135deg, #202020, #212121); */
+  background: var(--color-secondary);
+  /* background: linear-gradient(-135deg, var(--color-secondary), #212121); */
   margin: 0.375rem;
   display: flex;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -834,8 +822,11 @@ h1 {
 
 .friends-page {
   /* border: 1px solid lightcoral; */
-  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
-  width: 100%;
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+}
+
+.friends-page h1 {
+  text-align: center;
 }
 
 .friends-left, .friends-search {
@@ -1043,22 +1034,16 @@ circle {
 }
 
 .calendar header {
-  height: 15%;
   display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
 }
 
 .days {
   display: grid; 
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  /* margin-top: 0.5rem;  */
   margin-bottom: 10px;
-  font-size: 0.875rem; 
-  width: 90%;
-  text-align: center;
-  color:#a1a1a1;
+  font-size: 15px; font-weight: 800; 
+  width: 90%; text-align: center;
+  color:#ffffff;
 }
 
 .calendar-grid {
@@ -1066,8 +1051,8 @@ circle {
   height: 70%;
   display: grid; 
   grid-template-columns: repeat(7, minmax(0, 1fr)); 
-  font-size: 0.875rem; 
-  text-align: center;
+  font-size: 15px; font-weight: 600;
+  text-align: center; -webkit-font-smoothing: antialiased;
   background-color: transparent;
   margin-left: -13px;
   margin-top: -10px;
@@ -1234,11 +1219,11 @@ circle {
 }
 
 .calendar-btn.prev {
-  margin-right: 0px;
+  margin-right: 0px; margin-top: -8px;
 }
 
 .calendar-btn.next {
-  margin-left: 0px;
+  margin-left: 0px; margin-top: -6px;
 }
 
 .calendar-title {
@@ -1334,17 +1319,28 @@ circle {
   transition: 0.3s ease;
 }
 
-.friend-habits {
-  width: 700px;
-  background: #161616;
-  border-radius: 8px;
-  padding-bottom: 25px;
-  align-self: flex-start;
+.friend-habits, .welcome {
+  width: 350px; padding: 40px; font-size: 15px;
+  background: var(--color-secondary); border-radius: 28px;
+  padding-bottom: 35px;
   margin: 65px 25px 0 25px;
-
+  text-align: center; color: rgb(219, 219, 219);
   /* border: 2px dashed lightcyan; */
 }
 
+.welcome h1, .friend-habits h1{
+  color: white; font-size: 26px;
+}
+
+.welcome h1 {
+  margin-bottom: 35px;
+}
+
+.friend-habits button {
+  border: none; border-radius: 26px; height: 50px; width: 100%; margin-top: 50px;
+  font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer;
+  background-color: var(--color-accent-light);
+}
 
 .friends-left {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
@@ -1561,4 +1557,84 @@ circle {
 
 .advanced-stats h4, .advanced-stats p {
   color: whitesmoke;
+}
+
+.habit-details {
+  background-color: #181818; border-radius: 16px; width: 90%; max-width: 700px;
+}
+
+.calendar-container, .mastery-graph {
+  width: 90%; max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 16px;
+  background: linear-gradient(0deg, #1a1a1a 15%, #171717 100%);
+  font-weight: 800;
+  align-self: center; justify-self: center;
+}
+
+.mastery-graph {
+  height: 425px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+section {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  margin: 25px 0px 25px 0px;
+  /* border: 2px solid yellow; */
+}
+
+.habit-data {
+  /* border: 2px solid red; */
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: start;
+}
+
+.mastery, .calendar-section {
+  min-width: 35%; width: 500px; max-width: 95%;
+}
+
+.mastery h1, .calendar-section h1 {
+  margin: 0; font-weight: 600;
+}
+
+.mastery h5, .calendar-section h5 {
+  color: #aaa; margin: 5px 0px 25px 0px; font-weight: 600;
+}
+
+.habit-details {
+  padding: 0px 15px 0px 15px;
+  /* border: 2px solid green; */
+}
+
+.habit-details h1 {
+  font-size: 32px; font-weight: 600;
+  /* text-align: center; */
+}
+
+.details-section {
+  margin-right: auto; margin-left: auto;
+}
+
+span {
+  color: var(--color-accent-light);
+}
+
+.welcome {
+  text-align: center;
+}
+
+.welcome p {
+  margin: 20px;
+}
+
+.welcome-buttons {
+  display: flex; align-items: center; justify-content: center; gap: 25px;
+}
+
+.welcome-buttons button {
+  border: none; border-radius: 26px; height: 50px; width: 100%; margin-top: 50px;
+  font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer;
+  background-color: var(--color-accent-light);
 }

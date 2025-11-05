@@ -33,6 +33,25 @@ const Habits = () => {
     totalCompletions += 2
   }
 
+  if (habits.length == 0) {
+    return (
+      <>
+        <Navigation></Navigation>
+        <home className = "home-mid">
+          <div className = "welcome">
+            <h1><span>Create or link</span> a habit to begin your journey!</h1>
+            <p>“The journey of a thousand miles begins with a single step.”</p>
+            <p style = {{ margin: 0, fontSize: '13px' }}>-- Lao Tzu</p>
+            <div className = "welcome-buttons">
+              <button onClick = { () => navigate('/habits/create') }>Create new habit</button>
+              {/* <button>Link existing habit</button> */}
+            </div>
+          </div>
+        </home>
+      </>
+    )
+  }
+
   return (
     <>
       <Navigation />

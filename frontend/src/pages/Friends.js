@@ -42,10 +42,15 @@ const NewFriends = () => {
           </div>
         </div> */}
         <div className="friend-habits">
-          <h2>Friend Habits </h2>
           {!friendHabits || friendHabits.length === 0 && (
             // <img style = {{ zIndex:'5',width:'250px', margin: '-15px 0px -80px 650px'}}src = { emptyFriends }></img>          )}
-            <p>The night feels a little empty.</p>
+            <>            
+              <h1>The best way to stay accountable <span> is with friends!</span></h1>
+              <p>"Adapt yourself to the life you have been given; and truly love the people with whom destiny has surrounded you."</p>
+              <p style = {{ margin: 0, fontSize: '12px'}}>-- Marcus Aurelius</p>
+              <button>Add Friends!</button>
+            </>
+
           )}
           {friendHabits && friendHabits.length > 0 && 
             friendHabits.map(friendHabit => (

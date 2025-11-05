@@ -40,12 +40,8 @@ const Habits = () => {
         <home className = "home-mid">
           <div className = "welcome">
             <h1><span>Create or link</span> a habit to begin your journey!</h1>
-            <p>“The journey of a thousand miles begins with a single step.”</p>
-            <p style = {{ margin: 0, fontSize: '13px' }}>-- Lao Tzu</p>
-            <div className = "welcome-buttons">
-              <button onClick = { () => navigate('/habits/create') }>Create new habit</button>
-              {/* <button>Link existing habit</button> */}
-            </div>
+            <p>“The journey of a thousand miles begins with a single step.” --<span style = {{ color: "#dbdbdbff", margin: 0, fontSize: '13px'}}> Lao Tzu</span></p>
+            <button onClick = { () => navigate('/habits/create') }>Create new habit</button>
           </div>
         </home>
       </>

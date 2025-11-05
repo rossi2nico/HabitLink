@@ -13,7 +13,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 
 :root {
   --color-accent-light: rgb(0, 221, 166);
-  --color-secondary: #202020;
+  --color-secondary: #181818;
 }
 
 html {
@@ -538,15 +538,6 @@ h1 {
   width: 100%;
   background: rgba(0, 0, 0, 0.7);
   z-index: 999;
-}
-
-.user-habits,
-.friend-habits,
-.public-habits {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #ffffff;
 }
 
 .advanced-habit-info {
@@ -1320,24 +1311,26 @@ circle {
 }
 
 .friend-habits, .welcome {
-  width: 350px; padding: 40px; font-size: 15px;
-  background: var(--color-secondary); border-radius: 28px;
+  padding: 40px; font-size: 15px;
+  background: var(--color-secondary); border-radius: 18px;
   padding-bottom: 35px;
   margin: 65px 25px 0 25px;
-  text-align: center; color: rgb(219, 219, 219);
+  /* border: 2px solid yellow; */
+  width: 95%; max-width: 600px;
+  text-align: center; color: rgb(219, 219, 219); display: flex; flex-direction: column; align-items: center;
   /* border: 2px dashed lightcyan; */
 }
 
 .welcome h1, .friend-habits h1{
-  color: white; font-size: 26px;
+  color: white; font-size: 26px; max-width: 350px;
 }
 
 .welcome h1 {
-  margin-bottom: 35px;
+  margin-bottom: 35px; width: 100%;
 }
 
 .friend-habits button {
-  border: none; border-radius: 26px; height: 50px; width: 100%; margin-top: 50px;
+  border: none; border-radius: 26px; height: 50px; width: 100%; max-width: 350px; margin-top: 50px;
   font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer;
   background-color: var(--color-accent-light);
 }
@@ -1626,15 +1619,19 @@ span {
 }
 
 .welcome p {
-  margin: 20px;
+  margin: 20px; max-width: 350px;
 }
 
-.welcome-buttons {
+/* .welcome-buttons {
   display: flex; align-items: center; justify-content: center; gap: 25px;
-}
+} */
 
-.welcome-buttons button {
-  border: none; border-radius: 26px; height: 50px; width: 100%; margin-top: 50px;
+.welcome button {
+  border: none; border-radius: 26px; height: 50px; width: 100%; max-width: 350px; margin-top: 50px;
   font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer;
   background-color: var(--color-accent-light);
+}
+
+.friend-habits p {
+  max-width: 350px;
 }

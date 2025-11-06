@@ -13,10 +13,11 @@ export const SearchUser = ({ user }) => {
   return (
     <div className="search-user-card">
       <div className = "search-user-card-left">
-        <span>@{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</span> 
+        <h1>{ user.username.charAt(0).toUpperCase() + user.username.slice(1) }</h1> 
       </div>
       <div className = "search-user-card-right">
-        <img className = "add-user" style = {{ width:'25px'}} src = { addUser }></img>
+        {/* <img className = "add-user" style = {{ width:'25px'}} src = { addUser }></img> */}
+        <button className = "add-friend">Add Friend</button>
       </div>
     </div>
   );

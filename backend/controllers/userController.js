@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
 
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET, {expiresIn: '30d'})
@@ -8,6 +9,14 @@ const createToken = (_id) => {
 const searchUsers = async (req, res) => {
     const searchTerm = req.query.q; // api/users/search?q=nico
 
+    if (mongoose.Types.ObjectId.isValid(searchTerm)) {
+        const user = await User.findById(searchTerm);
+        if (user) {
+            console.log(user);
+            return res.status(200).json([user]);
+        }
+    }
+
     try {
         const regex = new RegExp(searchTerm, 'i');
 
@@ -15,7 +24,7 @@ const searchUsers = async (req, res) => {
             $or : [
                 { username: regex }
             ]
-        }).limit(10);
+        }).limit(5);
 
         res.status(200).json(users);
     } catch (error) {

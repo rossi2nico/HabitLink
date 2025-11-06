@@ -18,7 +18,6 @@ export const useFriends = () => {
       setError('You must be logged in');
       return false;
     }
-
     const res = await fetch(`${BACKEND_URL}/api/users/search?q=${encodeURIComponent(searchTerm)}`, {
       method: 'GET', 
       headers: {

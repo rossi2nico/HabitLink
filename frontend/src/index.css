@@ -12,7 +12,7 @@ input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
 
 :root {
-  --color-accent-light: rgb(0, 221, 166);
+  --color-accent-light: #00dda6;
   --color-secondary: #181818;
 }
 
@@ -828,22 +828,25 @@ h1 {
  
 .friends-search {
   flex-direction: column; align-items: center;
-  width: 300;
+  width: 95%; max-width: 680px; padding: 20px;
   padding-bottom: 20px;
-  border-radius: 10px;
-  background-color: #171717;
+  border-radius: 18px;
+  /* background-color: var(--color-secondary);  */
+  /* border: 2px solid yellow; */
+  margin: 0;
 }
 
 .search-users {
-  width: 300px;
-  height: 30px;
+  width: 95%;
+  height: 50px;
   background-color: transparent;
-  color: whitesmoke;
-  background: #121212;
-  border: none;
-  border-radius: 12px;
+  background: #161616;
+  color: #f0f0f0;
+  /* border: none; */
+  border: 1px solid #3d3d3d;
+  border-radius: 22px;
   font-family: 'Manrope';
-  font-size: 16px;
+  font-size: 15px;
   text-align: center;
   opacity: 95%;
   margin-bottom: 20px;
@@ -852,17 +855,18 @@ h1 {
 }
 
 .search-users:focus {
-  /* border: 1px solid #16f8bf; */
-  outline: none;
-  /* outline: 1px solid rgba(45, 253, 236, 0.438); */
-  background-color: #282828;
+  outline: 2px solid var(--color-accent-light);
 }
 
 .login input::placeholder, .search-users::placeholder {
-  color: #acacac; 
+  color: #b9b9b9; 
   opacity: 1; 
-  font-style: italic;
+  /* font-style: italic; */
   font-family: 'Manrope';
+}
+
+.search-users::placeholder {
+  font-weight: 600;
 }
 
 .login input:focus {
@@ -877,30 +881,28 @@ h1 {
   margin: 6px;
   border-radius: 14px;
   display: flex;
-  /* flex-direction: column; */
-  /* text-align: left; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  width: 250px;
+  width: 95%;
 }
 
 .search-user-card-left {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+  display: flex; align-items: center;
   /* border: 1px dashed yellow; */
-  height: 100%;
-  width: 80%;
+  height: 100%; margin-top: auto; margin-bottom: auto;
+  width: 60%;
   margin-left: 10px;
 }
 
+.search-user-card-left h1 {
+  margin: 0; font-size: 17px;
+}
+
 .search-user-card-right {
-  width: 10%;
+  width: 40%;
   margin-left: 10px;
   /* border: 1px dotted yellow; */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 /* 
 .search-user-card:hover, .friend-card:hover, .pending-user-card:hover {
@@ -1314,7 +1316,7 @@ circle {
   padding: 40px; font-size: 15px;
   background: var(--color-secondary); border-radius: 18px;
   padding-bottom: 35px;
-  margin: 65px 25px 0 25px;
+  /* margin: 65px 25px 0 25px; */
   /* border: 2px solid yellow; */
   width: 95%; max-width: 600px;
   text-align: center; color: rgb(219, 219, 219); display: flex; flex-direction: column; align-items: center;
@@ -1634,4 +1636,9 @@ span {
 
 .friend-habits p {
   max-width: 350px;
+}
+
+.add-friend {
+  width: 100px; height: 25px; margin: 10px; border-radius: 16px; background: var(--color-accent-light); border: none;
+  font-weight: 600; font-family: 'Manrope';
 }

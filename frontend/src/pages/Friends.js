@@ -15,12 +15,13 @@ import charmander from "../assets/charmander.png"
 const NewFriends = () => {
 
   const [searchResults, setSearchResults] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("685d8432bee447a2765934f9");
   const { user } = useAuthContext();
   const { friends, pendingUsers } = useFriendsContext();
-  const { getFriends, getPendingUsers } = useFriends()
+  const { searchUsers, getFriends, getPendingUsers } = useFriends()
   const { friendHabits } = useHabitsContext()
   const { getFriendHabits } = useHabits()
+  const [searchDebounce, setSearchDebounce] = useState(false);
 
   useEffect(() => { 
     if (user) {
@@ -30,10 +31,57 @@ const NewFriends = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (searchDebounce) return;
+    if (searchTerm === '') {
+      setSearchResults([]);
+      return
+    }
+    setSearchDebounce(true);
+    
+    const fetchUsers = async () => {
+      try {
+        const users = await searchUsers(searchTerm);
+        console.log("users: ", users);
+        setSearchResults(users);
+      } catch (err) {
+
+      }
+    }
+    fetchUsers();
+
+    setTimeout(() => {
+      setSearchDebounce(false);
+    }, 100);
+
+  }, [searchTerm]);
+
   return (
     <>
       <Navigation></Navigation>
       <div className = "friends-page">
+        <div className='friends-search'>
+
+          <input
+            type="search"
+            className="search-users"
+            value={searchTerm}
+            placeholder="Enter friend username or ID"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          {searchResults.length === 0 && searchTerm != "" ? (
+            <p>No users found</p>
+          ) : searchResults.length === 0 ?
+            <></>
+            : (
+              <>
+                {searchResults.map(user => (
+                  <SearchUser key={user._id} user={user}></SearchUser>
+                ))}
+              </>
+            )}
+        </div> 
         {/* <div className = "friends-left">
           <div className = "intro">
             <h3>Community & Friends</h3>
@@ -57,6 +105,7 @@ const NewFriends = () => {
               <Habit key = {friendHabit._id} habit = { friendHabit } />
             ))
           }
+          
         </div>
 
         {/* <div className = "friends-list"> 

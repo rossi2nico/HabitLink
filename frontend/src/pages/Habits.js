@@ -62,7 +62,7 @@ const Habits = () => {
             <div className = "habits-filters">
               <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Filter</button>
               <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Sort</button>
-              <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Reorder</button>
+              <button style = {{justifyContent: 'center'}}>Re-order </button>
               <button onClick = {() => navigate('/habits/create')}>New Habit</button>
             </div>
 
@@ -72,16 +72,21 @@ const Habits = () => {
           </section>
 
           {/* Graph Section */}
-          <section className="graph-more">
-            <h2 style={{fontSize: '30px', margin: 0, color: '#fff', fontWeight: 650}}>
-              Habit Progress
-            </h2>
-            <h5>Completion over time for all habits (%)</h5>
+          <div className="graph-more">
+            {/* <h2>Habit Completion </h2> */}
+            {/* <h5>Completion over time for all habits (%)</h5> */}
+
+            <div className="graph-filters">
+              <button style={{ justifyContent: 'center' }} >30 days</button>
+              <button style={{ justifyContent: 'center' }} >3 months</button>
+            </div>
 
             <div className="habits-graph-div">
               <HabitsGraph habits={habits} />
             </div>
-          </section>
+            <h5>Habit completions over time (%)</h5>
+
+          </div>
         </div>
       </div>
 

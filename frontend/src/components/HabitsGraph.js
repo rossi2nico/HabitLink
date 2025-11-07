@@ -1,5 +1,5 @@
 'use client';
-import { LineChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, LineChart, Line, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { format, parseISO, addDays, isAfter, startOfDay } from 'date-fns';
 
 export const HabitsGraph = ({ habits }) => {
@@ -51,6 +51,9 @@ export const HabitsGraph = ({ habits }) => {
   return (
     <ResponsiveContainer width="92%" height="80%">
       <LineChart data={habitCompletions}>
+
+        <CartesianGrid vertical = {false} stroke="#ffffff54" />
+
         <defs>
           <linearGradient id="GradientColor2" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#ff1e00ff" stopOpacity={1} />
@@ -63,7 +66,7 @@ export const HabitsGraph = ({ habits }) => {
           type="category"
           axisLine={false}
           tickLine={false}
-          tick={{ fill: "#757575ff", fontSize: 12, dy: 15, dx: -15 }}
+          tick={{ fill: "#ffffff86", fontSize: 12, dy: 15, dx: -15 }}
           tickFormatter={(value) => format(parseISO(value), 'MMM dd, yyyy')}
           ticks={[habitCompletions[0].date, habitCompletions[habitCompletions.length - 1].date]}
           interval="preserveStartEnd"
@@ -85,6 +88,8 @@ export const HabitsGraph = ({ habits }) => {
           dot={{ fill: '#ff1e00', strokeWidth: 2, r: 4 }}
           activeDot={{ r: 6, stroke: '#ff1e00', strokeWidth: 2 }}
           connectNulls={false}
+          animationEasing="ease-in"
+          animationDuration = { 2000 }
         />
       </LineChart>
     </ResponsiveContainer>

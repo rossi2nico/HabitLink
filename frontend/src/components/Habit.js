@@ -42,8 +42,8 @@ export const Habit = ({ habit }) => {
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40px" height="40px">
          <defs>
             <linearGradient id="GradientColor">
-              <stop offset="0%" stopColor="#41ccdfff" />
-              <stop offset="100%" stopColor="#00e284ff" /> 
+              <stop offset="0%" stopColor="#7cfbffff" />
+              <stop offset="100%" stopColor="#00ff95ff" /> 
             </linearGradient>
          </defs>
          <circle cx="20" cy="20" r="18" strokeLinecap="round" />
@@ -78,7 +78,6 @@ export const Habit = ({ habit }) => {
           <div className = "habit-right">
             <div className = "habit-buttons">
               {/* <Link to={`/habits/${habit._id}`} className = "view-analytics">View Stats</Link> */}
-              {/* <img src = {dropdown}></img> */}
             </div>
 
             {usersHabit ? (

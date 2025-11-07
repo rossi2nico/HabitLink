@@ -1616,7 +1616,7 @@ span {
   margin-left: auto; margin-right: 5px; border-radius: 9px;
   /* color: wheat; color: var(--color-accent-light); */
   background-color: var(--color-accent-light); color: rgb(12, 12, 12);
-  font-size: 14px; font-weight: 600; justify-content: center; height: 26px; max-width: 105px;
+  font-size: 14px; font-weight: 600; justify-content: center; height: 26px; width: 100%;
 }
 
 .habits-filters button:hover, .graph-filters button:hover {

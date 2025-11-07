@@ -93,12 +93,8 @@ export const useFriends = () => {
   }
 
   const sendFriendRequest = async (friendId) => {
-    setIsLoading(true);
-    setError(null);
-
     if (!user) {
-      setError('You must be logged in');  
-      return false;
+      return { success: false, error: 'Not logged in' };
     }
 
     const res = await fetch(`${BACKEND_URL}/api/users/send-friend-request`, {
@@ -111,11 +107,8 @@ export const useFriends = () => {
     });
     const json = await res.json();
     if (!res.ok) {
-      setError(json.error);
-      setIsLoading(false);
-      return false; 
+      return { success: false, error: json.error }; 
     }
-    setIsLoading(false);
     switch (json.status) {
       case 'request_sent':
         dispatch( { type: 'SEND_FRIEND_REQUEST', payload: json.targetUser });
@@ -124,9 +117,9 @@ export const useFriends = () => {
         dispatch( { type: 'ACCEPT_FRIEND_REQUEST', payload: json.targetUser });
         break;
       default:
-        setError('An error occurred while sending the friend request.');
+        return { success: false, error: 'An unexpected error has occured' };
     }
-    return json;
+    return { success: true, user: json };
   }
 
   const declineFriendRequest = async (friendId) => {

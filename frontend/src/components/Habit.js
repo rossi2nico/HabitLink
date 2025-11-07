@@ -51,7 +51,7 @@ export const Habit = ({ habit }) => {
       </div>
       <div className = "habit-div">
         <div className = "habit-mid">
-              <Link to={`/habits/${habit._id}`} className = "habit-name">{habit.name}</Link>
+              <Link to={`/habits/${habit._id}`} className = "habit-name"> { habit.name } </Link>
           {!usersHabit && (
             <p className = "habit-username"> from <strong>{ habit.userId }</strong> 
               {linkedUsers.length > 0 &&
@@ -77,7 +77,8 @@ export const Habit = ({ habit }) => {
           </div>
           <div className = "habit-right">
             <div className = "habit-buttons">
-              <Link to={`/habits/${habit._id}`} className = "view-analytics">View Stats</Link>
+              {/* <Link to={`/habits/${habit._id}`} className = "view-analytics">View Stats</Link> */}
+              {/* <img src = {dropdown}></img> */}
             </div>
 
             {usersHabit ? (

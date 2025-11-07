@@ -11,8 +11,7 @@ import { SearchUser } from "../components/SearchUser";
 import emptyFriends from "../assets/charmander sit.png"
 import charmander from "../assets/charmander.png"
 
-
-const NewFriends = () => {
+const Friends = () => {
 
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("685d8432bee447a2765934f9");
@@ -77,24 +76,18 @@ const NewFriends = () => {
             : (
               <>
                 {searchResults.map(user => (
-                  <SearchUser key={user._id} user={user}></SearchUser>
+                  <SearchUser key = {user._id} user = {user}></SearchUser>
                 ))}
               </>
             )}
         </div> 
-        {/* <div className = "friends-left">
-          <div className = "intro">
-            <h3>Community & Friends</h3>
-            <img style = {{ position:'absolute',zIndex:'5',width:'125px', margin: '-100px 0px 0px 290px'}} src = { emptyFriends }></img>   
-            <p>Sync with friend habits to stay accountable and grow together!</p>
-          </div>
-        </div> */}
+    
         <div className="friend-habits">
           {!friendHabits || friendHabits.length === 0 && (
             // <img style = {{ zIndex:'5',width:'250px', margin: '-15px 0px -80px 650px'}}src = { emptyFriends }></img>          )}
             <>            
               <h1>The best way to stay accountable <span> is with friends!</span></h1>
-              <p>"Adapt yourself to the life you have been given; and truly love the people with whom destiny has surrounded you."</p>
+              <p>"Adapt yourself to the life you have been given and truly love the people with whom destiny has surrounded you."</p>
               <p style = {{ margin: 0, fontSize: '12px'}}>-- Marcus Aurelius</p>
               <button>Add Friends!</button>
             </>
@@ -126,7 +119,7 @@ const NewFriends = () => {
   )
 }
 
-export default NewFriends
+export default Friends
 
 {/* <div className = 'friends-search'>
             <label><h3> Search All Users </h3></label>

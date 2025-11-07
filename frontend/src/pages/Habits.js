@@ -9,6 +9,7 @@ import { Habit } from "../components/Habit"
 import { Footer } from '../components/Footer'
 import create from '../assets/create.png'
 import { useNavigate } from 'react-router-dom'
+import dropdown from '../assets/dropdown-white.png'
 
 const Habits = () => {
   const { user } = useAuthContext()
@@ -28,7 +29,6 @@ const Habits = () => {
   let linkedUsers = 0, totalCompletions = 0, maxStreak = 0;
   for (const habit of habits) {
     if (habit.maxStreak > maxStreak) maxStreak = habit.maxStreak;
-    console.log("habit before fail:", habit)
     linkedUsers += habit.linkedHabits?.length || 0;
     totalCompletions += 2
   }
@@ -56,16 +56,15 @@ const Habits = () => {
         <div className="home-mid">
           {/* Active Habits Section */}
           <section className="home-habits">
-            <h2>
-              Active Habits
-              <img
-                className="create-habit-icon"
-                src={create}
-                alt="Create Habit"
-                onClick={() => navigate('/habits/create')}
-              />
-            </h2>
+            <h2> Active Habits </h2>
             <h5>Click on any habit to view advanced statistics</h5>
+            
+            <div className = "habits-filters">
+              <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Filter</button>
+              <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Sort</button>
+              <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Reorder</button>
+              <button onClick = {() => navigate('/habits/create')}>New Habit</button>
+            </div>
 
             {habits.map(habit => (
               <Habit key={habit._id} habit={habit} />

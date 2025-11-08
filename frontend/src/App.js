@@ -6,9 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { HabitData } from './components/HabitData';
 import { CreateHabit } from './components/CreateHabit';
-import { Home } from './pages/Habits';
 import Secret from './pages/Secret';
-// import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const { user, loading } = useAuthContext();

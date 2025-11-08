@@ -9,8 +9,6 @@ import sync from '../assets/sync4.png'
 import { UserCard } from "./UserCard"
 import { format } from "date-fns"
 import { MasteryGraph } from "./MasteryGraph"
-import key from "../assets/key.png"
-import { Habit } from "./Habit"
 
 export const HabitData = () => {
 
@@ -38,7 +36,7 @@ export const HabitData = () => {
       const fetchHabit = async () => {
         try {
           const res = await getHabit(habitId, currentDate)
-          if (res.success == true) {
+          if (res.success === true) {
             setHabit(res.habit)
           } else {
             setError(res.error)
@@ -58,8 +56,9 @@ export const HabitData = () => {
     const fetchSynced = async () => {
       try {
         const res = await getLinkedHabits(habit._id)
-        if (res.success == false) {
-          setSyncedError(res.error)
+        if (res.success === false) {
+          setSyncedError(res.error);
+          console.log(syncedError);
         }
         else {
           const sortedResult = [...(res.linkedHabits || [])].sort((a, b) => {
@@ -94,8 +93,8 @@ export const HabitData = () => {
     )
   } 
 
-  const rawPercentCompleted = habit.totalCompletions / habit.potentialCompletions * 100;
-  const percentCompleted = parseFloat(rawPercentCompleted.toFixed(1));
+  // const rawPercentCompleted = habit.totalCompletions / habit.potentialCompletions * 100;
+  // const percentCompleted = parseFloat(rawPercentCompleted.toFixed(1));
 
   return (
     <>
@@ -218,9 +217,8 @@ export const HabitData = () => {
   //     </div>
   //   </div>
   // )
-}
 
-{/* <div className="idk" >
+  /* <div className="idk" >
   <div className="advanced-stats">
     <p>{habit.streak}</p>
     <h4>STREAK</h4>
@@ -241,4 +239,6 @@ export const HabitData = () => {
     <p style={{ fontSize: "16px", marginTop: '7px', fontWeight: "600", fontFamily: "Manrope" }}> Novice </p>
     <h4>HABIT MASTERY</h4>
   </div>
-</div> */}
+</div> */
+
+}

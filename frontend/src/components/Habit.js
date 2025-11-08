@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 import { useHabits } from '../hooks/useHabits'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
@@ -6,7 +6,7 @@ import link from '../assets/sync4.png'
 import { format } from 'date-fns';
 
 export const Habit = ({ habit }) => {
-  const { getHabit, toggleComplete, linkHabit, deleteHabit } = useHabits();
+  const { toggleComplete, linkHabit } = useHabits();
   const { user } = useAuthContext();
   const linkedUsers = habit.linkedHabits.map((linkedHabit) => linkedHabit.userId); 
 
@@ -85,7 +85,7 @@ export const Habit = ({ habit }) => {
             ) : (
               <>
                 {!linked ? (
-                  <img className = "habit-link" src = {link} onClick = {() => linkHabit(originalHabitId)}></img>
+                  <img alt = "link icon" className = "habit-link" src = {link} onClick = {() => linkHabit(originalHabitId)}></img>
 
                 ) : (
                   <p style = {{ alignSelf:'center', justifySelf:'center', padding:'5px' }}>Linked</p>

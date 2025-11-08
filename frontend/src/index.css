@@ -72,7 +72,7 @@ button {
   height: 45px;
   position: sticky;
   width: 98%; max-width: 1250px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   border-bottom-left-radius: 16px;border-bottom-right-radius: 16px; opacity: 95%;
 }
 
@@ -183,7 +183,7 @@ footer a {
   border-radius: 16px;
   /* border: 3px solid #1f1f1f; */
   width: 95%;
-  max-width: 655px;
+  max-width: 700px;
   padding: 10px 25px 0px 25px;
   /* margin-top: 10px; */
   /* margin-bottom: 50px; */
@@ -1602,13 +1602,12 @@ span {
   display: flex; align-items: center;
 }
 
-.habits-filters button {
+.habits-filters button, .fill {
   margin: 10px 12px 0px 0px;
   border: none; border-radius: 16px;
   height: 28px; width: 20%; max-width: 95px; padding: 0px 7px 0px 10px;
   background-color: var(--color-secondary); color: rgb(243, 243, 243);
-  font-family: 'Manrope'; font-weight: 550; font-size: 14px;
-  /* border: 2px solid lightblue;  */
+  font-family: 'Manrope'; font-weight: 550; font-size: 13px;
   display: flex; align-items: center; justify-content: space-between; flex-direction: row-reverse;
 }
 
@@ -1616,7 +1615,7 @@ span {
   margin-left: auto; margin-right: 5px; border-radius: 9px;
   /* color: wheat; color: var(--color-accent-light); */
   background-color: var(--color-accent-light); color: rgb(12, 12, 12);
-  font-size: 14px; font-weight: 600; justify-content: center; height: 26px; width: 100%;
+  font-size: 13px; font-weight: 600; justify-content: center; height: 26px; width: 100%;
 }
 
 .habits-filters button:hover, .graph-filters button:hover {
@@ -1651,4 +1650,43 @@ span {
 
 .graph-filters button:first-child {
   background-color: #404040;
+}
+
+.filter-options {
+  /* border: 2px dashed lightblue; */
+  display: flex; gap: 10px;
+  margin: 10px 0px 5px 0px; padding-top: 5px; margin-top: -10px; width: 100%; align-items: flex-start;
+}
+
+.dropdown {
+  margin: 3px 0px 3px 0px;
+  border: none;
+  border-radius: 4px;
+  height: 28px;
+  width: 100%;
+  max-width: 80px;
+  /* padding: 0px 7px 0px 10px; */
+  background-color: var(--color-secondary);
+  color: rgb(243, 243, 243);
+  font-family: 'Manrope';
+  font-weight: 550;
+  font-size: 13px;
+  /* border: 2px solid lightblue;  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown:hover {
+  background-color: #282828;
+}
+
+.highlighted {
+  border: 2px solid lightblue !important;
+}
+
+.fill {
+  width: 150px; max-width: 150px; text-align: center; font-weight: 600; flex-direction: row;
+  /* border: 2px solid lightblue !important; */
+  margin: 0; border-radius: 8px;
 }

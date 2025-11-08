@@ -3,7 +3,7 @@ import { HabitsGraph } from "../components/HabitsGraph"
 import { useHabits } from "../hooks/useHabits"
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useFriends } from "../hooks/useFriends"
 import { Habit } from "../components/Habit"
 import { Footer } from '../components/Footer'
@@ -13,7 +13,7 @@ import dropdown from '../assets/dropdown-white.png'
 
 const Habits = () => {
   const { user } = useAuthContext()
-  const { habits } = useHabitsContext()
+  let { habits } = useHabitsContext()
   const { getHabits } = useHabits()
   const { getFriends } = useFriends();
   const navigate = useNavigate();
@@ -26,12 +26,23 @@ const Habits = () => {
     getHabits()
   }, [user])
 
-  let linkedUsers = 0, totalCompletions = 0, maxStreak = 0;
-  for (const habit of habits) {
-    if (habit.maxStreak > maxStreak) maxStreak = habit.maxStreak;
-    linkedUsers += habit.linkedHabits?.length || 0;
-    totalCompletions += 2
-  }
+  const [filterSelected, setFilterSelected] = useState(false);
+  const [sortSelected, setSortSelected] = useState(false);
+
+  const sortStreak = () => {
+    habits = habits.sort((a, b) => b.streak - a.streak);
+    setSortSelected(false);
+  };
+
+  const sortNewest = () => {
+    habits = habits.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+    setSortSelected(false);
+  };
+
+  const sortOldest = () => {
+    habits = habits.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+    setSortSelected(false);
+  };
 
   if (habits.length == 0) {
     return (
@@ -60,11 +71,45 @@ const Habits = () => {
             <h5>Click on any habit to view advanced statistics</h5>
             
             <div className = "habits-filters">
-              <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Filter</button>
-              <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Sort</button>
-              <button style = {{justifyContent: 'center'}}>Re-order </button>
+              <button className={sortSelected ? "highlighted" : ""} 
+                onMouseEnter={() => setSortSelected(true)}
+                onMouseLeave={() => setSortSelected(false)}>
+                <img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Sort</button>
+              <button className = { filterSelected ? "highlighted" : "" }
+                onMouseEnter={() => setFilterSelected(true)}
+                onMouseLeave={() => setFilterSelected(false)}
+                ><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>Filter</button>
+              {/* <button style = {{justifyContent: 'center'}}>Re-order </button> */}
               <button onClick = {() => navigate('/habits/create')}>New Habit</button>
             </div>
+
+            { sortSelected ? 
+              <div className="filter-options"
+              onMouseEnter={() => setSortSelected(true)}
+                onMouseLeave={() => setSortSelected(false)}>
+                <button onClick = { sortNewest } className = "dropdown">Newest</button>
+                <button onClick={ sortOldest } className="dropdown">Oldest</button>
+                <button onClick={ sortStreak } className="dropdown">Streak</button>
+              </div> : null }
+
+            {filterSelected ?
+              <div className="filter-options"
+                onMouseEnter={() => setFilterSelected(true)}
+                onMouseLeave={() => setFilterSelected(false)}>
+                <button className = "dropdown">Public</button>
+                <button className="dropdown">Synced</button>
+                <button className="dropdown">Bundled</button>
+                <button className="dropdown">TBD</button>
+
+              </div> : null}
+
+              {!filterSelected && !sortSelected && 
+                <div style = {{height:'34px', width: '100%', display: 'flex', gap: '10px'}}>
+                  {/* Implement this tomorrow */}
+                <p className="fill">No synced habits</p> 
+                {/* <p className="fill">27 max streak</p>    */}
+                </div>}
+
 
             {habits.map(habit => (
               <Habit key={habit._id} habit={habit} />

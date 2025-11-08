@@ -99,6 +99,7 @@ const Habits = () => {
                 <button className = "dropdown">Public</button>
                 <button className="dropdown">Synced</button>
                 <button className="dropdown">Bundled</button>
+                <button className="dropdown">TBD</button> 
                 <button className="dropdown">TBD</button>
 
               </div> : null}

@@ -35,29 +35,34 @@ const Habits = () => {
   };
 
   const sortNewest = () => {
-    habits = habits.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-    setSortSelected(false);
-  };
-
-  const sortOldest = () => {
     habits = habits.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
     setSortSelected(false);
   };
 
-  if (habits.length == 0) {
-    return (
-      <>
-        <Navigation></Navigation>
-        <home className = "home-mid">
-          <div className = "welcome">
-            <h1><span>Create or link</span> a habit to begin your journey!</h1>
-            <p>“The journey of a thousand miles begins with a single step.” --<span style = {{ color: "#dbdbdbff", margin: 0, fontSize: '13px'}}> Lao Tzu</span></p>
-            <button onClick = { () => navigate('/habits/create') }>Create new habit</button>
-          </div>
-        </home>
-      </>
-    )
+  const sortOldest = () => {
+    habits = habits.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+    setSortSelected(false);
+  };
+
+  const sortUsers = () => {
+    habits = habits.sort((a, b) => (b.linkedHabits?.length || 0) - (a.linkedHabits?.length || 0));
+    setSortSelected(false);
   }
+
+  // if (habits.length == 0) {
+  //   return (
+  //     <>
+  //       <Navigation></Navigation>
+  //       <home className = "home-mid">
+  //         <div className = "welcome">
+  //           <h1><span>Create or link</span> a habit to begin your journey!</h1>
+  //           <p>“The journey of a thousand miles begins with a single step.” --<span style = {{ color: "#dbdbdbff", margin: 0, fontSize: '13px'}}> Lao Tzu</span></p>
+  //           <button onClick = { () => navigate('/habits/create') }>Create new habit</button>
+  //         </div>
+  //       </home>
+  //     </>
+  //   )
+  // }
 
   return (
     <>
@@ -87,9 +92,10 @@ const Habits = () => {
               <div className="filter-options"
               onMouseEnter={() => setSortSelected(true)}
                 onMouseLeave={() => setSortSelected(false)}>
-                <button onClick = { sortNewest } className = "dropdown">Newest</button>
-                <button onClick={ sortOldest } className="dropdown">Oldest</button>
-                <button onClick={ sortStreak } className="dropdown">Streak</button>
+                <button onClick= { sortStreak } className="dropdown">Streak</button>
+                <button onClick= { sortUsers } className="dropdown">Users</button>
+                <button onClick= { sortNewest } className="dropdown">Newest</button>
+                <button onClick= { sortOldest} className="dropdown">Oldest</button>
               </div> : null }
 
             {filterSelected ?
@@ -111,9 +117,16 @@ const Habits = () => {
                 </div>}
 
 
-            {habits.map(habit => (
+            {habits.length > 0 ? 
+              habits.map(habit => (
               <Habit key={habit._id} habit={habit} />
-            ))}
+            )) : 
+              <div className="welcome">
+                <h1><span>Create or link</span> a habit to begin your journey!</h1>
+              < p>“The journey of a thousand miles begins with a single step.” -<span style = {{ color: "#dbdbdbff", margin: 0, fontSize: '13px'}}> Lao Tzu</span></p>
+              < button onClick = { () => navigate('/habits/create') }>Create new habit</button>
+              </div>
+            }
           </section>
 
           {/* Graph Section */}

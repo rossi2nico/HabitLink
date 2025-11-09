@@ -9,6 +9,7 @@ import sync from '../assets/sync4.png'
 import { UserCard } from "./UserCard"
 import { format } from "date-fns"
 import { MasteryGraph } from "./MasteryGraph"
+import dropdown from '../assets/dropdown-white.png'
 
 export const HabitData = () => {
 
@@ -100,18 +101,33 @@ export const HabitData = () => {
     <>
       <Navigation></Navigation>
       <section className="details-section">
+        <div className = "details-header">
+            <h1> {habit.name} </h1>
+            <div className = "navigate-advanced">
+              <button> Prev </button> 
+              <button> Next </button>
+            </div>
+          </div>
+          <h5> I am going to make it. { habit.description } </h5>
         <div className="habit-details">
-          <h1>[icon] {habit.name} [del][edit]</h1>
-          <button>delete</button>
-          <button>edit</button>
-          <p>{habit.description} description goes herelol</p>
-        </div>
-      </section>
-      <main className = "habit-data">
-        {/* <Habit key={habit._id} habit={habit}></Habit> */}
 
-        
-        
+          <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>{ habit.privacy === 0 ? "Private"
+          : habit.privacy === 1 ? "Friends" : "Public" }</button>
+          <button>{ habit.startDate }</button>
+          {/* <button className = "fill" style = {{ maxWidth: '80px' }}>Share</button> */}
+          {/* <button>Delete</button> */}
+          {/* <button>edit</button> */}
+          <button className = "fill" style = {{ justifyContent: 'left', gap: '25px', maxWidth: '120px', width: '25%' }}> <img style = {{ width: '17px'}} src = { sync }></img>{ (habit.linkedHabits?.length || "No") } users</button>
+
+            <button>Habit settings</button>
+        </div>
+
+        {/* {<div className = "fill2" style={{ height: '34px', width: '100%', display: 'flex', gap: '10px' }}> */}
+            {/* Implement this tomorrow */}
+            {/* <button className = "fill" style = {{ justifyContent: 'left', gap: '10px' }}> <img style = {{ width: '17px'}} src = { sync }></img>{ (habit.linkedHabits?.length || "No") } Linked Users</button> */}
+          {/* </div>} */}
+      </section>
+      <main className = "habit-data">        
         <section className = "mastery">
           <h1> Habit Mastery</h1>
           <h5>Blah blah Bllah blah Bllah blah Blah Blah</h5>
@@ -128,7 +144,7 @@ export const HabitData = () => {
           </div>
         </section>
 
-        <section className = "mastery">
+        {/* <section className = "mastery">
           <h1 className="synced-users-title">Linked Users</h1>
           <h5>Salam Alaikum</h5>
           {syncedHabits && (
@@ -143,14 +159,14 @@ export const HabitData = () => {
           {syncedHabits?.map((h) => (
             <UserCard key={h._id} habit={h} />
           ))}
-        </section>
+        </section> */}
 
-        <section className = "mastery">
+        {/* <section className = "mastery">
           <h1>Coming SOon</h1>
           <h5>SUiiiiiiiiiii</h5>
-        </section>
+        </section> */}
       
-        <div className="idk" >
+        {/* <div className="idk" >
           <div className="advanced-stats">
             <p>{habit.streak}</p>
             <h4>STREAK</h4>
@@ -171,7 +187,7 @@ export const HabitData = () => {
             <p style={{ fontSize: "16px", marginTop: '7px', fontWeight: "600", fontFamily: "Manrope" }}> Novice </p>
             <h4>HABIT MASTERY</h4>
           </div>
-        </div>
+        </div> */}
 
         {/* <section className = "habit-details">
           <h1>test</h1>

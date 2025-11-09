@@ -177,7 +177,7 @@ footer a {
   /* background-color: #090909; */
 }
 
-.home-habits {
+.home-habits, .details-section {
   display: flex; flex-direction: column; align-items: flex-start;
   /* border: 2px dashed lightblue; */
   border-radius: 16px;
@@ -197,7 +197,7 @@ footer a {
   margin: 0; margin-left: 0px;
   font-family: 'Red Hat Display';
 }
-.home-habits h5 {
+.home-habits h5, .details-section h5 {
   font-size: 16px;
   color: #c5c5c5;
   margin: 0px 0px 10px 0px;
@@ -316,11 +316,11 @@ footer a {
 }
 
 .login {
-  max-width: 500px;
+  max-width: 375px; width: 95%;
   margin: 5rem auto;
-  padding: 15px 0px 25px 0px;
+  padding: 12px 0px 25px 0px;
   color: rgb(240, 240, 240);
-  border-radius: 32px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -329,10 +329,11 @@ footer a {
 }
 
 .login h3 {
-  text-align: center;
-  font-size: 1.25rem;
+  /* text-align: center; */
+  align-self: flex-start; margin-left: 50px;
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .login label {
@@ -569,11 +570,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.calendar-container, .completion-graph {
-  background-color: #1b1b1b;
-  background: linear-gradient(0deg, #1a1a1a 15%, #171717 100%);
 }
 
 .synced-users {
@@ -1276,16 +1272,20 @@ circle {
   text-align: center; color: rgb(219, 219, 219); display: flex; flex-direction: column; align-items: center;
 }
 
+.welcome {
+  padding: 5px 0px 25px 0px; margin-top: 25px; align-self: center;
+}
+
 .welcome h1, .friend-habits h1{
   color: white; font-size: 26px; max-width: 350px;
 }
 
 .welcome h1 {
-  margin-bottom: 35px; width: 100%;
+  margin-bottom: 15px; width: 100%;
 }
 
 .friend-habits button {
-  border: none; border-radius: 26px; height: 50px; width: 100%; max-width: 350px; margin-top: 50px;
+  border: none; border-radius: 26px; height: 50px; width: 100%; max-width: 350px; margin-top: 40px;
   font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer;
   background-color: var(--color-accent-light);
 }
@@ -1507,12 +1507,8 @@ circle {
   color: whitesmoke;
 }
 
-.habit-details {
-  background-color: #181818; border-radius: 16px; width: 90%; max-width: 700px;
-}
-
 .calendar-container, .mastery-graph {
-  width: 90%; max-width: 500px;
+  width: 90%; max-width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1540,7 +1536,8 @@ section {
 }
 
 .mastery, .calendar-section {
-  min-width: 35%; width: 500px; max-width: 95%;
+  /* border: 2px solid yellow; */
+  width: 500px; max-width: 95%;
 }
 
 .mastery h1, .calendar-section h1 {
@@ -1551,18 +1548,14 @@ section {
   color: #aaa; margin: 5px 0px 25px 0px; font-weight: 600;
 }
 
-.habit-details {
-  padding: 0px 15px 0px 15px;
-  /* border: 2px solid green; */
-}
-
-.habit-details h1 {
-  font-size: 32px; font-weight: 600;
+.details-section h1 {
+  font-size: 36px; font-weight: 600; margin: 0;
   /* text-align: center; */
 }
 
 .details-section {
   margin-right: auto; margin-left: auto;
+  /* background-color: var(--color-secondary); */
 }
 
 span {
@@ -1570,11 +1563,11 @@ span {
 }
 
 .welcome {
-  text-align: center;
+  text-align: left;
 }
 
 .welcome p {
-  margin: 20px; max-width: 350px;
+  margin: 0px; text-align: left; max-width: 350px;
 }
 
 /* .welcome-buttons {
@@ -1582,7 +1575,7 @@ span {
 } */
 
 .welcome button {
-  border: none; border-radius: 26px; height: 50px; width: 100%; max-width: 350px; margin-top: 50px;
+  border: none; border-radius: 26px; height: 50px; width: 100%; max-width: 350px; margin-top: 40px;
   font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer;
   background-color: var(--color-accent-light);
 }
@@ -1596,26 +1589,34 @@ span {
   font-weight: 600; font-family: 'Manrope';
 }
 
-.habits-filters {
+.habits-filters, .habit-details {
   /* border: 2px dashed lightskyblue; */
   width: 100%; height: 100%; margin-bottom: 10px;
-  display: flex; align-items: center;
+  display: flex;
 }
 
-.habits-filters button, .fill {
+.habits-filters button, .fill, .habit-details button {
   margin: 10px 12px 0px 0px;
   border: none; border-radius: 16px;
-  height: 28px; width: 20%; max-width: 95px; padding: 0px 7px 0px 10px;
+  height: 30px; width: 20%; max-width: 95px; padding: 0px 7px 0px 10px;
   background-color: var(--color-secondary); color: rgb(243, 243, 243);
   font-family: 'Manrope'; font-weight: 550; font-size: 13px;
   display: flex; align-items: center; justify-content: space-between; flex-direction: row-reverse;
 }
 
-.habits-filters button:last-child {
+.habit-details button {
+  max-width: 115px;
+}
+
+.habits-filters button:last-child, .habit-details button:last-child {
   margin-left: auto; margin-right: 5px; border-radius: 9px;
   /* color: wheat; color: var(--color-accent-light); */
   background-color: var(--color-accent-light); color: rgb(12, 12, 12);
   font-size: 13px; font-weight: 600; justify-content: center; height: 26px; width: 100%;
+}
+
+.habit-details button:last-child {
+  background-color: rgb(31, 31, 31); color: white; max-width: 120px; height: 30px;
 }
 
 .habits-filters button:hover, .graph-filters button:hover {
@@ -1689,4 +1690,28 @@ span {
   width: 150px; max-width: 150px; text-align: center; font-weight: 600; flex-direction: row;
   /* border: 2px solid lightblue !important; */
   margin: 0; border-radius: 8px;
+}
+
+.details-header {
+  display: flex; justify-content: space-between; align-items: center;
+  /* border: 2px dashed lightblue; */
+  width: 100%;
+}
+
+.details-header h1 {
+  font-size: 22px;
+}
+
+.navigate-advanced {
+  margin-top: 10px; margin-right: 5px;
+  width: 160px;
+  display: flex; align-items: center; justify-content: center; gap: 15px;
+}
+
+.navigate-advanced button {
+  height: 26px; border: none; border-radius: 4px; font-size: 14px; background-color: var(--color-secondary); color: white; width: 80px;
+}
+
+.navigate-advanced button:last-child {
+  color: black; background-color: var(--color-accent-light);
 }

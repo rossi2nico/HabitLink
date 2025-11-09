@@ -4,9 +4,10 @@ import Friends from './pages/Friends';
 import Habits from './pages/Habits';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import { HabitData } from './components/HabitData';
+import { HabitMetrics } from './components/HabitMetrics';
 import { CreateHabit } from './components/CreateHabit';
 import Secret from './pages/Secret';
+import { Metrics } from './pages/Metrics';
 
 function App() {
   const { user, loading } = useAuthContext();
@@ -34,8 +35,12 @@ function App() {
             element={user ? <Habits /> : <Navigate to="/login" replace />}
           />
           <Route
+            path = "/metrics"
+            element = { user ? <Metrics/> : <Navigate to = "/login" replace />}
+          />
+          <Route
             path="/habits/:habitId"
-            element={user ? <HabitData /> : <Navigate to="/login" replace />}
+            element={user ? <HabitMetrics /> : <Navigate to="/login" replace />}
           />
           <Route
             path="/habits/create"

@@ -10,6 +10,7 @@ import { Footer } from '../components/Footer'
 import create from '../assets/create.png'
 import { useNavigate } from 'react-router-dom'
 import dropdown from '../assets/dropdown-white.png'
+import sync from '../assets/sync4.png'
 
 const Habits = () => {
   const { user } = useAuthContext()
@@ -112,7 +113,9 @@ const Habits = () => {
               {!filterSelected && !sortSelected && 
                 <div style = {{height:'34px', width: '100%', display: 'flex', gap: '10px'}}>
                   {/* Implement this tomorrow */}
-                <p className="fill">No synced habits</p> 
+                {/* <button> <img style = {{ width: '17px' }} src = { sync }></img>{ (habit.linkedHabits?.length || "No") } users</button> */}
+
+                <p className="fill">No synced habits<img style = {{ width: '17px'}} src = { sync }></img></p> 
                 {/* <p className="fill">27 max streak</p>    */}
                 </div>}
 

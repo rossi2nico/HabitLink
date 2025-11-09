@@ -1,11 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
-import userIcon from '../assets/icon2.png'
 import habitlink from '../assets/habitlink.png'
-import female from '../assets/female.png'
-import batman from '../assets/batman.png'
-
+import batman from '../assets/batman.png';
 export const Navigation = () => {
   const { user } = useAuthContext();
   const { logout } = useLogout();
@@ -18,6 +15,7 @@ export const Navigation = () => {
       </div>
       <div className="nav-mid">
         <h3><Link to="/habits">Habits</Link></h3>
+        <h3><Link to="/metrics">Metrics</Link></h3>
         <h3><Link to="/friends">Friends</Link></h3>
       </div>
       <div className="nav-right">

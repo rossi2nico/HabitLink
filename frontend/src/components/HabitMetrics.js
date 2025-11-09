@@ -6,27 +6,39 @@ import { Navigation } from "./Navigation"
 import { useHabitsContext } from "../hooks/useHabitsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 import sync from '../assets/sync4.png'
-import { UserCard } from "./UserCard"
 import { format } from "date-fns"
 import { MasteryGraph } from "./MasteryGraph"
 import dropdown from '../assets/dropdown-white.png'
+import { useNavigate } from "react-router-dom"
 
-export const HabitData = () => {
+export const HabitMetrics = () => {
 
   const { habits } = useHabitsContext()
-  const { getLinkedHabits, getHabit } = useHabits()
+  const { getLinkedHabits, getHabit, getHabits } = useHabits()
   const [syncedHabits, setSyncedHabits] = useState([])
+  const [refreshHabits, setRefreshHabits] = useState([])
   const [habit, setHabit] = useState(null)
   const [error, setError] = useState("")
   const [syncedError, setSyncedError] = useState("")
   const { user } = useAuthContext()
   const { habitId } = useParams()  
+  const navigate = useNavigate();
   const currentDate = format(new Date(), 'yyyy-MM-dd');
 
   useEffect(() => {
     if (!user) {
       return
     }
+    /* If habits aren't loaded from context (refreshing page on itself edge case)*/
+    if (habits.length === 0) {
+      console.log("Empty on refresh.")
+      const fetchHabits = async () => {
+        const res = await getHabits();
+        setRefreshHabits(res.habits);
+      }
+      fetchHabits();
+    }
+    console.log("habits? : ", habits);
     /* This will only find the habit in context if we previously clicked from the habits page with the context. */
     const habitFromContext = habits.find(h => h._id === habitId)
     if (habitFromContext) {
@@ -85,6 +97,36 @@ export const HabitData = () => {
     )
   }
 
+  let index, prevIndex, nextIndex, prevHabitId, nextHabitId;
+  if (refreshHabits.length > 0) {
+    /* Solves refresh issue by loading content from fetched habits instead of using context*/
+    index = refreshHabits.findIndex((h) => h === habit);
+
+    prevIndex = (index - 1 + habits.length) % habits.length;
+    nextIndex = (index + 1) % habits.length;
+
+    nextHabitId = refreshHabits[nextIndex]?._id;
+    prevHabitId = refreshHabits[prevIndex]?._id;
+  } else {
+    index = habits.findIndex((h) => h === habit);
+
+    prevIndex = (index - 1 + habits.length) % habits.length;
+    nextIndex = (index + 1) % habits.length;
+    
+    nextHabitId = habits[nextIndex]?._id;
+    prevHabitId = habits[prevIndex]?._id;
+  }
+
+  const navigatePrev = () => {
+    if (index === prevIndex) return;
+    navigate(`/habits/${ prevHabitId }`)
+  }
+
+  const navigateNext = () => {
+    if (index === nextIndex) return;
+    navigate(`/habits/${ nextHabitId }`)
+  }
+
   if (!habit) {
     return (
       <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
@@ -104,8 +146,8 @@ export const HabitData = () => {
         <div className = "details-header">
             <h1> {habit.name} </h1>
             <div className = "navigate-advanced">
-              <button> Prev </button> 
-              <button> Next </button>
+              <button onClick = { navigatePrev }> Prev </button> 
+              <button onClick = { navigateNext }> Next </button>
             </div>
           </div>
           <h5> I am going to make it. { habit.description } </h5>
@@ -113,7 +155,7 @@ export const HabitData = () => {
 
           <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>{ habit.privacy === 0 ? "Private"
           : habit.privacy === 1 ? "Friends" : "Public" }</button>
-          <button>{ habit.startDate }</button>
+          <button><img style={{ margin: '0', width: '20px' }} src={dropdown}></img>{ habit.startDate }</button>
           {/* <button className = "fill" style = {{ maxWidth: '80px' }}>Share</button> */}
           {/* <button>Delete</button> */}
           {/* <button>edit</button> */}

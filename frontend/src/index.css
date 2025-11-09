@@ -190,6 +190,10 @@ footer a {
   height: 100%;
 }
 
+.details-section {
+  max-width: 900px;
+}
+
 .home-habits h2 {
   font-size: 36px;
   font-weight: 700;

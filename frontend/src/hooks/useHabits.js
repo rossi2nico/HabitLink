@@ -189,7 +189,7 @@ export const useHabits = () => {
     return { success: true, habit: json.habit }
   }
 
-  const syncHabit = async (originalHabitId, currentDate) => {
+  const linkHabit = async (originalHabitId, currentDate) => {
     if (!user) return { success: false, error: 'You must be logged in' }
     if (!currentDate) currentDate = format(new Date(), 'yyyy-MM-dd')
     const res = await fetch(`${BACKEND_URL}/api/habits/sync`, {
@@ -204,34 +204,34 @@ export const useHabits = () => {
       }
     })
 
-    const json = await res.json()
+    const json = await res.json()    
     if (!res.ok) return { success: false, error: json.error }
     
-    const originalHabit = await fetch(`${BACKEND_URL}/api/habits/${originalHabitId}?currentDate=${currentDate}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`,
-        'Access-Type': 'sync'
-      }
-    })
+    // const originalHabit = await fetch(`${BACKEND_URL}/api/habits/${originalHabitId}?currentDate=${currentDate}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${user.token}`,
+    //     'Access-Type': 'sync'
+    //   }
+    // })
     
-    const jsonOriginal = await originalHabit.json()
+    // const jsonOriginal = await originalHabit.json()
     
-    if (!originalHabit.ok) {
-      return { success: false, error: jsonOriginal.error || "Failed to fetch original habit" }
-    }
+    // if (!originalHabit.ok) {
+    //   return { success: false, error: jsonOriginal.error || "Failed to fetch original habit" }
+    // }
 
     dispatch({ type: 'SYNC_HABIT', payload: {
-      newHabit: json,
-      originalHabit: jsonOriginal
+      newHabit: json.newHabit,
+      originalHabit: json.originalHabit
     }})
     
-    return { success: true, newHabit: json, originalHabit: jsonOriginal }
+    return { success: true, newHabit: json.newHabit, originalHabit: json.originalHabit }
   }
 
   return { 
-    syncHabit, 
+    linkHabit, 
     getHabit, 
     getHabits, 
     getFriendHabits, 

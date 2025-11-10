@@ -31,14 +31,12 @@ export const HabitMetrics = () => {
     }
     /* If habits aren't loaded from context (refreshing page on itself edge case)*/
     if (habits.length === 0) {
-      console.log("Empty on refresh.")
       const fetchHabits = async () => {
         const res = await getHabits();
         setRefreshHabits(res.habits);
       }
       fetchHabits();
     }
-    console.log("habits? : ", habits);
     /* This will only find the habit in context if we previously clicked from the habits page with the context. */
     const habitFromContext = habits.find(h => h._id === habitId)
     if (habitFromContext) {
@@ -275,28 +273,4 @@ export const HabitMetrics = () => {
   //     </div>
   //   </div>
   // )
-
-  /* <div className="idk" >
-  <div className="advanced-stats">
-    <p>{habit.streak}</p>
-    <h4>STREAK</h4>
-  </div>
-  <div className="advanced-stats">
-    <p>{habit.maxStreak}</p>
-    <h4>MAX STREAK</h4>
-  </div>
-  <div className="advanced-stats">
-    <p>{syncedHabits.length}</p>
-    <h4>LINKED USERS</h4>
-  </div>
-  <div className="advanced-stats">
-    <p> 79%</p>
-    <h4>COMPLETION (%)</h4>
-  </div>
-  <div className="advanced-stats">
-    <p style={{ fontSize: "16px", marginTop: '7px', fontWeight: "600", fontFamily: "Manrope" }}> Novice </p>
-    <h4>HABIT MASTERY</h4>
-  </div>
-</div> */
-
 }

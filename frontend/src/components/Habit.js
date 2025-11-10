@@ -8,7 +8,8 @@ import { format } from 'date-fns';
 export const Habit = ({ habit }) => {
   const { toggleComplete, linkHabit } = useHabits();
   const { user } = useAuthContext();
-  const linkedUsers = habit.linkedHabits.map((linkedHabit) => linkedHabit.userId); 
+
+  const linkedUsers = habit.linkedHabits?.map((linkedHabit) => linkedHabit.userId); 
 
   const isUsersHabit = () => {
     return user?._id?.toString() === habit?.userId?.toString();
@@ -76,21 +77,15 @@ export const Habit = ({ habit }) => {
           )}
           </div>
           <div className = "habit-right">
-            <div className = "habit-buttons">
-              {/* <Link to={`/habits/${habit._id}`} className = "view-analytics">View Stats</Link> */}
-            </div>
 
-            {usersHabit ? (
-              null
-            ) : (
-              <>
+            {!usersHabit && (
+              <div className = "link-info">
                 {!linked ? (
-                  <img alt = "link icon" className = "habit-link" src = {link} onClick = {() => linkHabit(originalHabitId)}></img>
-
+                  <button onClick = { () => { linkHabit(originalHabitId, today) } } className = "link-button">Link Habit</button>
                 ) : (
                   <p style = {{ alignSelf:'center', justifySelf:'center', padding:'5px' }}>Linked</p>
                 )}
-              </>
+              </div>
             )}
           </div>
         </div>

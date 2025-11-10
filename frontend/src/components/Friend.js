@@ -30,15 +30,9 @@ export const Friend = ({ friend }) => {
 
   return (
     <div className="friend-card">
-      <div className = "friend-left">
-        <img style = {{ padding:'5px', marginRight: '3px', width: 50 }} src = { batman } ></img>
-      </div>
-        <div className = "friend-right">  
-        <div className = 'friend-info'>
-          <h3> {friend.username.charAt(0).toUpperCase() + friend.username.slice(1)} </h3>
-          
-        </div>
-        <div className = "friend-shared-habits">
+      <img style={{ width: 60 }} src={batman} ></img>
+      <h3>{friend.username.charAt(0).toUpperCase() + friend.username.slice(1)} </h3>
+        {/* <div className = "friend-shared-habits">
           {sharedHabits && sharedHabits.length > 0 ? (
             sharedHabits.map(habit => {
               return <p className = "shared-habit" key = { habit._id }> { habit.name } 
@@ -52,8 +46,7 @@ export const Friend = ({ friend }) => {
             <p className = "shared-habit"> No shared friend habits</p>
           )}
           
-        </div>
-      </div>
+        </div> */}
     </div>
   );
 };

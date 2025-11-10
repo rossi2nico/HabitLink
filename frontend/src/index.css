@@ -201,12 +201,16 @@ footer a {
   margin: 0; margin-left: 0px;
   font-family: 'Red Hat Display';
 }
-.home-habits h5, .details-section h5 {
+.home-habits h5, .details-section h5, .friend-habit-container h5 {
   font-size: 16px;
   color: #c5c5c5;
   margin: 0px 0px 10px 0px;
   font-weight: 500;
   font-family: 'Red Hat Display';
+}
+
+.friend-habit-container h5 {
+  margin-left: 50px;
 }
 
 .graph-more {
@@ -305,9 +309,10 @@ footer a {
 
 .habit-buttons {
   /* width: 70%; height: 100%; */
-  /* border: 2px dashed lightblue; */
-  display: flex; justify-content: flex-end; align-items: center;
+  border: 2px dashed lightblue;
+  display: flex; justify-content: flex-end; align-items: center; width: 100%;
 }
+
 .view-analytics, .share-habit {
   border: none; background-color: var(--color-secondary); text-decoration: none; border-radius: 12px; color: rgb(14, 14, 14);
   font-size: 12px; font-weight: 600; height: 24px; width: 80px; text-align: center; margin-left: auto; margin-right: auto;
@@ -758,8 +763,8 @@ h1 {
 
 .friends, .pending-users {
   /* border: 2px dashed lightblue; */
-  display: flex; gap: 1rem; justify-content: flex-start; flex-wrap: wrap;
-  flex-direction: column;
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  /* flex-direction: column; */
   width: 95%;
   margin: 0px 50px 0px 50px;
   text-align: center;
@@ -768,7 +773,7 @@ h1 {
 
 .friends-page {
   /* border: 1px solid lightcoral; */
-  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
 }
 
 .friends-page h1 {
@@ -779,6 +784,7 @@ h1 {
   display: flex;
   align-items: top;
   margin-top: 40px;
+  justify-self: center;
 }
  
 .friends-search {
@@ -1276,6 +1282,10 @@ circle {
   text-align: center; color: rgb(219, 219, 219); display: flex; flex-direction: column; align-items: center;
 }
 
+.friend-habits {
+  background-color: inherit;
+}
+
 .welcome {
   padding: 5px 0px 25px 0px; margin-top: 25px; align-self: center;
 }
@@ -1337,13 +1347,13 @@ circle {
   transition: 0.3s ease;
 }
 
-.friend-info h3 {
+.friend-card h3 {
   margin: 0px;
-  /* margin-top: -15px; */
+  margin-top: 10px;
   display: flex; align-items: center;
-  font-size: 18px;
-  font-weight: 700;
-  margin-left: 5px;
+  font-size: 16px;
+  /* font-weight: 700; */
+  /* margin-left: 5px; */
 }
 
 .sync-habit-small {
@@ -1355,29 +1365,31 @@ circle {
 .friend-card {
   /* border: 1px solid #757575; */
   padding-top: 8px;
-  padding-left: 8px;
-  background-color: #111111;
+  /* padding-left: 8px; */
+  /* background-color: var(--color-secondary); */
   border-radius: 8px;
-  width: 375px;
+  width: 90px;
   margin-bottom: 0px;
-  display: flex;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  height: 100px;
 }
 
 .friends-list {
   /* border: 2px dashed lightblue; */
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   border-radius: 14px;
-  background-color: #161616;
-  margin-top: 25px;
+  /* background-color: #161616; */
+  /* margin-top: 25px; */
   padding: 5px;
   padding-bottom: 15px;
-  width: 400px;
+  width: 95%;
 }
 
 .friends-list h2 {
   align-self: flex-start;
-  margin-left: 20px;
-  font-weight: 700;
+  margin: 0; margin-left: 20px; margin-bottom: 20px;
+  /* font-weight: 700; */
+  font-size: 26px;
 }
 
 .habit-info {
@@ -1614,7 +1626,6 @@ span {
 
 .habits-filters button:last-child, .habit-details button:last-child {
   margin-left: auto; margin-right: 5px; border-radius: 9px;
-  /* color: wheat; color: var(--color-accent-light); */
   background-color: var(--color-accent-light); color: rgb(12, 12, 12);
   font-size: 13px; font-weight: 600; justify-content: center; height: 26px; width: 100%;
 }
@@ -1718,4 +1729,29 @@ span {
 
 .navigate-advanced button:last-child {
   color: black; background-color: var(--color-accent-light);
+}
+
+.link-button {
+  height: 26px !important; margin: 0 !important; margin-top: 3px !important;
+  font-size: 13px !important; width: 80px !important;
+}
+
+.link-info {
+  display: flex; width: 100%; height: 100%;
+  /* border: 2px solid red; */
+  align-items: center; justify-content: center;
+}
+
+.friend-habit-container {
+  margin-top: 35px;
+  /* border: 2px dashed lightblue; */
+  align-self: flex-start; width: 95%; max-width: 600px;
+}
+
+.friend-habit-container h2 {
+  margin: 0; margin-left: 50px; font-size: 36px;
+}
+
+.friend-habits {
+  /* border: 2px solid red; */
 }
